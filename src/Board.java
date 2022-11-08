@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-
+    public static final int SIZE = 15;
     Piece[][] arr;
 
     public Board(){
