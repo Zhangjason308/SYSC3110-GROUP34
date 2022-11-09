@@ -14,7 +14,7 @@ public class ScrabbleGame {
     int player1Score;
     int player2Score;  //p possibly want to add a player class since each player has a hand and a score, might make it more complicated tho, idk yet
     Hand player1Hand;
-    Hand player2Hand;//welp
+    Hand player2Hand;
     Board scrabbleBoard;
     Bag bag;
     boolean turn; // false meaning its player2's turn
@@ -29,8 +29,8 @@ public class ScrabbleGame {
         player1Score = 0;
         player2Score = 0;
         bag = new Bag();
-        player1Hand = new Hand(bag);
-        player2Hand = new Hand(bag);
+        player1Hand = new Hand();
+        player2Hand = new Hand();
         scrabbleBoard = new Board();
         turn = player1;
         views = new ArrayList<>();
