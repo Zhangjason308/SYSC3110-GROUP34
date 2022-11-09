@@ -1,14 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
-public class ScrabbleFrame extends JFrame {
+public class BoardFrame extends JFrame {
 
     private JButton[][] buttons;
-    public ScrabbleFrame() {
+    public BoardFrame() {
         super("Scrabble");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.
         this.setLayout(new GridLayout(Board.SIZE, Board.SIZE));
         this.setSize(500,500);
 
@@ -27,6 +25,6 @@ public class ScrabbleFrame extends JFrame {
         this.setVisible(true);
     }
     public static void main(String args[]) {
-        new ScrabbleFrame();
+        new BoardFrame();
     }
 }
