@@ -3,12 +3,12 @@ import java.awt.*;
 
 public class BoardFrame extends JPanel {
     private JButton[][] buttons;
-    public BoardFrame() {
+    public BoardFrame(Board model) {
         super();
         this.setLayout(new GridLayout(Board.SIZE, Board.SIZE));
-        this.setSize(500,500);
+        //this.setSize(200,200);
 
-        Board model = new Board();
+
         buttons = new JButton[Board.SIZE][Board.SIZE];
 
         for (int i  = 0; i < Board.SIZE; i++) {
@@ -23,6 +23,6 @@ public class BoardFrame extends JPanel {
        this.setVisible(true);
     }
     public static void main(String args[]) {
-        new BoardFrame();
+        new BoardFrame(new Board());
     }
 }
