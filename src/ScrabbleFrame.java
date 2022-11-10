@@ -20,6 +20,7 @@ public class ScrabbleFrame extends JFrame implements ScrabbleView {
     @Override
     public void update(int x, int y, Piece selectedPiece) {
 
+
     }
 
     public static void main(String args[]) {
