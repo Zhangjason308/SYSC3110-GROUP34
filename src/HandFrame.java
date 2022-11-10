@@ -34,7 +34,7 @@ public class HandFrame extends JPanel implements ScrabbleView{
                 public void actionPerformed(ActionEvent e) {
                     // these are the 1x7 buttons in the hand
                     // they need to add the piece associated to the hand to the selectedPiece variable
-                    selectedButton = b;
+                    setSelectedButton(b);
                 }
             });
 
@@ -49,6 +49,10 @@ public class HandFrame extends JPanel implements ScrabbleView{
     }
     public JButton getSelectedButton(){
         return selectedButton;
+    }
+
+    public void setSelectedButton(JButton b) {
+        selectedButton = b;
     }
     @Override
     public void update(int x, int y, Piece selectedPiece) {
