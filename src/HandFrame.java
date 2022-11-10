@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class HandFrame extends JPanel implements ScrabbleView{
     private JButton[] buttons;
+    private JButton selectedButton;
     public HandFrame(Hand model) {
         super();
         GridLayout buttonGrid = new GridLayout(1, ScrabbleGame.HAND_SIZE);
@@ -33,6 +34,7 @@ public class HandFrame extends JPanel implements ScrabbleView{
                 public void actionPerformed(ActionEvent e) {
                     // these are the 1x7 buttons in the hand
                     // they need to add the piece associated to the hand to the selectedPiece variable
+                    selectedButton = b;
                 }
             });
 
@@ -40,8 +42,13 @@ public class HandFrame extends JPanel implements ScrabbleView{
             buttons[i] = b;
             //b.addActionListener(sc); //pass it the controller to run actionPerformed when clicked, with that button's info
             this.add(buttons[i]);
+            //make it so that you create another list of buttons, and it will remove the button from the list everytime you
+            //attempt to add it to the board, that way you cant add duplicates
         }
         this.setVisible(true); // add a new set of buttons for hand, and change visibility of hand based on players turn (they overlap if thats possible)
+    }
+    public JButton getSelectedButton(){
+        return selectedButton;
     }
     @Override
     public void update(int x, int y, Piece selectedPiece) {
