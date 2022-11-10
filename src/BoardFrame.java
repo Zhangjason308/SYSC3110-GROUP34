@@ -1,12 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardFrame extends JFrame {
-
+public class BoardFrame extends JPanel {
     private JButton[][] buttons;
     public BoardFrame() {
-        super("Scrabble");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super();
         this.setLayout(new GridLayout(Board.SIZE, Board.SIZE));
         this.setSize(500,500);
 
@@ -22,7 +20,7 @@ public class BoardFrame extends JFrame {
                 this.add(b);
             }
         }
-        this.setVisible(true);
+       this.setVisible(true);
     }
     public static void main(String args[]) {
         new BoardFrame();
