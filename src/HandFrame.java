@@ -2,14 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class HandFrame extends JPanel implements ScrabbleView{
     private JButton[] buttons;
     private JButton selectedButton;
+    private Hand model;
+    //public ArrayList<JButton> selectedButtons = new ArrayList<>();
     public HandFrame(Hand model) {
         super();
+        this.model = model;
         GridLayout buttonGrid = new GridLayout(1, ScrabbleGame.HAND_SIZE);
-
         this.setSize(800, 100);
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -35,6 +38,7 @@ public class HandFrame extends JPanel implements ScrabbleView{
                     // these are the 1x7 buttons in the hand
                     // they need to add the piece associated to the hand to the selectedPiece variable
                     setSelectedButton(b);
+                    //selectedButtons.add(b);
                 }
             });
 
@@ -53,6 +57,10 @@ public class HandFrame extends JPanel implements ScrabbleView{
 
     public void setSelectedButton(JButton b) {
         selectedButton = b;
+    }
+
+    public Hand getHand() {
+        return model;
     }
     @Override
     public void update(int x, int y, Piece selectedPiece) {
