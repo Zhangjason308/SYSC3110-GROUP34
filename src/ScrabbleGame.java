@@ -64,7 +64,7 @@ public class ScrabbleGame {
         }
         else{
             if (scrabbleBoard.getPiece(x, y).getLetter() == ' '){  // places the selected piece on the board
-                scrabbleBoard.placePiece(x, y, selectedPiece);
+                //scrabbleBoard.placePiece(x, y, selectedPiece);
             }
         }
 
