@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="376b0733-6dcd-4790-8dd3-3104139d748d" name="Changes" comment="Added Piece class">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b741f320-6ed2-492b-b4cf-f0d99779e81b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ScrabbleFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoardFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScrabbleGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ScrabbleGame.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HandFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HandFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScrabbleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,14 +37,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
-  <component name="RunManager" selected="Application.BoardFrame">
+}]]></component>
+  <component name="RunManager" selected="Application.HandFrame">
     <configuration name="Bag" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Bag" />
       <module name="ScrabbleGame" />
@@ -71,8 +77,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Hand" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Hand" />
+    <configuration name="HandFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HandFrame" />
       <module name="ScrabbleGame" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -80,11 +86,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HandFrame" />
         <item itemvalue="Application.BoardFrame" />
         <item itemvalue="Application.Game" />
         <item itemvalue="Application.Bag" />
         <item itemvalue="Application.Board" />
-        <item itemvalue="Application.Hand" />
       </list>
     </recent_temporary>
   </component>

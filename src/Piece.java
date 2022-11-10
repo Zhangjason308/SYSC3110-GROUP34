@@ -3,34 +3,6 @@ public class Piece {
     char piece;
     private static final HashMap<Character, Integer> pieceMap = new HashMap<>();
     static {
-        /*
-        myMap.put(new Piece('E'), 1);
-        myMap.put(new Piece('A'), 1);
-        myMap.put(new Piece('O'), 1);
-        myMap.put(new Piece('N'), 1);
-        myMap.put(new Piece('R'), 1);
-        myMap.put(new Piece('T'), 1);
-        myMap.put(new Piece('L'), 1);
-        myMap.put(new Piece('S'), 1);
-        myMap.put(new Piece('U'), 1);
-        myMap.put(new Piece('D'), 2);
-        myMap.put(new Piece('G'), 2);
-        myMap.put(new Piece('B'), 3);
-        myMap.put(new Piece('C'), 3);
-        myMap.put(new Piece('M'), 3);
-        myMap.put(new Piece('P'), 3);
-        myMap.put(new Piece('F'), 4);
-        myMap.put(new Piece('H'), 4);
-        myMap.put(new Piece('V'), 4);
-        myMap.put(new Piece('W'), 4);
-        myMap.put(new Piece('Y'), 4);
-        myMap.put(new Piece('K'), 5);
-        myMap.put(new Piece('J'), 8);
-        myMap.put(new Piece('X'), 8);
-        myMap.put(new Piece('Q'), 10);
-        myMap.put(new Piece('Z'), 10);
-         */
-
         pieceMap.put('E', 1);
         pieceMap.put('A', 1);
         pieceMap.put('O', 1);
