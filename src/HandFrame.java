@@ -58,6 +58,6 @@ public class HandFrame extends JPanel implements ScrabbleView{
         hand.addPieces(bag.grabPieces(7));
         JFrame fream = new JFrame();
         fream.add(new HandFrame(hand));
-        fream.setVisible(true);
+        fream.setVisible(true); // edit
     }
 }
