@@ -70,7 +70,9 @@ public class ScrabbleGame {
 
         updateStatus();
 
-        for (ScrabbleView v: views) { v.update(x, y, selectedPiece);}
+
+        for (ScrabbleView v: views) { v.updateHandFrame(x, y, selectedPiece);}
+        for (ScrabbleView v: views) { v.updateInfoPanel(player1Score, player2Score, bag);}
 
         changeTurn();
     }

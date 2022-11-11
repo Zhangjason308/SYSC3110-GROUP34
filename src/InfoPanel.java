@@ -6,6 +6,11 @@ public class InfoPanel extends JPanel{
     private JLabel playerTwo;
     private JLabel playerOneScore;
     private JLabel playerTwoScore;
+
+    private int tilesLeft;
+    private int p1ActualScore;
+    private int p2ActualScore;
+
     public InfoPanel(){
         super();
         this.setSize(400, 500);
@@ -16,7 +21,7 @@ public class InfoPanel extends JPanel{
         gbc.gridy = 0;
         gbc.gridwidth = 3;
         gbc.gridheight = 1;
-        tilesLeftLabel = new JLabel("20");
+        tilesLeftLabel = new JLabel(String.valueOf(tilesLeft));
         add(tilesLeftLabel, gbc);
 
         gbc.gridx = 0;
@@ -37,21 +42,23 @@ public class InfoPanel extends JPanel{
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
-        playerOneScore = new JLabel("100");
+        playerOneScore = new JLabel(String.valueOf(p1ActualScore));
         add(playerOneScore, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
         gbc.gridheight = 1;
-        playerTwoScore = new JLabel("200");
+        playerTwoScore = new JLabel(String.valueOf(p2ActualScore));
         add(playerTwoScore, gbc);
 
         setVisible(true);
 
     }
-    public void update(Game.Player p1, Game.Player p2, Bag baggy) {
-
+    public void updatePanel(Game.Player p1, Game.Player p2, Bag baggy) {
+        p1ActualScore = p1.score;
+        p2ActualScore = p2.score;
+        tilesLeft = baggy.numberOfRemainingPieces();
     }
 
     public static void main(String[] args) {
