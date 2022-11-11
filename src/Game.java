@@ -111,7 +111,7 @@ public class Game {
     //if (placedPiece.get(0).x == placedPiece.get(1).x) //then its a vertical word...
     // for (InputData d: placedPieces) { For each letter placed -> findFirstLetter() -> findWordInLine() -> findWords() -> finds main word as String, finds sub words as Stirng[] then checks isValidWord()
 
-    //1. parsedata from inputWord into arraylist<inputData> pieceData
+    //1. parse data from inputWord into arraylist<inputData> pieceData
     //2. Check if pieceData has length 1, if so, just get vertical and horizontal word
     //3. If multiple inputted Data, Get the first piece inputted, aka. first InputData
     //4. Check if the next piece has the same x coordinate or y coordinate
