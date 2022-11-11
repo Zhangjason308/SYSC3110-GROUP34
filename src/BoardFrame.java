@@ -34,7 +34,7 @@ public class BoardFrame extends JPanel {
                                 hand.remove(hand.getSelectedButton());
                                 hand.setSelectedButton(null);
                             }
-                                if (b.getText() != " ") {
+                                if (b.getText() != " ") { // change test
                                     System.out.println("Deselected Button: " + b.getText());
                                     //b.setText("");
                                     hand.add(new JButton(b.getText()));
