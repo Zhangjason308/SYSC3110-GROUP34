@@ -20,6 +20,7 @@ public class ScrabbleFrame extends JFrame implements ScrabbleView {
         this.setSize(500,500);
         boardF.setSize(100,100);
         gameButtonF.setSize(100,100);
+
         this.setVisible(true);
 
     }
