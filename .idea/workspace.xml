@@ -5,6 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BoardFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoardFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HandFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HandFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScrabbleFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScrabbleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

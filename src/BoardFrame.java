@@ -25,7 +25,7 @@ public class BoardFrame extends JPanel {
 
                 b.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {//gonna have to embed this inside hand actoinperformed so that
+                    public void actionPerformed(ActionEvent e) {//gonna have to embed this inside hand actionperformed so that
                                                                 // it places the letter on the board only if you click a letter in the hand
                         if (hand.getSelectedButton() != null) {
                             if (b.getText() == " ") {
