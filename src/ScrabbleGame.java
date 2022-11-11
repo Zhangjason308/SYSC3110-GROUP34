@@ -26,11 +26,13 @@ public class ScrabbleGame {
     public ScrabbleGame() {
         // initializing game elements
         status = Status.UNDECIDED;
-        player1Score = 0;
-        player2Score = 0;
+        player1Score = 1;
+        player2Score = 1;
         bag = new Bag();
         player1Hand = new Hand();
         player2Hand = new Hand();
+        player1Hand.addPieces(bag.grabPieces(7));
+        player2Hand.addPieces(bag.grabPieces(7));
         scrabbleBoard = new Board();
         turn = player1;
         views = new ArrayList<>();
@@ -49,9 +51,15 @@ public class ScrabbleGame {
 
     public boolean getTurn() {return turn;}
 
+    /*
+   Update the player score after play button is selected
+   Update the hand with new pieces after the swap button is selected
+   Update the player turn after skip, play, and swap are selected
+    */
     private void updateStatus() {
         return; //TODO
     }
+
 
     public Piece setSelectedPiece(Piece p){
         return selectedPiece = p;

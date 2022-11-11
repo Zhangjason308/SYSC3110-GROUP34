@@ -62,13 +62,6 @@ public class HandFrame extends JPanel implements ScrabbleView{
     public Hand getHand() {
         return model;
     }
-    @Override
-    public void update(int x, int y, Piece selectedPiece) {
-        // to update hand needs a reference to the actionCommand of the button pressed
-
-        Hand hand = new Hand(); // this will need to be passed as a parameter (added to so code will work for now)
-        buttons[x].setText(Character.toString(selectedPiece.getLetter()));
-    }
 
     public static void main(String args[]) {
 
@@ -78,5 +71,18 @@ public class HandFrame extends JPanel implements ScrabbleView{
         JFrame fream = new JFrame();
         fream.add(new HandFrame(hand));
         fream.setVisible(true); // edit
+    }
+
+    @Override
+    public void updateHandFrame(int x, int y, Piece selectedPiece) {
+        // to update hand needs a reference to the actionCommand of the button pressed
+
+        Hand hand = new Hand(); // this will need to be passed as a parameter (added to so code will work for now)
+        buttons[x].setText(Character.toString(selectedPiece.getLetter()));
+    }
+
+    @Override
+    public void updateInfoPanel(int p1, int p2, Bag baggy) {
+
     }
 }
