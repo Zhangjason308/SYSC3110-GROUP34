@@ -13,6 +13,7 @@ public class ScrabbleController implements ActionListener{
         String[] input = e.getActionCommand().split(" ");
         int x = Integer.parseInt(input[0]);
         int y = Integer.parseInt(input[1]);
-        model.play(x,y);//welp
+
+        model.play(x,y);
     }
 }
