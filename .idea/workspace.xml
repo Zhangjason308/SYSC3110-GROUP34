@@ -6,12 +6,15 @@
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/BoardFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BoardFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HandFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HandFrame.java" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InfoPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ScrabbleFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ScrabbleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleGame.java" afterDir="false" />
 =======
       <change beforePath="$PROJECT_DIR$/src/GameButtonFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameButtonFrame.java" afterDir="false" />
 >>>>>>> 1719015e0f18dd581d0ea2db0fbfdbc1c52d1fe5
+=======
+>>>>>>> parent of de749c4 (Jason - add minor changes)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

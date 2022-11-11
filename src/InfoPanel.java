@@ -55,7 +55,7 @@ public class InfoPanel extends JPanel{
         setVisible(true);
 
     }
-    public void updateInfoPanel(Game.Player p1, Game.Player p2, Bag baggy) {
+    public void updatePanel(Game.Player p1, Game.Player p2, Bag baggy) {
         p1ActualScore = p1.score;
         p2ActualScore = p2.score;
         tilesLeft = baggy.numberOfRemainingPieces();
