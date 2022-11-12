@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class ScrabbleGame {
    Update the player turn after skip, play, and swap are selected
     */
     private void updateStatus() {
-        return; //TODO
+
     }
 
 
@@ -66,15 +67,21 @@ public class ScrabbleGame {
     }
 
     public void play(int x, int y) {
-        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
-            System.out.println("no piece is selected to place at position: " + x + ", " + y);
-            return;
-        }
-        else{
-            if (scrabbleBoard.getPiece(x, y).getLetter() == ' '){  // places the selected piece on the board
-                //scrabbleBoard.placePiece(x, y, selectedPiece);
-            }
-        }
+            //for ()
+               // x = selButtons.get(i).getActionCommand();
+               // y = selButtons.get(i).getActionCommand();
+               // scrabbleBoard.placePiece(x,y,Piece);
+            //for ()
+            changeTurn();
+//        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
+//            System.out.println("no piece is selected to place at position: " + x + ", " + y);
+//            return;
+//        }
+//        else{
+//            if (scrabbleBoard.getPiece(x, y).getLetter() == ' '){  // places the selected piece on the board
+//                //scrabbleBoard.placePiece(x, y, selectedPiece);
+//            }
+
 
         updateStatus();
 
