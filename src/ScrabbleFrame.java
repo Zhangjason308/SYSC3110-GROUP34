@@ -10,7 +10,7 @@ public class ScrabbleFrame extends JFrame implements ScrabbleView {
         //Hand hand = new Hand();
         HandFrame handF = new HandFrame(model.player1Hand);
         BoardFrame boardF = new BoardFrame(model.scrabbleBoard, handF);
-        GameButtonFrame gameButtonF = new GameButtonFrame();
+        GameButtonFrame gameButtonF = new GameButtonFrame(model);
         JTextArea gameName = new JTextArea("SCRABBLE"); //Make it have an actionlistener to change player everytime
         //gameName.setAlignmentX();
         InfoPanel infoP = new InfoPanel();
