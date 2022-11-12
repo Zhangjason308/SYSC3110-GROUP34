@@ -41,7 +41,7 @@ public class BoardFrame extends JPanel {
                                 for (int i = 0; i < selectedPieces.size(); i++) {
                                     if (hand.getHand().getHandPieces().get(i) == selectedPieces.get(i)) {
                                         hand.getHand().getHandPieces().remove(i);
-                                    }
+                                    }//make copy of hand and remove from hand
                                 }
                                 hand.remove(hand.getSelectedButton()); // remove the selected button from handframe
                                 hand.setSelectedButton(null); // make the selectedButton empty once you place it on board
@@ -78,8 +78,8 @@ public class BoardFrame extends JPanel {
                                 if (selectedButtons.get(i).getText() == b.getText()){
                                     System.out.println("Deselected Button: " + b.getText());
                                     hand.add(new JButton(b.getText())); // add button to back of Handframe
+                                    hand.getHand().getHandPieces().remove(new Piece(b.getText().charAt(0)));
                                     b.setText(" "); //set the button to empty text
-                                    hand.getHand().getHandPieces().remove(new Piece('a'));
                                     selectedButtons.remove(b);
                                     hand.setSelectedButton(null);
                                 }

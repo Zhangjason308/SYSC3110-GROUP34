@@ -69,7 +69,7 @@ public class ScrabbleGame {
             if (scrabbleBoard.getPiece(x,y).getLetter() == ' '){
                 System.out.println("No piece has been played");
             }
-            for ()
+            //for ()
             changeTurn();
 //        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
 //            System.out.println("no piece is selected to place at position: " + x + ", " + y);
