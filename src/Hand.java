@@ -13,7 +13,7 @@ public class Hand{
     }
 
     public void addPiece(Piece piece){
-        if(pieces.size() <= 7){
+        if(pieces.size() < 7){
             this.pieces.add(piece);
         }
     }

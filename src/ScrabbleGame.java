@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,9 +67,10 @@ public class ScrabbleGame {
     }
 
     public void play(int x, int y) {
-            if (scrabbleBoard.getPiece(x,y).getLetter() == ' '){
-                System.out.println("No piece has been played");
-            }
+            //for ()
+               // x = selButtons.get(i).getActionCommand();
+               // y = selButtons.get(i).getActionCommand();
+               // scrabbleBoard.placePiece(x,y,Piece);
             //for ()
             changeTurn();
 //        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it

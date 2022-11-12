@@ -34,15 +34,21 @@ public class BoardFrame extends JPanel {
                                 //***Ideally want to set this button to the button from HandFrame
                                 //*** But b = hand.getSelectedButton() does not work
                                 selectedButtons.add(hand.getSelectedButton()); // keep track of all buttons selected
-                                selectedPieces.add(hand.getHand().getHandPieces().get(hand.getSelectedPieceIndex())); //succesfully adds the correct piece to selectedPieces
+                                selectedPieces.add(new Piece(hand.getSelectedButton().getText().charAt(0))); //succesfully adds the correct piece to selectedPieces
                                 //Need to change this later so that once you add a piece onto the board, it removes the piece
                                 //from the hand. Currently only removes from the handFrame
                                 //Have issues indexing the the hand arraylist while removing items
-                                for (int i = 0; i < selectedPieces.size(); i++) {
-                                    if (hand.getHand().getHandPieces().get(i) == selectedPieces.get(i)) {
-                                        hand.getHand().getHandPieces().remove(i);
-                                    }//make copy of hand and remove from hand
+                                System.out.println(selectedPieces.size());
+                                System.out.println(selectedPieces.get(0).getLetter());
+                                for (int j=0; j < hand.getHand().getHandPieces().size(); j++) {
+                                        if (hand.getHand().getHandPieces().get(j).equals(selectedPieces.get(selectedPieces.size()-1))) {
+                                            hand.getHand().removePiece(j);
+                                            System.out.println("somehow got here");
+                                            break;
+                                        }//make copy of hand and remove from hand
+
                                 }
+//
                                 hand.remove(hand.getSelectedButton()); // remove the selected button from handframe
                                 hand.setSelectedButton(null); // make the selectedButton empty once you place it on board
                             }
@@ -74,14 +80,32 @@ public class BoardFrame extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (b.getText() != " ") { // Makes sure you select a button that is not empty
-                            for (int i = 0; i < selectedButtons.size(); i++ ){ //makes sure the button youre removing is the one you added
+                            for (int i = 0; i < selectedButtons.size(); i++ ){ //makes sure the button you're removing is the one you added
                                 if (selectedButtons.get(i).getText() == b.getText()){
                                     System.out.println("Deselected Button: " + b.getText());
-                                    hand.add(new JButton(b.getText())); // add button to back of Handframe
-                                    hand.getHand().getHandPieces().remove(new Piece(b.getText().charAt(0)));
+                                    JButton newB = new JButton(b.getText());
+                                    newB.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            hand.setSelectedButton(newB);
+                                        }
+                                    });
+                                    hand.add(newB); // add button to back of Handframe
+
+                                    hand.getHand().addPiece(new Piece(b.getText().charAt(0)));
+                                    int count = 0;
+                                    for (JButton selB : selectedButtons) {
+                                        if (selB.getText() == b.getText()) {
+                                            selectedButtons.remove(count);
+                                            selectedPieces.remove(count);
+                                            break;
+                                        }
+                                        count++;
+
+                                    }
                                     b.setText(" "); //set the button to empty text
-                                    selectedButtons.remove(b);
                                     hand.setSelectedButton(null);
+                                    //we got to remove from selectedButtons and selectedPieces
                                 }
                             }
 
