@@ -8,9 +8,12 @@ public class GameButtonFrame extends JPanel implements ActionListener {
     JButton skip;
     JButton swap; //
     ScrabbleGame game;
-    public GameButtonFrame(ScrabbleGame game) {
+
+    Game g;
+    public GameButtonFrame(ScrabbleGame game, Game g) {
         super();
         this.game = game;
+        this.g = g;
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setSize(600,500);
          play = new JButton("Play");
@@ -48,12 +51,14 @@ public class GameButtonFrame extends JPanel implements ActionListener {
                 //to be changed later
             }
             else if(button == skip){
-                //game.skip();
+                g.skip();
                 
             }
 
             else if(button == swap){
-                // game.swap();
+                String x = "temp";
+                g.swap(x);
+                //to be changed later
 
             }
         }
