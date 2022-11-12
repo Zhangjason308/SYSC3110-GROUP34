@@ -57,7 +57,7 @@ public class ScrabbleGame {
    Update the player turn after skip, play, and swap are selected
     */
     private void updateStatus() {
-        return; //TODO
+
     }
 
 
@@ -66,15 +66,20 @@ public class ScrabbleGame {
     }
 
     public void play(int x, int y) {
-        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
-            System.out.println("no piece is selected to place at position: " + x + ", " + y);
-            return;
-        }
-        else{
-            if (scrabbleBoard.getPiece(x, y).getLetter() == ' '){  // places the selected piece on the board
-                //scrabbleBoard.placePiece(x, y, selectedPiece);
+            if (scrabbleBoard.getPiece(x,y).getLetter() == ' '){
+                System.out.println("No piece has been played");
             }
-        }
+            for ()
+            changeTurn();
+//        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
+//            System.out.println("no piece is selected to place at position: " + x + ", " + y);
+//            return;
+//        }
+//        else{
+//            if (scrabbleBoard.getPiece(x, y).getLetter() == ' '){  // places the selected piece on the board
+//                //scrabbleBoard.placePiece(x, y, selectedPiece);
+//            }
+
 
         updateStatus();
 
