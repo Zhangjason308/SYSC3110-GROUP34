@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class GameButtonFrame extends JPanel implements ActionListener {
     JButton play;
     JButton skip;
-    JButton swap;
+    JButton swap; //
     ScrabbleGame game;
     public GameButtonFrame(ScrabbleGame game) {
         super();
