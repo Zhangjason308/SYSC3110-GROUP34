@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class HandFrame extends JPanel implements ScrabbleView{
     private JButton[] buttons;
     private JButton selectedButton;
+    private int selectedPieceIndex;
     private Hand model;
     //public ArrayList<JButton> selectedButtons = new ArrayList<>();
     public HandFrame(Hand model) {
@@ -38,6 +39,7 @@ public class HandFrame extends JPanel implements ScrabbleView{
                     // these are the 1x7 buttons in the hand
                     // they need to add the piece associated to the hand to the selectedPiece variable
                     setSelectedButton(b);
+                    setSelectedPieceIndex(Integer.parseInt(b.getActionCommand()));
                     //selectedButtons.add(b);
                 }
             });
@@ -51,6 +53,13 @@ public class HandFrame extends JPanel implements ScrabbleView{
         }
         this.setVisible(true); // add a new set of buttons for hand, and change visibility of hand based on players turn (they overlap if thats possible)
     }
+    public void setSelectedPieceIndex(int spi) {
+        selectedPieceIndex = spi;
+    }
+
+    public int getSelectedPieceIndex() {
+        return selectedPieceIndex;
+    }
     public JButton getSelectedButton(){
         return selectedButton;
     }
@@ -62,13 +71,6 @@ public class HandFrame extends JPanel implements ScrabbleView{
     public Hand getHand() {
         return model;
     }
-    @Override
-    public void update(int x, int y, Piece selectedPiece) {
-        // to update hand needs a reference to the actionCommand of the button pressed
-
-        Hand hand = new Hand(); // this will need to be passed as a parameter (added to so code will work for now)
-        buttons[x].setText(Character.toString(selectedPiece.getLetter()));
-    }
 
     public static void main(String args[]) {
 
@@ -78,5 +80,18 @@ public class HandFrame extends JPanel implements ScrabbleView{
         JFrame fream = new JFrame();
         fream.add(new HandFrame(hand));
         fream.setVisible(true); // edit
+    }
+
+    @Override
+    public void updateHandFrame(int x, int y, Piece selectedPiece) {
+        // to update hand needs a reference to the actionCommand of the button pressed
+
+        Hand hand = new Hand(); // this will need to be passed as a parameter (added to so code will work for now)
+        buttons[x].setText(Character.toString(selectedPiece.getLetter()));
+    }
+
+    @Override
+    public void updateInfoPanel(int p1, int p2, Bag baggy) {
+
     }
 }
