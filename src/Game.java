@@ -47,7 +47,7 @@ public class Game {
 
     /************************** Process Commands **************************/
 
-    private void skip(){ //need to add logic to switch turns
+    public void skip(){ //need to add logic to switch turns
         nextTurn();
         System.out.println("skip ran");
     }
@@ -69,7 +69,7 @@ public class Game {
     // arrOfInput = ['a','a','z']
     // p1.hand = (a,b,c,d,e,f,a)
     // copy.hand = (b,c,d,e,f)
-    private void swap(String letters) { //ex: inputWord = "aab"
+    public void swap(String letters) { //ex: inputWord = "aab"
         if (isP1turn) {
             p1.hand = swapWithHand(p1.hand, letters);
             refillHand(p1.hand);
