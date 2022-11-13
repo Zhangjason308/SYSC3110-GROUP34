@@ -16,14 +16,13 @@ public class ScrabbleControllerTest {
 
     @Test
     public void lettersAreInLine() {
-        bool = new boolean[2];
         testGame = new ScrabbleGame();
         testController = new ScrabbleController(testGame);
         testBoard = new Board();
-        SelectionData d1 = new SelectionData(1,2, new Piece('h'));
-        SelectionData d2 = new SelectionData(1,3, new Piece('a'));
-        SelectionData d3 = new SelectionData(1,4, new Piece('b'));
-        SelectionData d4 = new SelectionData(1,5, new Piece('c'));
+        SelectionData d1 = new SelectionData(1,1, new Piece('h'));
+        SelectionData d2 = new SelectionData(1,2, new Piece('a'));
+        SelectionData d3 = new SelectionData(1,3, new Piece('b'));
+        SelectionData d4 = new SelectionData(1,4, new Piece('c'));
 
         testBoard.placePiece(d1);
         testController.addToSelectedBoardButtonsForTesting(d1);
@@ -34,19 +33,17 @@ public class ScrabbleControllerTest {
         testBoard.placePiece(d4);
         testController.addToSelectedBoardButtonsForTesting(d4);
 
-        bool[0] = true;
-        bool[1] = false;
-        assertEquals(testController.lettersAreInLine(), bool);
+        assertTrue(testController.lettersAreInLine()[0]);
+        assertTrue(testController.lettersAreInLine()[1]);
 
 
-        bool = new boolean[2];
         testGame = new ScrabbleGame();
         testController = new ScrabbleController(testGame);
         testBoard = new Board();
         d1 = new SelectionData(1,1, new Piece('h'));
         d2 = new SelectionData(2,1, new Piece('a'));
-        d3 = new SelectionData(2,1, new Piece('b'));
-        d4 = new SelectionData(2,1, new Piece('c'));
+        d3 = new SelectionData(3,1, new Piece('b'));
+        d4 = new SelectionData(4,1, new Piece('c'));
 
         testBoard.placePiece(d1);
         testController.addToSelectedBoardButtonsForTesting(d1);
@@ -57,12 +54,10 @@ public class ScrabbleControllerTest {
         testBoard.placePiece(d4);
         testController.addToSelectedBoardButtonsForTesting(d4);
 
-        bool[0] = false;
-        bool[1] = true;
-        assertEquals(testController.lettersAreInLine(), bool);
+        assertTrue(testController.lettersAreInLine()[0]);
+        assertFalse(testController.lettersAreInLine()[1]);
 
 
-        bool = new boolean[2];
         testGame = new ScrabbleGame();
         testController = new ScrabbleController(testGame);
         testBoard = new Board();
@@ -80,9 +75,8 @@ public class ScrabbleControllerTest {
         testBoard.placePiece(d4);
         testController.addToSelectedBoardButtonsForTesting(d4);
 
-        bool[0] = false;
-        bool[1] = false;
-        assertEquals(testController.lettersAreInLine(), bool);
+        assertFalse(testController.lettersAreInLine()[0]);
+        assertFalse(testController.lettersAreInLine()[1]);
 
 
     }
