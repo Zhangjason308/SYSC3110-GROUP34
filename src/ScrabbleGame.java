@@ -41,7 +41,7 @@ public class ScrabbleGame {
         views.add(v);
     }
 
-    private void changeTurn() {
+    public void changeTurn() {
         if(turn == player1){
             turn = player2;
         }
