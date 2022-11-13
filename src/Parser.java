@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 
 public class Parser
@@ -76,11 +75,11 @@ public class Parser
         return arrOfStr;
     }
 
-    public ArrayList<InputData> parsePieceData(String pieceInfo){
-        ArrayList<InputData> pieceData = new ArrayList<InputData>();
+    public ArrayList<SelectionData> parsePieceData(String pieceInfo){
+        ArrayList<SelectionData> pieceData = new ArrayList<SelectionData>();
         String[] parsedInputWord = parseInputWord(pieceInfo);
         for (int i = 0 ; i < parsedInputWord.length; i++){
-            InputData d = new InputData(parsedInputWord[i]);
+            SelectionData d = new SelectionData(parsedInputWord[i]);
             pieceData.add(d);
             System.out.println(pieceData.get(i).getPiece().getLetter() + " " + pieceData.get(i).getx() + " " + pieceData.get(i).gety());
         }
