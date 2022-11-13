@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.PortUnreachableException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ScrabbleController implements ActionListener {
@@ -23,6 +27,30 @@ public class ScrabbleController implements ActionListener {
     public boolean lettersAreInLine(ArrayList<SelectionData> data) {
         //for each SelectionData in ArrayList, continue if x or y is the same, return false if not
         return true;
+    }
+
+    private boolean isValidWord(String word) throws IOException {  // this function works as is
+
+        Path path = Path.of("src\\Dictionary.txt");
+        String dictionary = Files.readString(path);
+        String[] temp = dictionary.split("\n");
+
+        for (String s : temp) {
+            String str = s.trim();
+            if(str.compareTo(word) == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int calculateScore(String s){
+        char[] arr = s.toCharArray();
+        int score = 0;
+        for(char c : arr){
+            score += Piece.pieceMap.get(c);
+        }
+        return score;
     }
 
     private void revertSelections(){
@@ -54,22 +82,26 @@ public class ScrabbleController implements ActionListener {
             String[] input = button.getActionCommand().split(" ");
 
             if(button.getText() == "Play"){
-               /* if (lettersAreInLine(selectedBoardButtons)){ // all x or y indexes are same
+                if (lettersAreInLine(selectedBoardButtons)){ // all x or y indexes are same
                     String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
                     String[] branches = getBranchWords();
                     int score = 0;
-                    if(isValidWord(word)){
-                        for (String s : branches) {
-                            if(!(isValidWord(s))){
-                                System.out.println("Invalid word: " + s);
-                                revertSelections();
-                                score = 0;
-                                break;
-                            }
-                            else{
-                                score += calculateScore(s);
+                    try {
+                        if(isValidWord(word)){
+                            for (String s : branches) {
+                                if(!(isValidWord(s))){
+                                    System.out.println("Invalid word: " + s);
+                                    revertSelections();
+                                    score = 0;
+                                    break;
+                                }
+                                else{
+                                    score += calculateScore(s);
+                                }
                             }
                         }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
                     if(score == 0){
                         System.out.println("invalid word");
@@ -82,7 +114,7 @@ public class ScrabbleController implements ActionListener {
                 else{
                     System.out.println("Invalid Placements");
                     revertSelections();
-                }*/
+                }
 
             }
             else if(button.getText() == "Skip"){
