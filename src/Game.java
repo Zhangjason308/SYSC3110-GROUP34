@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -127,11 +126,11 @@ public class Game {
         int x = 0;
         int y = 0;
         Set<String> wordSet = new HashSet<>();
-        ArrayList<InputData> pieceData = parser.parsePieceData(inputWord);
-        for (InputData c: pieceData) {
+        ArrayList<SelectionData> pieceData = parser.parsePieceData(inputWord);
+        for (SelectionData c: pieceData) {
             scrabbleBoard.placePiece(c);
         }
-        for (InputData d : pieceData) { // vertical word
+        for (SelectionData d : pieceData) { // vertical word
             String wordy = "";
             x = d.getx();
             y = d.gety();
@@ -148,7 +147,7 @@ public class Game {
         }
         System.out.println("Vertical Words: " + wordSet);
 
-        for (InputData d : pieceData) { // horizontal word
+        for (SelectionData d : pieceData) { // horizontal word
             String wordx = "";
             x = d.getx();
             y = d.gety();

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Board {
 
     public static final int SIZE = 15;
@@ -18,7 +16,7 @@ public class Board {
         return arr[x][y];
     }
 
-    public void placePiece(InputData d) {
+    public void placePiece(SelectionData d) {
         if(arr[d.getx()][d.gety()].getLetter() == (' ')){
             arr[d.getx()][d.gety()] = d.getPiece();
         }
@@ -91,10 +89,10 @@ public class Board {
 
     public static void main(String args[]) {
         Board board1 = new Board();
-        InputData d1 = new InputData("t_1_2");
-        InputData d2 = new InputData("h_1_3");
-        InputData d3 = new InputData("e_1_4");
-        InputData d4 = new InputData("e_1_3");
+        SelectionData d1 = new SelectionData("t_1_2");
+        SelectionData d2 = new SelectionData("h_1_3");
+        SelectionData d3 = new SelectionData("e_1_4");
+        SelectionData d4 = new SelectionData("e_1_3");
         board1.placePiece(d1);
         board1.placePiece(d2);
         board1.placePiece(d3);
