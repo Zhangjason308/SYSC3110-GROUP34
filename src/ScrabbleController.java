@@ -24,24 +24,107 @@ public class ScrabbleController implements ActionListener {
         selectedHandButtons = new ArrayList<>();
     }
 
-    public boolean lettersAreInLine() {
-        int xCoord = selectedBoardButtons.get(0).getX();
-        int yCoord = selectedBoardButtons.get(0).getY();
-        int xCount = 0;
-        int yCount = 0;
-                    // ,,m(0,1)a(1,1)t(2,1)
-        for (int i = 1; i< selectedBoardButtons.size(); i++) {
-            if (selectedBoardButtons.get(i).getX() != xCoord) {  // if x coord is not same, then y coord must be same and must be horizontal word
-                if (selected)
+    public boolean[] lettersAreInLine() {
+
+        boolean xAligned = true;
+        boolean yAligned = true;
+
+        SelectionData previous = null;
+
+        for (SelectionData sd : selectedBoardButtons) {
+            if(previous == null){
+                previous = sd;
+                continue;
+            }
+            if(sd.getX() == previous.getX()){
+                previous = sd;
+            }
+            else {
+                xAligned = false;
+            }
+            if(sd.getY() == previous.getY()){
+                previous = sd;
+            }
+            else {
+                yAligned = false;
             }
         }
-        for (int i = 1; i< selectedBoardButtons.size(); i++) {
-            if (selectedBoardButtons.get(i).getY() != yCoord) {  // if x coord is not same, then y coord must be same and must be horizontal word
-                return false;
+        boolean[] booleans = new boolean[2];
+        booleans[0] = xAligned;
+        booleans[1] = yAligned;
+        return booleans;
+    }
+
+    private String[] getBranchWords(){
+
+    }
+
+    private String getWord(){
+
+        int smallestIndex = ScrabbleGame.SIZE;
+        int largestIndex = 0;
+        int associatedCoordinate = 0;
+        for (SelectionData sd : selectedBoardButtons) {
+            if(isXAligned()){
+                if(sd.getX() < smallestIndex){
+                    smallestIndex = sd.getY();
+                }
+                if(sd.getX() > largestIndex){
+                    largestIndex = sd.getY();
+                }
+                associatedCoordinate = sd.getX();
+            }
+            else {
+                if(sd.getY() < smallestIndex){
+                    smallestIndex = sd.getX();
+                }
+                if(sd.getY() > largestIndex){
+                    largestIndex = sd.getX();
+                }
+                associatedCoordinate = sd.getY();
             }
         }
-        //for each SelectionData in ArrayList, continue if x or y is the same, return false if not
-        return true;
+        String out = "";
+        int i = smallestIndex;
+        if(isXAligned()){
+            while(model.getBoard().getPiece(associatedCoordinate, i).getLetter() != ' '){
+                if(i != 0){
+                    i--;
+                }
+                else {
+                    smallestIndex = 0;
+                }
+            }
+
+            while(model.getBoard().getPiece(associatedCoordinate, i + 1).getLetter() != ' '){ // while next piece is not ' ' continue
+                // add to out and check for holes in selected letters (theyre on the board)
+            }
+        }
+        else if(isYAligned(){
+            while(model.getBoard().getPiece(i, associatedCoordinate).getLetter() != ' '){
+                if(i != 0){
+                    smallestIndex = i;
+                    i--;
+                }
+                else {
+                    smallestIndex = 0;
+                }
+            }
+
+            while(){ // while next piece is not ' ' continue
+
+            }
+        }
+
+        return out;
+    }
+    private boolean isXAligned(){
+        boolean[] bool = lettersAreInLine();
+        return bool[0];
+    }
+    private boolean isYAligned(){
+        boolean[] bool = lettersAreInLine();
+        return bool[1];
     }
 
     private boolean isValidWord(String word) throws IOException {  // this function works as is
@@ -98,11 +181,9 @@ public class ScrabbleController implements ActionListener {
 
             if(button.getText() == "Play"){
 
-                if (lettersAreInLine()){ // all x or y indexes are same
+                if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
-                if (lettersAreInLine(selectedBoardButtons)){ // all x or y indexes are same
-
-                    String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
+                    String word = getWord(); //gets the word (including the letters in potential spaces)
                     String[] branches = getBranchWords();
                     int score = 0;
                     try {
