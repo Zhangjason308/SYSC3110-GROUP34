@@ -192,6 +192,27 @@ public class ScrabbleControllerTest {
     }
 
     @Test
+    public void revertSelections() {
+        testGame = new ScrabbleGame();
+        testController = new ScrabbleController(testGame);
+        testBoard = new Board();
+        SelectionData d1 = new SelectionData(1,2, new Piece('l'));
+        SelectionData d2 = new SelectionData(1,3, new Piece('e'));
+        SelectionData d3 = new SelectionData(1,4, new Piece('a'));
+        SelectionData d4 = new SelectionData(1,5, new Piece('n'));
+
+        testBoard.placePiece(d1);
+        testController.addToSelectedBoardButtonsForTesting(d1);
+        testBoard.placePiece(d2);
+        testController.addToSelectedBoardButtonsForTesting(d2);
+        testController.addToSelectedHandButtonsForTesting(d3);
+        testController.addToSelectedHandButtonsForTesting(d4);
+        testController.getWord();
+        assertTrue(testController.getSelectedBoardButtonsForTesting().isEmpty());
+        assertTrue(testController.getSelectedHandButtonsForTesting().isEmpty());
+    }
+
+    @Test
     public void actionPerformed() {
 
     }

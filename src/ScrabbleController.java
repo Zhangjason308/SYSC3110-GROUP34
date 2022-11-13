@@ -291,8 +291,20 @@ public class ScrabbleController implements ActionListener {
             }
         }
     }
+    public ArrayList<SelectionData> getSelectedBoardButtonsForTesting() {
+        return selectedBoardButtons;
+    }
+
+    public ArrayList<SelectionData> getSelectedHandButtonsForTesting(){
+        return selectedHandButtons;
+    }
+
     //function is ONLY USED FOR TESTING PURPOSES pog
     public void addToSelectedBoardButtonsForTesting(SelectionData sd) {
         selectedBoardButtons.add(sd);
+    }
+
+    public void addToSelectedHandButtonsForTesting(SelectionData sd){
+        selectedHandButtons.add(sd);
     }
 }
