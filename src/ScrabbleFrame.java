@@ -7,6 +7,7 @@ public class ScrabbleFrame extends JFrame {
         super("Scrabble");
         ScrabbleGame model = new ScrabbleGame();
         ScrabbleController sc = new ScrabbleController(model);
+        HandPanel handPanel = new HandPanel(sc);
         BoardPanel boardPanel = new BoardPanel(sc);
         GameButtonPanel gameButtonPanel = new GameButtonPanel(sc);
         InfoPanel infoPanel = new InfoPanel();
