@@ -62,7 +62,7 @@ public class ScrabbleController implements ActionListener {
 
     }
 
-    private String getWord(){
+    public String getWord(){
 
         int smallestIndex = ScrabbleGame.SIZE;
         int largestIndex = 0;
@@ -290,5 +290,9 @@ public class ScrabbleController implements ActionListener {
                 model.updateViews();
             }
         }
+    }
+    //function is ONLY USED FOR TESTING PURPOSES pog
+    public void addToSelectedBoardButtonsForTesting(SelectionData sd) {
+        selectedBoardButtons.add(sd);
     }
 }
