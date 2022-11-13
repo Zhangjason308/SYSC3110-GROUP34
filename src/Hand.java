@@ -21,8 +21,9 @@ public class Hand{
         return this.pieces;
     }
 
+    public void setHandPieces(ArrayList<Piece> setTo){pieces = setTo;}
     public void addPieces(ArrayList<Piece> arr) {
-        if(sizeOfHand()<=7){  // check before pushing that this is an ok change
+        if(sizeOfHand()<7){  // check before pushing that this is an ok change
             for(Piece p : arr){
                 this.pieces.add(p);
             }
@@ -68,56 +69,6 @@ public class Hand{
         }
 
         return true;
-
-
-
-        /*
-        for (int i = 0; i < arrOfInput.length; i++) {
-            if (copy.contains(new Piece(arrOfInput[i]))) {
-                count++;
-                copy.remove(new Piece(arrOfInput[i]));
-            }
-        }
-        if (count == arrOfInput.length) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
-
-    /*
-       // String[] arrOfHand1 = (String[]) this.getHandPieces().toArray();
-        char[] arrOfInput = str.toCharArray();
-        ArrayList<Piece> copy = this.getHandPieces();
-
-        //for (char c : arrOfInput) {  // hand:"a b c d e f g"       input: "help" -> char[] = h, e, l, p
-            for (Piece p : this.getHandPieces()){
-                if (copy.contains(p)){
-                    copy.remove(p);
-
-                }
-                else{return false;}
-
-            }
-       // }
-        return true;
-/*
-        for (char Input : copy) {
-
-            int check = 0;
-            for(Piece Han : this.getHandPieces()){
-                if (Input == Character.toString(Han.getLetter())){
-
-                    Input = "";
-                    check = 1;
-                }
-            }
-            if (check == 0){
-                return false;
-            }
-        }
-        return true; */
-
     }
     public Piece removePiece(int i){
         return pieces.remove(i);
