@@ -55,6 +55,9 @@ public class ScrabbleController implements ActionListener {
         return booleans;
     }
 
+    private void wordIsConnected(){ // idk if its needed
+
+    }
     private String[] getBranchWords(){
 
     }
@@ -100,7 +103,7 @@ public class ScrabbleController implements ActionListener {
                 // add to out and check for holes in selected letters (theyre on the board)
             }
         }
-        else if(isYAligned(){
+        else if(isYAligned()){
             while(model.getBoard().getPiece(i, associatedCoordinate).getLetter() != ' '){
                 if(i != 0){
                     smallestIndex = i;
@@ -111,7 +114,7 @@ public class ScrabbleController implements ActionListener {
                 }
             }
 
-            while(){ // while next piece is not ' ' continue
+            while(true){ // while next piece is not ' ' continue
 
             }
         }
@@ -181,10 +184,11 @@ public class ScrabbleController implements ActionListener {
 
             if(button.getText() == "Play"){
 
+
                 if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
                     String word = getWord(); //gets the word (including the letters in potential spaces)
-                    String[] branches = getBranchWords();
+                    //String[] branches = getBranchWords();
                     int score = 0;
                     try {
                         if(isValidWord(word)){
