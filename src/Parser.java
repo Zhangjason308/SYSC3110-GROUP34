@@ -81,7 +81,7 @@ public class Parser
         for (int i = 0 ; i < parsedInputWord.length; i++){
             SelectionData d = new SelectionData(parsedInputWord[i]);
             pieceData.add(d);
-            System.out.println(pieceData.get(i).getPiece().getLetter() + " " + pieceData.get(i).getx() + " " + pieceData.get(i).gety());
+            System.out.println(pieceData.get(i).getPiece().getLetter() + " " + pieceData.get(i).getX() + " " + pieceData.get(i).getY());
         }
         return pieceData;
     }

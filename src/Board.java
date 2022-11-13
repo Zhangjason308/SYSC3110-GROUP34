@@ -17,9 +17,15 @@ public class Board {
     }
 
     public void placePiece(SelectionData d) {
-        if(arr[d.getx()][d.gety()].getLetter() == (' ')){
-            arr[d.getx()][d.gety()] = d.getPiece();
+        if(arr[d.getX()][d.getY()].getLetter() == (' ')){
+            arr[d.getX()][d.getY()] = d.getPiece();
         }
+    }
+
+    public Piece removePiece(int x, int y){
+        Piece p = arr[x][y];
+        arr[x][y] = new Piece(' ');
+        return p;
     }
 
     public String toString(){  // this function works as is

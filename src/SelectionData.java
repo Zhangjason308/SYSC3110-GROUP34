@@ -20,18 +20,18 @@ public class SelectionData {
         return p;
     }
 
-    public int getx(){
+    public int getX(){
         return x;
     }
 
-    public int gety(){
+    public int getY(){
         return y;
     }
 
     public static void main(String args[]) {
         SelectionData d = new SelectionData("t_11_12");
-        System.out.println(d.getx());
-        System.out.println(d.gety());
+        System.out.println(d.getX());
+        System.out.println(d.getY());
         System.out.println(d.getPiece().getLetter());
     }
 }

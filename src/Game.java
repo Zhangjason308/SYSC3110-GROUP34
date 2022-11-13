@@ -132,8 +132,8 @@ public class Game {
         }
         for (SelectionData d : pieceData) { // vertical word
             String wordy = "";
-            x = d.getx();
-            y = d.gety();
+            x = d.getX();
+            y = d.getY();
             while (scrabbleBoard.getPiece(x,y).getLetter() != ' ') {
                 y--;
             }
@@ -149,8 +149,8 @@ public class Game {
 
         for (SelectionData d : pieceData) { // horizontal word
             String wordx = "";
-            x = d.getx();
-            y = d.gety();
+            x = d.getX();
+            y = d.getY();
             while (scrabbleBoard.getPiece(x,y).getLetter() != ' ') {
                 x--;
             }
