@@ -36,5 +36,5 @@ public class ScrabbleFrame extends JFrame {
         new ScrabbleFrame();
     }
 
-    
+
 }
