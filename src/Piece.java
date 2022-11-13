@@ -1,7 +1,7 @@
 import java.util.HashMap;
 public class Piece {
     char piece;
-    private static final HashMap<Character, Integer> pieceMap = new HashMap<>();
+    public static final HashMap<Character, Integer> pieceMap = new HashMap<>();
     static {
         pieceMap.put('E', 1);
         pieceMap.put('A', 1);
