@@ -48,12 +48,12 @@ public class GameButtonFrame extends JPanel implements ActionListener {
                 //to be changed later
             }
             else if(button == skip){
-                //game.skip();
+                game.skip();
                 
             }
 
             else if(button == swap){
-                // game.swap();
+                game.swap();
 
             }
         }

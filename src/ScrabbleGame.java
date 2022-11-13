@@ -24,6 +24,13 @@ public class ScrabbleGame {
 
     private Piece selectedPiece;
 
+    // tracker arrays to hold the elements that were recently selected, might not need selectedBoardButtons
+    // i think selecting a handButton should add the button to this and then swap takes from this list, as does selecting a button on the baoard
+    private ArrayList<JButton> selectedHandButtons;
+
+    // selectedBoardButtons might be helpful in calculating score and finding if the word is valid
+    private ArrayList<JButton> selectedBoardButtons;
+
     public ScrabbleGame() {
         // initializing game elements
         status = Status.UNDECIDED;
@@ -57,22 +64,87 @@ public class ScrabbleGame {
    Update the hand with new pieces after the swap button is selected
    Update the player turn after skip, play, and swap are selected
     */
-    private void updateStatus() {
-
-    }
-
-
     public Piece setSelectedPiece(Piece p){
         return selectedPiece = p;
     }
+    private void updateStatus() {
+        if(endConditionIsMet()){
+            status = calculateWinner();
+        }else{
+            status = Status.UNDECIDED;
+        }
+    }
+    private boolean endConditionIsMet(){ //idk if this is what it should be, at very least its a placeholder
+        if((player1Hand.sizeOfHand() < 7 || player2Hand.sizeOfHand() < 7) && bag.numberOfRemainingPieces() <= 0){
+            return true;
+        }
+        return false;
+    }
 
-    public void play(int x, int y) {
+    private Status calculateWinner(){
+        if(player1Score == player2Score){
+            return Status.TIE;
+        }
+        return (player1Score > player2Score)? Status.PLAYER_1_WON: Status.PLAYER_2_WON;
+    }
+
+    public void skip(){
+        changeTurn();
+    }
+
+    public void swap(){
+        if(turn){
+            swapLettersFromHand(player1Hand);
+        }
+        else{
+            swapLettersFromHand(player2Hand);
+        }
+    }
+    private void swapLettersFromHand(Hand hand){ // only to be called in the swap function
+        ArrayList<Character> selectedHandButtonsAsChars = new ArrayList<>();
+        for (JButton b : selectedHandButtons) {
+            selectedHandButtonsAsChars.add(b.getText().charAt(0));
+        }
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for (char c : selectedHandButtonsAsChars) {
+            for (char c1 : hand.getHandAsChars()) {
+                if(c == c1){
+                    indexes.add(hand.getHandAsChars().indexOf(c));
+                }
+            }
+        }
+        for (int i : indexes) {
+            hand.removePiece(i);
+        }
+    }
+
+    public void play(int x, int y) {// dont think it needs the x and y
+        if(selectedBoardButtons.isEmpty()){
+            System.out.println("No selected Buttons");
+        }
+        else { // checking if valid word needs to be added and changeTurn is only updated if validWord
+            for (JButton b : selectedBoardButtons) {
+                String[] position = b.getActionCommand().split(" ");
+                int q = Integer.parseInt(position[0]);
+                int z = Integer.parseInt(position[1]);
+                Hand playerHand = (turn)? player1Hand : player2Hand;
+                InputData info = new InputData(q, z, playerHand.getPieceWithChar(b.getText().charAt(0)));
+                scrabbleBoard.placePiece(info);
+            }
+        }
+        updateStatus();
+
+        // need to alter the game updating logic: didnt know exactly how this should be done
+        for (ScrabbleView v: views) { v.updateHandFrame(x, y, selectedPiece);}
+        changeTurn();
+
+        // **************************** old code *****************************
             //for ()
                // x = selButtons.get(i).getActionCommand();
                // y = selButtons.get(i).getActionCommand();
                // scrabbleBoard.placePiece(x,y,Piece);
             //for ()
-            changeTurn();
+
 //        if(selectedPiece.getLetter() == ' '){  // need a way for the player to select a piece from their hand by clicking it
 //            System.out.println("no piece is selected to place at position: " + x + ", " + y);
 //            return;
@@ -83,13 +155,12 @@ public class ScrabbleGame {
 //            }
 
 
-        updateStatus();
+        //updateStatus();
 
+        //for (ScrabbleView v: views) { v.updateHandFrame(x, y, selectedPiece);}
+        //for (ScrabbleView v: views) { v.updateInfoPanel(player1Score, player2Score, bag);}
 
-        for (ScrabbleView v: views) { v.updateHandFrame(x, y, selectedPiece);}
-        for (ScrabbleView v: views) { v.updateInfoPanel(player1Score, player2Score, bag);}
-
-        changeTurn();
+        //changeTurn();
     }
 }
 

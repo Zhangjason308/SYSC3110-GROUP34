@@ -29,6 +29,24 @@ public class Hand{
         }
     }
 
+    public ArrayList<Character> getHandAsChars(){
+        ArrayList<Character> chars = new ArrayList<>();
+        for (Piece p : pieces) {
+            chars.add(p.getLetter());
+        }
+        return chars;
+    }
+
+    public Piece getPieceWithChar(char c){
+        for (int i = 0; i < sizeOfHand(); i++){
+            if(c == pieces.get(i).getLetter()){
+                return  pieces.get(i);
+            }
+        }
+        System.out.println("getIndexOfPieceWidth() returned a value of -1; the hand doesnt contain that char");
+        return null;
+    }
+
     public boolean containsLetters(String str) {
 
         int count = 0;
