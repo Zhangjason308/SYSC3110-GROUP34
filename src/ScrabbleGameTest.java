@@ -76,6 +76,49 @@ class ScrabbleGameTest {
 
     @Test
     void calculateWinner(){
+        ScrabbleGame game = new ScrabbleGame();
+
+        int score1 = 100;
+        int score2 = 100;
+        assertTrue(game.getTurn());
+
+        game.addScore(score1);
+        assertEquals(game.getPlayer1Score(), score1);
+
+        game.changeTurn();
+        game.addScore(score2);
+
+        assertEquals(game.getPlayer2Score(), score2);
+
+        assertEquals(game.calculateWinner(), ScrabbleGame.Status.TIE);
+
+        int score3 = 300;
+        int score4 = 100;
+        assertTrue(game.getTurn());
+
+        game.addScore(score3);
+        assertEquals(game.getPlayer1Score(), score3);
+
+        game.changeTurn();
+        game.addScore(score4);
+
+        assertEquals(game.getPlayer2Score(), score4);
+
+        assertEquals(game.calculateWinner(), ScrabbleGame.Status.PLAYER_1_WON);
+
+        int score5 = 100;
+        int score6 = 1000;
+        assertTrue(game.getTurn());
+
+        game.addScore(score5);
+        assertEquals(game.getPlayer1Score(), score5);
+
+        game.changeTurn();
+        game.addScore(score6);
+
+        assertEquals(game.getPlayer2Score(), score6);
+
+        assertEquals(game.calculateWinner(), ScrabbleGame.Status.PLAYER_2_WON);
 
     }
     @Test

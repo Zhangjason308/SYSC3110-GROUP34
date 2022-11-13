@@ -111,7 +111,7 @@ public class ScrabbleGame {
         return false;
     }
 
-    private Status calculateWinner(){
+    public Status calculateWinner(){
         if(player1Score == player2Score){
             return Status.TIE;
         }
