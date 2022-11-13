@@ -33,7 +33,7 @@ public class ScrabbleController implements ActionListener {
             else{
                 model.getPlayer2Hand().addPiece(sd.getPiece());
             }
-            model.getBoard().removePiece(sd.getX(), sd.getY());
+            model.removeFromBoard(sd.getX(), sd.getY());
         }
         selectedBoardButtons = new ArrayList<>();
         for (SelectionData sd : selectedHandButtons) {
@@ -89,8 +89,6 @@ public class ScrabbleController implements ActionListener {
                 model.skip();
             }
             else if(button.getText() == "Swap"){ // doesn't return to bag (deletes them)
-                selectedBoardButtons = new ArrayList<>();
-                selectedHandButtons = new ArrayList<>();
                 revertSelections();
                 model.swap();
             }

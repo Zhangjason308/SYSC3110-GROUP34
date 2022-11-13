@@ -126,6 +126,9 @@ public class ScrabbleGame {
             return player2Hand.removePiece(index);
         }
     }
+    public Piece removeFromBoard(int x, int y){
+        return scrabbleBoard.removePiece(x, y);
+    }
 
     public void skip(){
         System.out.println("skip was pressed");
