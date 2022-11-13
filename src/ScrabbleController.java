@@ -20,7 +20,22 @@ public class ScrabbleController implements ActionListener {
         selectedHandButtons = new ArrayList<>();
     }
 
-    public boolean lettersAreInLine(ArrayList<SelectionData> data) {
+    public boolean lettersAreInLine() {
+        int xCoord = selectedBoardButtons.get(0).getX();
+        int yCoord = selectedBoardButtons.get(0).getY();
+        int xCount = 0;
+        int yCount = 0;
+                    // ,,m(0,1)a(1,1)t(2,1)
+        for (int i = 1; i< selectedBoardButtons.size(); i++) {
+            if (selectedBoardButtons.get(i).getX() != xCoord) {  // if x coord is not same, then y coord must be same and must be horizontal word
+                if (selected)
+            }
+        }
+        for (int i = 1; i< selectedBoardButtons.size(); i++) {
+            if (selectedBoardButtons.get(i).getY() != yCoord) {  // if x coord is not same, then y coord must be same and must be horizontal word
+                return false;
+            }
+        }
         //for each SelectionData in ArrayList, continue if x or y is the same, return false if not
         return true;
     }
@@ -54,7 +69,7 @@ public class ScrabbleController implements ActionListener {
             String[] input = button.getActionCommand().split(" ");
 
             if(button.getText() == "Play"){
-               /* if (lettersAreInLine(selectedBoardButtons)){ // all x or y indexes are same
+                if (lettersAreInLine()){ // all x or y indexes are same
                     String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
                     String[] branches = getBranchWords();
                     int score = 0;
@@ -82,7 +97,7 @@ public class ScrabbleController implements ActionListener {
                 else{
                     System.out.println("Invalid Placements");
                     revertSelections();
-                }*/
+                }
 
             }
             else if(button.getText() == "Skip"){
