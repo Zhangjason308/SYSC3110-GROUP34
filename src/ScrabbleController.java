@@ -64,6 +64,7 @@ public class ScrabbleController implements ActionListener {
                                 System.out.println("Invalid word: " + s);
                                 revertSelections();
                                 score = 0;
+                                break;
                             }
                             else{
                                 score += calculateScore(s);
