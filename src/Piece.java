@@ -5,6 +5,7 @@ public class Piece {
     static {
         pieceMap.put('E', 1);
         pieceMap.put('A', 1);
+        pieceMap.put('I', 1);
         pieceMap.put('O', 1);
         pieceMap.put('N', 1);
         pieceMap.put('R', 1);

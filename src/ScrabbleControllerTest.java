@@ -3,6 +3,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class ScrabbleControllerTest {
@@ -163,6 +165,30 @@ public class ScrabbleControllerTest {
         testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertEquals(testController.getWord(), "");
+    }
+
+    @Test
+    public void isValidWord() {
+
+
+        try {
+            testController = new ScrabbleController(testGame);
+            assertTrue(testController.isValidWord("hi"));
+
+            testController = new ScrabbleController(testGame);
+            assertFalse(testController.isValidWord("asdfkljasdlfj"));
+
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+
+    @Test
+    public void calculateScore() {
+        testController = new ScrabbleController(testGame);
+        assertEquals(testController.calculateScore("hi"), 5);
     }
 
     @Test

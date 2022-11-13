@@ -130,7 +130,7 @@ public class ScrabbleController implements ActionListener {
         return bool[1];
     }
 
-    private boolean isValidWord(String word) throws IOException {  // this function works as is
+    public boolean isValidWord(String word) throws IOException {  // this function works as is
 
         Path path = Path.of("src\\Dictionary.txt");
         String dictionary = Files.readString(path);
@@ -145,7 +145,7 @@ public class ScrabbleController implements ActionListener {
         return false;
     }
 
-    private int calculateScore(String s){
+    public int calculateScore(String s){
         char[] arr = s.toCharArray();
         int score = 0;
         for(char c : arr){
