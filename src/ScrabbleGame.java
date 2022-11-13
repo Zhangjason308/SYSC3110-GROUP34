@@ -41,7 +41,7 @@ public class ScrabbleGame {
         views.add(v);
     }
 
-    private void changeTurn() {
+    public void changeTurn() {
         if(turn == player1){
             turn = player2;
         }
@@ -111,7 +111,7 @@ public class ScrabbleGame {
         return false;
     }
 
-    private Status calculateWinner(){
+    public Status calculateWinner(){
         if(player1Score == player2Score){
             return Status.TIE;
         }
