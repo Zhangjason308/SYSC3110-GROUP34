@@ -58,9 +58,9 @@ public class ScrabbleController implements ActionListener {
     private void wordIsConnected(){ // idk if its needed
 
     }
-    private String[] getBranchWords(){
+    //private String[] getBranchWords(){
 
-    }
+    //}
 
     public String getWord(){
 
@@ -183,7 +183,7 @@ public class ScrabbleController implements ActionListener {
             String[] input = button.getActionCommand().split(" ");
 
             if(button.getText() == "Play"){
-
+/*
 
                 if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
@@ -220,6 +220,8 @@ public class ScrabbleController implements ActionListener {
                     revertSelections();
                 }
 
+
+ */
             }
             else if(button.getText() == "Skip"){
                 revertSelections();

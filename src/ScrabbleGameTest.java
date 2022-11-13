@@ -154,7 +154,28 @@ class ScrabbleGameTest {
 
     }
     @Test
-    void endConditionIsMet(){
+    void endConditionIsMet() {
+        ScrabbleGame game = new ScrabbleGame();
+
+
+        game.getBag().grabPieces(84);
+
+        for (int i = 0; i< ScrabbleGame.HAND_SIZE;i++ ){
+            game.getPlayer1Hand().removePiece(0);
+            game.getPlayer2Hand().removePiece(0);
+    }
+        assertTrue(game.getPlayer1Hand().getHandPieces().isEmpty());
+        assertTrue(game.getPlayer2Hand().getHandPieces().isEmpty());
+
+        int x = game.getPlayer1Hand().sizeOfHand();
+        int y = game.getBag().numberOfRemainingPieces();
+        int x2 =  game.getPlayer2Hand().sizeOfHand();
+
+
+        assertTrue((x <7) | (x2 <7) && (y <=0));
+
+        assertEquals(game.endConditionIsMet(),true);
+
 
 
 
