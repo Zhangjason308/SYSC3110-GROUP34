@@ -57,8 +57,8 @@ public class ScrabbleController implements ActionListener {
         return booleans;
     }
 
-    private void wordIsConnected(){ // idk if its needed
-
+    private String[] getBranchWords(){  //TODO
+        return new String[0];
     }
     private void getBranchWords() { // ex: put t_1_2,h_1_3,e_1_4
         int roundScore = 0;
@@ -129,64 +129,73 @@ public class ScrabbleController implements ActionListener {
 
     }
 
-    public String getWord(){
+    private String getWord(){
+        int contstantAxis; // the x or y coord that doesnt change
+        int startValue; // x or y for the first letter in the word for the varying coord
 
-        int smallestIndex = ScrabbleGame.SIZE;
-        int largestIndex = 0;
-        int associatedCoordinate = 0;
-        for (SelectionData sd : selectedBoardButtons) {
+        contstantAxis = (isXAligned()) ? selectedBoardButtons.get(0).getX():selectedBoardButtons.get(0).getY();
+        ArrayList<SelectionData> positions = new ArrayList<>(ScrabbleGame.SIZE);
+        for (int i = 0; i < selectedBoardButtons.size(); i++) {
             if(isXAligned()){
-                if(sd.getX() < smallestIndex){
-                    smallestIndex = sd.getY();
-                }
-                if(sd.getX() > largestIndex){
-                    largestIndex = sd.getY();
-                }
-                associatedCoordinate = sd.getX();
+                positions.set(i, selectedBoardButtons.get(i));
             }
-            else {
-                if(sd.getY() < smallestIndex){
-                    smallestIndex = sd.getX();
-                }
-                if(sd.getY() > largestIndex){
-                    largestIndex = sd.getX();
-                }
-                associatedCoordinate = sd.getY();
+            else{
+                positions.set(i, selectedBoardButtons.get(i));
             }
-        }
-        String out = "";
-        int i = smallestIndex;
-        if(isXAligned()){
-            while(model.getBoard().getPiece(associatedCoordinate, i).getLetter() != ' '){
-                if(i != 0){
-                    i--;
+        } // now we can iterate through and get the holes from the board
+
+        SelectionData tracker = new SelectionData(0, 0,new Piece(' '));
+
+        while(tracker.getPiece().getLetter() != ' '){
+            if(isXAligned()){
+                tracker = positions.get(tracker.getX() - 1);
+            }
+            else{
+                tracker = positions.get(tracker.getY() - 1);
+            }
+            if(tracker.getPiece().getLetter() == ' '){
+                if(model.getBoard().getPiece(tracker.getX(), tracker.getY()).getLetter() == ' '){
+                    return "";
                 }
                 else {
-                    smallestIndex = 0;
+                    tracker = new SelectionData(tracker.getX(), tracker.getY(), model.getBoard().getPiece(tracker.getX(), tracker.getY()));
                 }
             }
-
-            while(model.getBoard().getPiece(associatedCoordinate, i + 1).getLetter() != ' '){ // while next piece is not ' ' continue
-                // add to out and check for holes in selected letters (theyre on the board)
-            }
-        }
-        else if(isYAligned()){
-            while(model.getBoard().getPiece(i, associatedCoordinate).getLetter() != ' '){
-                if(i != 0){
-                    smallestIndex = i;
-                    i--;
+        } // tracker is now the first element of the word
+        ArrayList<Character> chars = new ArrayList<>();
+        while(tracker.getPiece().getLetter() != ' '){
+            int x = tracker.getX();
+            int y = tracker.getY();
+            if(isXAligned()){
+                if(model.getBoard().getPiece(x, y).getLetter() != ' '){
+                    chars.add(model.getBoard().getPiece(x, y).getLetter());
+                    tracker = new SelectionData(x+1, contstantAxis, model.getBoard().getPiece(x, y));
+                }
+                else if (positions.get(x).getPiece().getLetter() == ' '){
+                    chars.add(positions.get(x).getPiece().getLetter());
+                    tracker = new SelectionData(x+1, contstantAxis, positions.get(x).getPiece());
                 }
                 else {
-                    smallestIndex = 0;
+                    //end of word
+                    return chars.toString();
                 }
             }
-
-            while(true){ // while next piece is not ' ' continue
-
+            else{
+                if(model.getBoard().getPiece(x, y).getLetter() != ' '){
+                    chars.add(model.getBoard().getPiece(x, y).getLetter());
+                    tracker = new SelectionData(contstantAxis,y+1, model.getBoard().getPiece(x, y));
+                }
+                else if (positions.get(y).getPiece().getLetter() == ' '){
+                    chars.add(positions.get(y).getPiece().getLetter());
+                    tracker = new SelectionData(contstantAxis, y+1, positions.get(y).getPiece());
+                }
+                else {
+                    //end of word
+                    return chars.toString();
+                }
             }
         }
-
-        return out;
+        return "";
     }
     private boolean isXAligned(){
         boolean[] bool = lettersAreInLine();
@@ -250,12 +259,12 @@ public class ScrabbleController implements ActionListener {
             String[] input = button.getActionCommand().split(" ");
 
             if(button.getText() == "Play"){
-/*
+
 
                 if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
                     String word = getWord(); //gets the word (including the letters in potential spaces)
-                    //String[] branches = getBranchWords();
+                    String[] branches = getBranchWords();
                     int score = 0;
                     try {
                         if(isValidWord(word)){
@@ -270,6 +279,7 @@ public class ScrabbleController implements ActionListener {
                                     score += calculateScore(s);
                                 }
                             }
+                            score += calculateScore(word);
                         }
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -280,6 +290,7 @@ public class ScrabbleController implements ActionListener {
                     else{
                         model.addScore(score);
                         model.play(selectedBoardButtons);
+                        revertSelections();
                     }
                 }
                 else{
@@ -288,7 +299,7 @@ public class ScrabbleController implements ActionListener {
                 }
 
 
- */
+
             }
             else if(button.getText() == "Skip"){
                 revertSelections();

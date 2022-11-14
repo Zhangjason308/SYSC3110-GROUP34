@@ -147,7 +147,7 @@ public class ScrabbleGame {
         changeTurn();
         updateViews();
     }
-    private void swapLettersFromHand(Hand hand){ // only to be called in the swap function
+    public void swapLettersFromHand(Hand hand){ // only to be called in the swap function
         hand.addPieces(bag.grabPieces(HAND_SIZE - hand.sizeOfHand())); // gets rid of pieces doesn't add them to bag
     }
 

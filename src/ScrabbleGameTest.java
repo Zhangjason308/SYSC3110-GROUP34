@@ -9,33 +9,7 @@ class ScrabbleGameTest {
     void placeFirstWord() { //Makes sure first word has 1 piece in the center
 
     }
-    @Test
-    void createHorizontalWord() { //A horizontal word is valid
 
-    }
-    @Test
-    void createVerticalWord() { //Vertical word is valid
-
-    }
-    @Test
-    void placeScatteredLetters() { //Make sure you can only place letters that are connected to each other linearly and at one starting point
-
-    }
-
-    @Test
-    void swapWorks() { //Allows a swap of letters in the hand
-
-    }
-
-    @Test
-    void swapDoesntWork() { //Swapped pieces you don't have in your hand
-
-    }
-
-    @Test
-    void placePieceThatMakesaHorizontalandVerticalWord() { //Place a piece that makes a horizontal and vertical word
-
-    }
     @Test
     void bagisOutofPieces()  { //Bag is out of pieces so game is over
         ScrabbleGame game = new ScrabbleGame();
@@ -45,10 +19,7 @@ class ScrabbleGameTest {
         assertEquals(game.getBag().numberOfRemainingPieces(), 0);
     }
 
-    @Test
-    void cantMakeAnyMoreWords()  { //Board can't formulate any more words
 
-    }
 
     @Test
     void addScore(){
@@ -72,6 +43,28 @@ class ScrabbleGameTest {
 
     @Test
     void updateStatus() {
+
+        ScrabbleGame game = new ScrabbleGame();
+        game.getBag().grabPieces(84);
+        for (int i = 0; i< ScrabbleGame.HAND_SIZE;i++ ){
+            game.getPlayer1Hand().removePiece(0);
+            game.getPlayer2Hand().removePiece(0);
+        }
+        assertTrue(game.getPlayer1Hand().getHandPieces().isEmpty());
+        assertTrue(game.getPlayer2Hand().getHandPieces().isEmpty());
+
+        int x = game.getPlayer1Hand().sizeOfHand();
+        int y = game.getBag().numberOfRemainingPieces();
+        int x2 =  game.getPlayer2Hand().sizeOfHand();
+
+        assertTrue((x <7) | (x2 <7) && (y <=0));
+
+        assertEquals(game.endConditionIsMet(),true);
+
+        game.updateStatus();
+
+        assertEquals(game.getStatus(),game.calculateWinner());
+
     }
 
     @Test
@@ -125,6 +118,19 @@ class ScrabbleGameTest {
     }
     @Test
     void swapLettersFromHand(){
+        ScrabbleGame game = new ScrabbleGame();
+    Hand h = new Hand();
+    Piece p = new Piece('p');
+        h.addPiece(p);
+        h.addPiece(p);
+        h.addPiece(p);
+        h.addPiece(p);
+        h.addPiece(p);
+        game.swapLettersFromHand(h);
+
+        assertEquals(7,h.sizeOfHand());
+
+
 
     }
     @Test
