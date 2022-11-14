@@ -3,32 +3,32 @@ public class Piece {
     char piece;
     public static final HashMap<Character, Integer> pieceMap = new HashMap<>();
     static {
-        pieceMap.put('E', 1);
-        pieceMap.put('A', 1);
-        pieceMap.put('I', 1);
-        pieceMap.put('O', 1);
-        pieceMap.put('N', 1);
-        pieceMap.put('R', 1);
-        pieceMap.put('T', 1);
-        pieceMap.put('L', 1);
-        pieceMap.put('S', 1);
-        pieceMap.put('U', 1);
-        pieceMap.put('D', 2);
-        pieceMap.put('G', 2);
-        pieceMap.put('B', 3);
-        pieceMap.put('C', 3);
-        pieceMap.put('M', 3);
-        pieceMap.put('P', 3);
-        pieceMap.put('F', 4);
-        pieceMap.put('H', 4);
-        pieceMap.put('V', 4);
-        pieceMap.put('W', 4);
-        pieceMap.put('Y', 4);
-        pieceMap.put('K', 5);
-        pieceMap.put('J', 8);
-        pieceMap.put('X', 8);
-        pieceMap.put('Q', 10);
-        pieceMap.put('Z', 10);
+        pieceMap.put('e', 1);
+        pieceMap.put('a', 1);
+        pieceMap.put('i', 1);
+        pieceMap.put('o', 1);
+        pieceMap.put('n', 1);
+        pieceMap.put('r', 1);
+        pieceMap.put('t', 1);
+        pieceMap.put('l', 1);
+        pieceMap.put('s', 1);
+        pieceMap.put('u', 1);
+        pieceMap.put('d', 2);
+        pieceMap.put('g', 2);
+        pieceMap.put('b', 3);
+        pieceMap.put('c', 3);
+        pieceMap.put('m', 3);
+        pieceMap.put('p', 3);
+        pieceMap.put('f', 4);
+        pieceMap.put('h', 4);
+        pieceMap.put('v', 4);
+        pieceMap.put('w', 4);
+        pieceMap.put('y', 4);
+        pieceMap.put('k', 5);
+        pieceMap.put('j', 8);
+        pieceMap.put('x', 8);
+        pieceMap.put('q', 10);
+        pieceMap.put('z', 10);
 
     }
     /**

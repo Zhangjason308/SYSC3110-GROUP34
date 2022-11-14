@@ -182,8 +182,9 @@ public class ScrabbleControllerTest {
 
     @Test
     public void calculateScore() {
+        testGame = new ScrabbleGame();
         testController = new ScrabbleController(testGame);
-        assertEquals(testController.calculateScore("hi"), 5);
+        assertEquals(testController.calculateScore("HI"), 5);
     }
 
     @Test
@@ -203,6 +204,7 @@ public class ScrabbleControllerTest {
         testController.addToSelectedHandButtonsForTesting(d3);
         testController.addToSelectedHandButtonsForTesting(d4);
         testController.getWord();
+        testController.revertSelections();
         assertTrue(testController.getSelectedBoardButtonsForTesting().isEmpty());
         assertTrue(testController.getSelectedHandButtonsForTesting().isEmpty());
     }
