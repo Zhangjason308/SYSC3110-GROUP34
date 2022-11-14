@@ -62,6 +62,11 @@ public class ScrabbleController implements ActionListener {
         return new String[0];
     }
 
+    //private String[] getBranchWords(){
+
+    //}
+
+
     private String getWord(){
         int contstantAxis; // the x or y coord that doesnt change
         int startValue; // x or y for the first letter in the word for the varying coord
@@ -192,7 +197,7 @@ public class ScrabbleController implements ActionListener {
             String[] input = button.getActionCommand().split(" ");
 
             if(button.getText() == "Play"){
-
+/*
 
                 if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
@@ -229,6 +234,8 @@ public class ScrabbleController implements ActionListener {
                     revertSelections();
                 }
 
+
+ */
             }
             else if(button.getText() == "Skip"){
                 revertSelections();

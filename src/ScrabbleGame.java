@@ -97,21 +97,21 @@ public class ScrabbleGame {
         }
     }
 
-    private void updateStatus() {
+    public void updateStatus() {
         if(endConditionIsMet()){
             status = calculateWinner();
         }else{
             status = Status.UNDECIDED;
         }
     }
-    private boolean endConditionIsMet(){
+    public boolean endConditionIsMet(){
         if((player1Hand.sizeOfHand() < 7 || player2Hand.sizeOfHand() < 7) && bag.numberOfRemainingPieces() <= 0){
             return true;
         }
         return false;
     }
 
-    private Status calculateWinner(){
+    public Status calculateWinner(){
         if(player1Score == player2Score){
             return Status.TIE;
         }
