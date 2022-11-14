@@ -10,6 +10,8 @@ import java.net.PortUnreachableException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ScrabbleController implements ActionListener {
     private ScrabbleGame model;
@@ -58,9 +60,74 @@ public class ScrabbleController implements ActionListener {
     private void wordIsConnected(){ // idk if its needed
 
     }
-    //private String[] getBranchWords(){
+    private void getBranchWords() { // ex: put t_1_2,h_1_3,e_1_4
+        int roundScore = 0;
+        int x = 0;
+        int y = 0;
+        Set<String> wordSet = new HashSet<>();
+        ArrayList<SelectionData> pieceData = this.selectedBoardButtons;
+        for (SelectionData c: pieceData) {
+            model.getBoard().placePiece(c);
+        }
+        for (SelectionData d : pieceData) { // vertical word
+            String wordy = "";
+            x = d.getX();
+            y = d.getY();
+            while (model.getBoard().getPiece(x,y).getLetter() != ' ') {
+                y--;
+            }
+            y++;
+            while (model.getBoard().getPiece(x,y).getLetter() != ' ') {
+                wordy += model.getBoard().getPiece(x,y).getLetter();
+                y++;
+            }
+            wordSet.add(wordy);
 
-    //}
+        }
+        System.out.println("Vertical Words: " + wordSet);
+
+        for (SelectionData d : pieceData) { // horizontal word
+            String wordx = "";
+            x = d.getX();
+            y = d.getY();
+            while (model.getBoard().getPiece(x,y).getLetter() != ' ') {
+                x--;
+            }
+            x++;
+            while (model.getBoard().getPiece(x,y).getLetter() != ' ') {
+                wordx += model.getBoard().getPiece(x,y).getLetter();
+                x++;
+            }
+            wordSet.add(wordx);
+
+        }
+        System.out.println("Potential Words: " + wordSet);
+        Set<String> copy = new HashSet<>();
+
+        for (String word : wordSet) {
+            if (word.length() == 1) {
+                copy.add(word);
+            }
+        }
+        System.out.println(copy);
+        for (String word : copy) {
+            if (wordSet.contains(word)) {
+                wordSet.remove(word);
+            }
+        }
+        System.out.println(wordSet);
+
+        for (String word: wordSet) {
+            try {
+                if (!isValidWord(word)){
+                    wordSet = null;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 
     public String getWord(){
 
@@ -154,7 +221,7 @@ public class ScrabbleController implements ActionListener {
         return score;
     }
 
-    private void revertSelections(){
+    public void revertSelections(){
         for (SelectionData sd : selectedBoardButtons) {
             if(model.getTurn()){
                 model.getPlayer1Hand().addPiece(sd.getPiece());
