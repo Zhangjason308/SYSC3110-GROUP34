@@ -40,13 +40,13 @@ public class ScrabbleController implements ActionListener {
                 previous = sd;
             }
             else {
-                yAligned = false;
+                xAligned = false;
             }
             if(sd.getY() == previous.getY()){
                 previous = sd;
             }
             else {
-                xAligned = false;
+                yAligned = false;
             }
         }
         boolean[] booleans = new boolean[2];
@@ -58,12 +58,9 @@ public class ScrabbleController implements ActionListener {
     private void wordIsConnected(){ // idk if its needed
 
     }
-    /*
-    private String[] getBranchWords(){
+    //private String[] getBranchWords(){
 
-    }
-    */
-
+    //}
 
     public String getWord(){
 
@@ -218,16 +215,14 @@ public class ScrabbleController implements ActionListener {
                         model.play(selectedBoardButtons);
                     }
                 }
-
-
                 else{
                     System.out.println("Invalid Placements");
                     revertSelections();
                 }
-                */
+
+
+ */
             }
-
-
             else if(button.getText() == "Skip"){
                 revertSelections();
                 model.skip();
