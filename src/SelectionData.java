@@ -20,18 +20,25 @@ public class SelectionData {
         return p;
     }
 
-    public int getX(){
-        return x;
+    public int getCoord(Boolean align){
+        if(align){
+            return x;
+        }
+        return y;
     }
 
     public int getY(){
         return y;
     }
 
+    //public int getX(){
+        //return x;
+    //}
+
     public static void main(String args[]) {
         SelectionData d = new SelectionData("t_11_12");
-        System.out.println(d.getX());
-        System.out.println(d.getY());
+        System.out.println(d.getCoord(true));
+        System.out.println(d.getCoord(false));
         System.out.println(d.getPiece().getLetter());
     }
 }

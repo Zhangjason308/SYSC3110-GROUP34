@@ -120,69 +120,62 @@ public class ScrabbleController implements ActionListener {
     }
 
     public String getWord(){
-        int contstantAxis; // the x or y coord that doesnt change
+        int constantAxis; // the x or y coord that doesn't change
         int startValue; // x or y for the first letter in the word for the varying coord
 
-        contstantAxis = (isXAligned()) ? selectedBoardButtons.get(0).getX():selectedBoardButtons.get(0).getY();
-        ArrayList<SelectionData> positions = new ArrayList<>(ScrabbleGame.SIZE);
+        boolean align = isXAligned(); //check for x or y aligned
+
+        constantAxis = selectedBoardButtons.get(0).getCoord(align);
+
+        // sorting selected board buttons based in x or y align might help
+
+        //ArrayList<SelectionData> positions = new ArrayList<>(ScrabbleGame.SIZE);
+        SelectionData[] positions = new SelectionData[ScrabbleGame.SIZE];
+        SelectionData tracker = new SelectionData(0, 0,new Piece(' '));
+
         for (int i = 0; i < selectedBoardButtons.size(); i++) {
-            if(isXAligned()){
-                positions.set(i, selectedBoardButtons.get(i));
-            }
-            else{
-                positions.set(i, selectedBoardButtons.get(i));
+            //positions.set(i, selectedBoardButtons.get(i));
+            positions[selectedBoardButtons.get(i).getCoord(align)] = selectedBoardButtons.get(i);
+
+            if(i == 0){
+                tracker = selectedBoardButtons.get(i);
             }
         } // now we can iterate through and get the holes from the board
 
-        SelectionData tracker = new SelectionData(0, 0,new Piece(' '));
 
         while(tracker.getPiece().getLetter() != ' '){
-            if(isXAligned()){
-                tracker = positions.get(tracker.getX() - 1);
+            //tracker = positions.get(tracker.getX() - 1);
+            if(tracker.getCoord(align) - 1 == -1){
+                break;
             }
-            else{
-                tracker = positions.get(tracker.getY() - 1);
-            }
+            tracker = positions[tracker.getCoord(align) - 1];
+
             if(tracker.getPiece().getLetter() == ' '){
-                if(model.getBoard().getPiece(tracker.getX(), tracker.getY()).getLetter() == ' '){
+                if(model.getBoard().getPiece(tracker.getCoord(align), tracker.getY()).getLetter() == ' '){
                     return "";
                 }
                 else {
-                    tracker = new SelectionData(tracker.getX(), tracker.getY(), model.getBoard().getPiece(tracker.getX(), tracker.getY()));
+                    tracker = new SelectionData(tracker.getCoord(align), tracker.getY(), model.getBoard().getPiece(tracker.getCoord(align), tracker.getY()));
                 }
             }
         } // tracker is now the first element of the word
+
         ArrayList<Character> chars = new ArrayList<>();
         while(tracker.getPiece().getLetter() != ' '){
-            int x = tracker.getX();
+            int x = tracker.getCoord(align);
             int y = tracker.getY();
-            if(isXAligned()){
-                if(model.getBoard().getPiece(x, y).getLetter() != ' '){
-                    chars.add(model.getBoard().getPiece(x, y).getLetter());
-                    tracker = new SelectionData(x+1, contstantAxis, model.getBoard().getPiece(x, y));
-                }
-                else if (positions.get(x).getPiece().getLetter() == ' '){
-                    chars.add(positions.get(x).getPiece().getLetter());
-                    tracker = new SelectionData(x+1, contstantAxis, positions.get(x).getPiece());
-                }
-                else {
-                    //end of word
-                    return chars.toString();
-                }
+
+            if(model.getBoard().getPiece(x, y).getLetter() != ' '){
+                chars.add(model.getBoard().getPiece(x, y).getLetter());
+                tracker = new SelectionData(x+1, constantAxis, model.getBoard().getPiece(x, y));
             }
-            else{
-                if(model.getBoard().getPiece(x, y).getLetter() != ' '){
-                    chars.add(model.getBoard().getPiece(x, y).getLetter());
-                    tracker = new SelectionData(contstantAxis,y+1, model.getBoard().getPiece(x, y));
-                }
-                else if (positions.get(y).getPiece().getLetter() == ' '){
-                    chars.add(positions.get(y).getPiece().getLetter());
-                    tracker = new SelectionData(contstantAxis, y+1, positions.get(y).getPiece());
-                }
-                else {
-                    //end of word
-                    return chars.toString();
-                }
+            else if (positions[x].getPiece().getLetter() == ' '){
+                chars.add(positions[x].getPiece().getLetter());
+                tracker = new SelectionData(x+1, constantAxis, positions[x].getPiece());
+            }
+            else {
+                //end of word
+                return chars.toString();
             }
         }
         return "";
@@ -376,5 +369,20 @@ public class ScrabbleController implements ActionListener {
 
     public void addToSelectedHandButtonsForTesting(SelectionData sd){
         selectedHandButtons.add(sd);
+    }
+
+    public static void main(String[] args) {
+        ScrabbleGame game = new ScrabbleGame();
+        SelectionData piece1 = new SelectionData(2, 2, new Piece('c'));
+        SelectionData piece2 = new SelectionData(3, 2, new Piece('a'));
+        SelectionData piece3 = new SelectionData(4, 2, new Piece('t'));
+        game.placePiece(piece1);
+        game.placePiece(piece2);
+        game.placePiece(piece3);
+        ScrabbleController sc = new ScrabbleController(game);
+        sc.addToSelectedBoardButtonsForTesting(piece1);
+        sc.addToSelectedBoardButtonsForTesting(piece2);
+        sc.addToSelectedBoardButtonsForTesting(piece3);
+        System.out.println(sc.getWord());
     }
 }

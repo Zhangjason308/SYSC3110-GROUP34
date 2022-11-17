@@ -126,6 +126,9 @@ public class ScrabbleGame {
             return player2Hand.removePiece(index);
         }
     }
+    public void placePiece(SelectionData data){
+        scrabbleBoard.placePiece(data);
+    }
     public Piece removeFromBoard(int x, int y){
         return scrabbleBoard.removePiece(x, y);
     }
