@@ -31,9 +31,9 @@ public class SelectionData {
         return y;
     }
 
-    //public int getX(){
-        //return x;
-    //}
+    public int getX(){
+        return x;
+    }
 
     public static void main(String args[]) {
         SelectionData d = new SelectionData("t_11_12");

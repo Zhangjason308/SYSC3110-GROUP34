@@ -39,16 +39,13 @@ public class ScrabbleController implements ActionListener {
                 previous = sd;
                 continue;
             }
-            if (sd.getX() == previous.getX()) {
-                previous = sd;
-            } else {
-                xAligned = false;
-            }
-            if (sd.getY() == previous.getY()) {
-                previous = sd;
-            } else {
+            if (sd.getX() != previous.getX()) {
                 yAligned = false;
             }
+            if (sd.getY() != previous.getY()) {
+                xAligned = false;
+            }
+            previous = sd;
         }
         boolean[] booleans = new boolean[2];
         booleans[0] = xAligned;
@@ -60,125 +57,108 @@ public class ScrabbleController implements ActionListener {
 
         ArrayList<String> branchWords = new ArrayList<>(ScrabbleGame.HAND_SIZE);
 
-        if(isXAligned()){
-            // foreach selData d in selectedBoardButtons in y dir
-            // get horizontal word by iterating all the way to the left
-            // Create a String word that iterates right until theres no more letters -> This is the main word
-            // For every selectedBoardButton added, iterate up until theres no more words, then iterate all the way down -> these are the branch words
+        if (isXAligned()) {
+            for (SelectionData sd : selectedBoardButtons) {
+                String word = "";
 
-            for (SelectionData sd: selectedBoardButtons){
                 int x = sd.getX();
                 int y = sd.getY();
-                String word = "";
-                SelectionData tracker = new SelectionData(x, y, new Piece(' '));
-                while(tracker.getPiece().getLetter() != ' '){
-                    tracker = new SelectionData(x, y + 1, model.getBoard().getPiece(x, y + 1));
+                Piece tracker = sd.getPiece();
+                while (tracker.getLetter() != ' ') {
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    y--;
+                    tracker = model.getBoard().getPiece(x, y);
                 }// tracker has position of first letter in branch
+                y++;
+                tracker = model.getBoard().getPiece(x, y);
 
-                while(tracker.getPiece().getLetter() != ' '){
-                    tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
-                    if(tracker.getX() == x && tracker.getY() == y){
-                        word += "" + sd.getPiece().getLetter();
-                    }
-                    else {
-                        word += "" + tracker.getPiece().getLetter();
-                    }
+                while (tracker.getLetter() != ' ') {
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    tracker = model.getBoard().getPiece(x, y);
+                    word += "" + tracker.getLetter();
+                    y++;
                 }
                 branchWords.add(word);
             }
-        }
-        else{
+        } else {
             // foreach selData d in selectedBoardButtons in x dir
             // get vertical word by iterating all the way up
             // Create a String word that iterates down until theres no more letters -> This is the main word
             // For every selectedBoardButton added, iterate left until theres no more words, then iterate all the way right -> these are the branch words
-            for (SelectionData sd: selectedBoardButtons){
+            for (SelectionData sd : selectedBoardButtons) {
+                String word = "";
+
                 int x = sd.getX();
                 int y = sd.getY();
-                String word = "";
-                SelectionData tracker = new SelectionData(x, y, new Piece(' '));
-                while(tracker.getPiece().getLetter() != ' '){
-                    tracker = new SelectionData(x + 1, y, model.getBoard().getPiece(x + 1, y));
+                Piece tracker = sd.getPiece();
+                while (tracker.getLetter() != ' ') {
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    x--;
+                    tracker = model.getBoard().getPiece(x, y);
                 }// tracker has position of first letter in branch
+                x++;
+                tracker = model.getBoard().getPiece(x, y);
 
-                while(tracker.getPiece().getLetter() != ' '){
-                    tracker = new SelectionData(x - 1, y , model.getBoard().getPiece(x - 1, y));
-                    if(tracker.getX() == x && tracker.getY() == y){
-                        word += "" + sd.getPiece().getLetter();
-                    }
-                    else {
-                        word += "" + tracker.getPiece().getLetter();
-                    }
+                while (tracker.getLetter() != ' ') {
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    tracker = model.getBoard().getPiece(x, y);
+                    word += "" + tracker.getLetter();
+                    x++;
                 }
                 branchWords.add(word);
             }
+            //for every word in branchWords and word, check if they are all valid words in the dictionary, if Yes, then call calculateScore()
         }
-        //for every word in branchWords and word, check if they are all valid words in the dictionary, if Yes, then call calculateScore()
-
-
         return branchWords;
     }
 
     public String getWord(){
-        int constantAxis; // the x or y coord that doesn't change
-        int startValue; // x or y for the first letter in the word for the varying coord
 
-        boolean align = isXAligned(); //check for x or y aligned
+        if(selectedBoardButtons.isEmpty()){
+            return "";
+        }
 
-        constantAxis = selectedBoardButtons.get(0).getCoord(align);
+        String word = "";
 
-        // sorting selected board buttons based in x or y align might help
+        int x = selectedBoardButtons.get(0).getX();
+        int y = selectedBoardButtons.get(0).getY();
+        Piece tracker = selectedBoardButtons.get(0).getPiece();
+        if (isXAligned()) {
+            while (tracker.getLetter() != ' ') {
 
-        //ArrayList<SelectionData> positions = new ArrayList<>(ScrabbleGame.SIZE);
-        SelectionData[] positions = new SelectionData[ScrabbleGame.SIZE];
-        SelectionData tracker = new SelectionData(0, 0,new Piece(' '));
+                x--;
+                tracker = model.getBoard().getPiece(x, y);
+            }// tracker has position of first letter in branch
+            x++;
+            tracker = model.getBoard().getPiece(x, y);
+            System.out.println(tracker.getLetter());
 
-        for (int i = 0; i < selectedBoardButtons.size(); i++) {
-            //positions.set(i, selectedBoardButtons.get(i));
-            positions[selectedBoardButtons.get(i).getCoord(align)] = selectedBoardButtons.get(i);
+            while (tracker.getLetter() != ' ') {
 
-            if(i == 0){
-                tracker = selectedBoardButtons.get(i);
+                tracker = model.getBoard().getPiece(x, y);
+                System.out.println(word);
+                word += "" + tracker.getLetter();
+                x++;
             }
-        } // now we can iterate through and get the holes from the board
 
+        } else {
 
-        while(tracker.getPiece().getLetter() != ' '){
-            //tracker = positions.get(tracker.getX() - 1);
-            if(tracker.getCoord(align) - 1 == -1){
-                break;
-            }
-            tracker = positions[tracker.getCoord(align) - 1];
+            while (tracker.getLetter() != ' ') {
+                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                y--;
+                tracker = model.getBoard().getPiece(x, y);
+            }// tracker has position of first letter in branch
+            y++;
+            tracker = model.getBoard().getPiece(x, y);
 
-            if(tracker.getPiece().getLetter() == ' '){
-                if(model.getBoard().getPiece(tracker.getCoord(align), tracker.getY()).getLetter() == ' '){
-                    return "";
-                }
-                else {
-                    tracker = new SelectionData(tracker.getCoord(align), tracker.getY(), model.getBoard().getPiece(tracker.getCoord(align), tracker.getY()));
-                }
-            }
-        } // tracker is now the first element of the word
-
-        ArrayList<Character> chars = new ArrayList<>();
-        while(tracker.getPiece().getLetter() != ' '){
-            int x = tracker.getCoord(align);
-            int y = tracker.getY();
-
-            if(model.getBoard().getPiece(x, y).getLetter() != ' '){
-                chars.add(model.getBoard().getPiece(x, y).getLetter());
-                tracker = new SelectionData(x+1, constantAxis, model.getBoard().getPiece(x, y));
-            }
-            else if (positions[x].getPiece().getLetter() == ' '){
-                chars.add(positions[x].getPiece().getLetter());
-                tracker = new SelectionData(x+1, constantAxis, positions[x].getPiece());
-            }
-            else {
-                //end of word
-                return chars.toString();
+            while (tracker.getLetter() != ' ') {
+                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                tracker = model.getBoard().getPiece(x, y);
+                word += "" + tracker.getLetter();
+                y++;
             }
         }
-        return "";
+        return word;
     }
     private boolean isXAligned(){
         boolean[] bool = lettersAreInLine();
@@ -248,6 +228,8 @@ public class ScrabbleController implements ActionListener {
 
                     String word = getWord(); //gets the word (including the letters in potential spaces)
                     ArrayList<String> branches = getBranchWords();
+                    System.out.println(branches);
+                    System.out.println(word);
                     int score = 0;
                     try {
                         if(isValidWord(word)){
@@ -374,15 +356,25 @@ public class ScrabbleController implements ActionListener {
     public static void main(String[] args) {
         ScrabbleGame game = new ScrabbleGame();
         SelectionData piece1 = new SelectionData(2, 2, new Piece('c'));
-        SelectionData piece2 = new SelectionData(3, 2, new Piece('a'));
-        SelectionData piece3 = new SelectionData(4, 2, new Piece('t'));
+        SelectionData piece2 = new SelectionData(2, 3, new Piece('a'));
+        SelectionData piece3 = new SelectionData(2, 4, new Piece('t'));
+
+        SelectionData piece4 = new SelectionData(3, 2, new Piece('h'));
+        SelectionData piece5 = new SelectionData(3, 3, new Piece('o'));
+        SelectionData piece6 = new SelectionData(3, 4, new Piece('p'));
+
         game.placePiece(piece1);
         game.placePiece(piece2);
         game.placePiece(piece3);
+        game.placePiece(piece4);
+        game.placePiece(piece5);
+        game.placePiece(piece6);
+
         ScrabbleController sc = new ScrabbleController(game);
         sc.addToSelectedBoardButtonsForTesting(piece1);
         sc.addToSelectedBoardButtonsForTesting(piece2);
         sc.addToSelectedBoardButtonsForTesting(piece3);
+        System.out.println(sc.getBranchWords());
         System.out.println(sc.getWord());
     }
 }

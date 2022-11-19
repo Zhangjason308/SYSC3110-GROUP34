@@ -37,5 +37,10 @@ public class ScrabbleFrame extends JFrame {
         new ScrabbleFrame();
     }
 
+//Notes: when the play button is pressed
 
+    //1: word and branch words are gotten
+    //2: if valid continue
+    //3: the turn is changed
+    //4: selectedBoardButtons are erased and the pieces on the board stay
 }
