@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
 class ScrabbleGameTest {
 
 
@@ -183,4 +183,6 @@ class ScrabbleGameTest {
         assertEquals(game.endConditionIsMet(),true);
 
     }
-}
+
+
+ */

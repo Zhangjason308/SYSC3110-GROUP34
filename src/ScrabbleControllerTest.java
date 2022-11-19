@@ -5,7 +5,7 @@ import java.io.IOException;
 //import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
 public class ScrabbleControllerTest {
     ScrabbleGame testGame = new ScrabbleGame();
     ScrabbleController testController = new ScrabbleController(testGame);
@@ -274,3 +274,5 @@ public class ScrabbleControllerTest {
     }
 
     }
+
+ */
