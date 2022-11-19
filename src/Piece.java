@@ -29,7 +29,6 @@ public class Piece {
         pieceMap.put('x', 8);
         pieceMap.put('q', 10);
         pieceMap.put('z', 10);
-
     }
     /**
      *

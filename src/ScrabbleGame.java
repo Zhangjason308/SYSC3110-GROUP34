@@ -154,11 +154,7 @@ public class ScrabbleGame {
         hand.addPieces(bag.grabPieces(HAND_SIZE - hand.sizeOfHand())); // gets rid of pieces doesn't add them to bag
     }
 
-    public void play(ArrayList<SelectionData> placedPieces) {
-
-        for (SelectionData sd : placedPieces) {
-            getBoard().placePiece(sd);
-        }
+    public void play() {
         changeTurn();
         updateViews();
 
