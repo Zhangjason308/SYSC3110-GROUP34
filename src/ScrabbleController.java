@@ -284,10 +284,12 @@ public class ScrabbleController implements ActionListener {
             }
             else if(button.getText() == "Skip"){
                 revertSelections();
+                clearSelections();
                 model.skip();
             }
             else if(button.getText() == "Swap"){ // doesn't return to bag (deletes them)
                 revertSelections();
+                clearSelections(); 
                 model.swap();
             }
             else if(input.length == 1){ //it's a button from hand deal with accordingly
