@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,19 +141,23 @@ public class ScrabbleGame {
     public void swap(){
         System.out.println("swap was pressed");
         if(turn){
-            swapLettersFromHand(player1Hand);
+            refillHand(player1Hand);
         }
         else{
-            swapLettersFromHand(player2Hand);
+            refillHand(player2Hand);
         }
         changeTurn();
         updateViews();
     }
-    public void swapLettersFromHand(Hand hand){ // only to be called in the swap function
+    public void refillHand(Hand hand){ // only to be called in the swap function
         hand.addPieces(bag.grabPieces(HAND_SIZE - hand.sizeOfHand())); // gets rid of pieces doesn't add them to bag
     }
 
     public void play() {
+        if(getTurn()){
+            refillHand(player1Hand);
+        }
+        else {refillHand(player2Hand);}
         changeTurn();
         updateViews();
 

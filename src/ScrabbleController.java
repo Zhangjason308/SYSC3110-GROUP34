@@ -227,7 +227,7 @@ public class ScrabbleController implements ActionListener {
 
     public void clearSelections(){
         selectedBoardButtons.clear();
-        selectedBoardButtons.clear();
+        selectedHandButtons.clear();
     }
 
     @Override
