@@ -40,10 +40,10 @@ public class ScrabbleController implements ActionListener {
                 continue;
             }
             if (sd.getX() != previous.getX()) {
-                yAligned = false;
+                xAligned = false;
             }
             if (sd.getY() != previous.getY()) {
-                xAligned = false;
+                yAligned = false;
             }
             previous = sd;
         }
@@ -289,7 +289,7 @@ public class ScrabbleController implements ActionListener {
             }
             else if(button.getText() == "Swap"){ // doesn't return to bag (deletes them)
                 revertSelections();
-                clearSelections(); 
+                clearSelections();
                 model.swap();
             }
             else if(input.length == 1){ //it's a button from hand deal with accordingly
