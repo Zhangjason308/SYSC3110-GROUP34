@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class BoardPanel extends JPanel implements ScrabbleView {
-    private static JButton[][] buttons;
+    static private JButton[][] buttons;
 
     public BoardPanel(ScrabbleController controller) {
         super();
@@ -22,7 +22,8 @@ public class BoardPanel extends JPanel implements ScrabbleView {
             }
         }
         this.setVisible(true);
-    }
+
+            }
 
     static public void disableButtons(ArrayList<SelectionData> sData){
         for (SelectionData sd : sData) {
@@ -31,7 +32,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {
             buttons[x][y].setEnabled(false);
         }
     }
-
     @Override
     public void update(ScrabbleGame model) {
         Board board = model.getBoard();

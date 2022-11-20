@@ -183,6 +183,4 @@ class ScrabbleGameTest {
         assertEquals(game.endConditionIsMet(),true);
 
     }
-
-
- */
+}
