@@ -40,10 +40,10 @@ public class ScrabbleController implements ActionListener {
                 continue;
             }
             if (sd.getX() != previous.getX()) {
-                xAligned = false;
+                yAligned = false;
             }
             if (sd.getY() != previous.getY()) {
-                yAligned = false;
+                xAligned = false;
             }
             previous = sd;
         }
@@ -75,7 +75,9 @@ public class ScrabbleController implements ActionListener {
                 while (tracker.getLetter() != ' ') {
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = model.getBoard().getPiece(x, y);
-                    word.append(tracker.getLetter());
+                    if(tracker.getLetter() != ' '){
+                        word.append(tracker.getLetter());
+                    }
                     y++;
                 }
                 branchWords.add(word.toString());
@@ -102,30 +104,31 @@ public class ScrabbleController implements ActionListener {
                 while (tracker.getLetter() != ' ') {
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = model.getBoard().getPiece(x, y);
-                    word.append(tracker.getLetter());
+                    if(tracker.getLetter() != ' '){
+                        word.append(tracker.getLetter());
+                    }
                     x++;
                 }
                 branchWords.add(word.toString());
             }
             //for every word in branchWords and word, check if they are all valid words in the dictionary, if Yes, then call calculateScore()
         }
+        int index = 0;
         ArrayList<String> toReturn = new ArrayList<>();
-        for(int i = 0; i < branchWords.size(); i++){
-            char[] chars = branchWords.get(i).toCharArray();// c, , a, , t, ,
-            for (char c : chars) {
-                if(c == ' '){
-                    continue;
-                }
-                toReturn.add(Character.toString(c).trim());
+        for (String s : branchWords) {
+            String str = s.trim();
+            if(str.length() != 0 && str.length() != 1){
+                toReturn.add(str);
             }
         }
-
+        System.out.println("Branch words length: " + toReturn.size());
         return toReturn;
     }
 
     public String getWord(){
 
         if(selectedBoardButtons.isEmpty()){
+            System.out.println("in getWord Function: selectedBoradButtons is empty");
             return "";
         }
 
@@ -136,7 +139,10 @@ public class ScrabbleController implements ActionListener {
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (isXAligned()) {
             while (tracker.getLetter() != ' ') {
-
+                if(x == 0){
+                    x--;
+                    break;
+                }
                 x--;
                 tracker = model.getBoard().getPiece(x, y);
             }// tracker has position of first letter in branch
@@ -149,6 +155,9 @@ public class ScrabbleController implements ActionListener {
                 tracker = model.getBoard().getPiece(x, y);
                 System.out.println(word);
                 word.append(tracker.getLetter());
+                if(x == 14){
+                    break;
+                }
                 x++;
             }
 
@@ -156,6 +165,10 @@ public class ScrabbleController implements ActionListener {
 
             while (tracker.getLetter() != ' ') {
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                if(y == 0){
+                    y--;
+                    break;
+                }
                 y--;
                 tracker = model.getBoard().getPiece(x, y);
             }// tracker has position of first letter in branch
@@ -163,13 +176,21 @@ public class ScrabbleController implements ActionListener {
             tracker = model.getBoard().getPiece(x, y);
 
             while (tracker.getLetter() != ' ') {
+
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 tracker = model.getBoard().getPiece(x, y);
                 word.append(tracker.getLetter());
+                if(y == 14){
+                    break;
+                }
                 y++;
             }
         }
-        return word.toString();
+        String checkSizeStr = word.toString().trim();
+        if(checkSizeStr.length() == 1 && !getBranchWords().isEmpty()){
+            return "";
+        }
+        return checkSizeStr;
     }
     private boolean isXAligned(){
         boolean[] bool = lettersAreInLine();
@@ -230,6 +251,7 @@ public class ScrabbleController implements ActionListener {
         selectedHandButtons.clear();
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
@@ -247,21 +269,25 @@ public class ScrabbleController implements ActionListener {
                     System.out.println(word);
                     int score = 0;
                     try {
-                        if(isValidWord(word)){
+                        if(word.length() == 0 || isValidWord(word)){
+                            for (String s : branches) {
+                                if(isValidWord(s)){
+                                    score += calculateScore(s);
+                                }
+                                else{
+                                    System.out.println("Invalid word: " + s);
+                                    revertSelections();
+                                    score = 0;
+                                    break;
+                                }
+                            }
                             System.out.println("Nice, the word");
                             score += calculateScore(word);
                         }
-                        for (String s : branches) {
-                            if(isValidWord(s)){
-                                score += calculateScore(s);
-                            }
-                            else{
-                                System.out.println("Invalid word: " + s);
-                                revertSelections();
-                                score = 0;
-                                break;
-                            }
+                        else{
+                            System.out.println("Invalid word: " + word);
                         }
+
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -269,6 +295,7 @@ public class ScrabbleController implements ActionListener {
                         System.out.println("invalid word");
                     }
                     else{
+                        BoardPanel.disableButtons(selectedBoardButtons);
                         model.addScore(score);
                         model.play();
                         clearSelections();
@@ -288,7 +315,6 @@ public class ScrabbleController implements ActionListener {
                 model.skip();
             }
             else if(button.getText() == "Swap"){ // doesn't return to bag (deletes them)
-                revertSelections();
                 clearSelections();
                 model.swap();
             }
@@ -339,6 +365,13 @@ public class ScrabbleController implements ActionListener {
                         model.getPlayer2Hand().addPiece(model.getBoard().getPiece(x, y));
                     }
                     model.getBoard().removePiece(x, y);
+                    int index = 0;
+                    for (SelectionData sd : selectedBoardButtons) {
+                        if(sd.getX() == x && sd.getY() == y){
+                            index = selectedBoardButtons.indexOf(sd);
+                        }
+                    }
+                    selectedBoardButtons.remove(index);
                 }
                 //if piece is not null return piece to hand
                 // otherwise add selected piece to board
@@ -385,11 +418,11 @@ public class ScrabbleController implements ActionListener {
         game.placePiece(piece5);
         game.placePiece(piece6);
 
-        ScrabbleController sc = new ScrabbleController(game);
+        /*ScrabbleController sc = new ScrabbleController(game);
         sc.addToSelectedBoardButtonsForTesting(piece1);
         sc.addToSelectedBoardButtonsForTesting(piece2);
         sc.addToSelectedBoardButtonsForTesting(piece3);
         System.out.println(sc.getBranchWords());
-        System.out.println(sc.getWord());
+        System.out.println(sc.getWord());*/
     }
 }

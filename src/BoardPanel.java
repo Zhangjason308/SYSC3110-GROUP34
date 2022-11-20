@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class BoardPanel extends JPanel implements ScrabbleView {
-    private JButton[][] buttons;
+    private static JButton[][] buttons;
 
     public BoardPanel(ScrabbleController controller) {
         super();
@@ -21,8 +22,15 @@ public class BoardPanel extends JPanel implements ScrabbleView {
             }
         }
         this.setVisible(true);
+    }
 
-            }
+    static public void disableButtons(ArrayList<SelectionData> sData){
+        for (SelectionData sd : sData) {
+            int x = sd.getX();
+            int y = sd.getY();
+            buttons[x][y].setEnabled(false);
+        }
+    }
 
     @Override
     public void update(ScrabbleGame model) {
