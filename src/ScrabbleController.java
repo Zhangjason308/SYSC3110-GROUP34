@@ -270,6 +270,7 @@ public class ScrabbleController implements ActionListener {
                     int score = 0;
                     try {
                         if(word.length() == 0 || isValidWord(word)){
+                            score += calculateScore(word);
                             for (String s : branches) {
                                 if(isValidWord(s)){
                                     score += calculateScore(s);
@@ -281,8 +282,6 @@ public class ScrabbleController implements ActionListener {
                                     break;
                                 }
                             }
-                            System.out.println("Nice, the word");
-                            score += calculateScore(word);
                         }
                         else{
                             System.out.println("Invalid word: " + word);
