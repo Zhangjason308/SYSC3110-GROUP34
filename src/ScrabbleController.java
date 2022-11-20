@@ -155,7 +155,7 @@ public class ScrabbleController implements ActionListener {
                 tracker = model.getBoard().getPiece(x, y);
                 System.out.println(word);
                 word.append(tracker.getLetter());
-                if(x == 14){
+                if(x == 15){
                     break;
                 }
                 x++;
@@ -180,7 +180,7 @@ public class ScrabbleController implements ActionListener {
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 tracker = model.getBoard().getPiece(x, y);
                 word.append(tracker.getLetter());
-                if(y == 14){
+                if(y == 15){
                     break;
                 }
                 y++;
