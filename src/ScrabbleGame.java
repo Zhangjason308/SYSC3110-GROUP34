@@ -124,7 +124,7 @@ public class ScrabbleGame {
         else{
             return player2Hand.removePiece(index);
         }
-    }
+    } // comment
     public void placePiece(SelectionData data){
         scrabbleBoard.placePiece(data);
     }
