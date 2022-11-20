@@ -61,6 +61,4 @@ public class Piece {
         //System.out.println("SCORE for p1: "+ pieceMap.get('Z'));
 
     }
-
-
 }
