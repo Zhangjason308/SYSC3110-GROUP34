@@ -51,7 +51,7 @@ public class ScrabbleController implements ActionListener {
         booleans[0] = xAligned;
         booleans[1] = yAligned;
         return booleans;
-    }
+    } // comment
 
     public ArrayList<String> getBranchWords() {
 
