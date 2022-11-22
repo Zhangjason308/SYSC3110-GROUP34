@@ -1,30 +1,27 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.PortUnreachableException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ScrabbleController implements ActionListener {
     private ScrabbleGame model;
 
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
+    private ArrayList<SelectionData> specialButtons;
 
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
         selectedBoardButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
+        specialButtons = new ArrayList<>();
+    }
+
+    public void getspecialButtons(ArrayList<SelectionData> sbb) {
     }
 
     public boolean[] lettersAreInLine() {
@@ -65,6 +62,10 @@ public class ScrabbleController implements ActionListener {
                 int y = sd.getY();
                 Piece tracker = sd.getPiece();
                 while (tracker.getLetter() != ' ') {
+                    if (y==0) {
+                        y--;
+                        break;
+                    }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     y--;
                     tracker = model.getBoard().getPiece(x, y);
@@ -73,6 +74,9 @@ public class ScrabbleController implements ActionListener {
                 tracker = model.getBoard().getPiece(x, y);
 
                 while (tracker.getLetter() != ' ') {
+                    if (y == 14) {
+                        break;
+                    }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = model.getBoard().getPiece(x, y);
                     if(tracker.getLetter() != ' '){
@@ -94,6 +98,10 @@ public class ScrabbleController implements ActionListener {
                 int y = sd.getY();
                 Piece tracker = sd.getPiece();
                 while (tracker.getLetter() != ' ') {
+                    if (x==0) {
+                        x--;
+                        break;
+                    }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     x--;
                     tracker = model.getBoard().getPiece(x, y);
@@ -102,6 +110,9 @@ public class ScrabbleController implements ActionListener {
                 tracker = model.getBoard().getPiece(x, y);
 
                 while (tracker.getLetter() != ' ') {
+                    if (x == 14) {
+                        break;
+                    }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = model.getBoard().getPiece(x, y);
                     if(tracker.getLetter() != ' '){
@@ -128,7 +139,7 @@ public class ScrabbleController implements ActionListener {
     public String getWord(){
 
         if(selectedBoardButtons.isEmpty()){
-            System.out.println("in getWord Function: selectedBoradButtons is empty");
+            System.out.println("in getWord Function: selectedBoardButtons is empty");
             return "";
         }
 
@@ -136,9 +147,11 @@ public class ScrabbleController implements ActionListener {
 
         int x = selectedBoardButtons.get(0).getX();
         int y = selectedBoardButtons.get(0).getY();
+        //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (isXAligned()) {
             while (tracker.getLetter() != ' ') {
+
                 if(x == 0){
                     x--;
                     break;
@@ -155,7 +168,7 @@ public class ScrabbleController implements ActionListener {
                 tracker = model.getBoard().getPiece(x, y);
                 System.out.println(word);
                 word.append(tracker.getLetter());
-                if(x == 15){
+                if(x == 14){
                     break;
                 }
                 x++;
@@ -180,7 +193,7 @@ public class ScrabbleController implements ActionListener {
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 tracker = model.getBoard().getPiece(x, y);
                 word.append(tracker.getLetter());
-                if(y == 15){
+                if(y == 14){
                     break;
                 }
                 y++;
@@ -203,7 +216,7 @@ public class ScrabbleController implements ActionListener {
 
     public boolean isValidWord(String word) throws IOException {  // this function works as is
 
-        Path path = Path.of("src\\Dictionary.txt");
+        Path path = Path.of("src/Dictionary.txt");
         String dictionary = Files.readString(path);
         String[] temp = dictionary.split("\n");
 

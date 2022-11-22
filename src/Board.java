@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
 
 public class Board {
 
@@ -13,6 +15,7 @@ public class Board {
             }
         }
     }
+
 
     public Piece getPiece(int x, int y) {
         return arr[x][y];
