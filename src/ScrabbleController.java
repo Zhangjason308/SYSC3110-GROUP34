@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,11 +12,16 @@ public class ScrabbleController implements ActionListener {
 
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
+    private ArrayList<SelectionData> specialButtons;
 
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
         selectedBoardButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
+        specialButtons = new ArrayList<>();
+    }
+
+    public void getspecialButtons(ArrayList<SelectionData> sbb) {
     }
 
     public boolean[] lettersAreInLine() {
@@ -133,7 +139,7 @@ public class ScrabbleController implements ActionListener {
     public String getWord(){
 
         if(selectedBoardButtons.isEmpty()){
-            System.out.println("in getWord Function: selectedBoradButtons is empty");
+            System.out.println("in getWord Function: selectedBoardButtons is empty");
             return "";
         }
 
@@ -141,9 +147,11 @@ public class ScrabbleController implements ActionListener {
 
         int x = selectedBoardButtons.get(0).getX();
         int y = selectedBoardButtons.get(0).getY();
+        //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (isXAligned()) {
             while (tracker.getLetter() != ' ') {
+
                 if(x == 0){
                     x--;
                     break;
@@ -208,7 +216,7 @@ public class ScrabbleController implements ActionListener {
 
     public boolean isValidWord(String word) throws IOException {  // this function works as is
 
-        Path path = Path.of("src\\Dictionary.txt");
+        Path path = Path.of("src/Dictionary.txt");
         String dictionary = Files.readString(path);
         String[] temp = dictionary.split("\n");
 
