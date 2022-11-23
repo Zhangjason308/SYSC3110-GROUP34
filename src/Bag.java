@@ -34,6 +34,8 @@ public class Bag {
         return bagPieces.size();
     }
 
+    public char[] getAlph() {return ALPHABET;}
+
     public Piece grabPiece(){  //returns a random piece and removes that piece from this bag
         Random random = new Random();
         int randIndex = random.nextInt(numberOfRemainingPieces());

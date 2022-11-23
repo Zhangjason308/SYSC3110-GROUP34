@@ -21,10 +21,12 @@ public class ScrabbleController implements ActionListener {
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
 
+
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
         selectedBoardButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
+
     }
 
     public boolean[] lettersAreInLine() {
@@ -169,12 +171,27 @@ public class ScrabbleController implements ActionListener {
         return bool[1];
     }
 
+
+
+
+
     public boolean isValidWord(String word) throws IOException {  // this function works as is
+
+
 
         Path path = Path.of("src\\Dictionary.txt");
         String dictionary = Files.readString(path);
         String[] temp = dictionary.split("\n");
 
+        for(String value : temp){
+            String str = value.trim();
+            if(str.compareTo(word) == 0){
+                return true;
+            }
+        }
+        return false;
+
+/*
         for (String s : temp) {
             String str = s.trim();
             if(str.compareTo(word) == 0){
@@ -182,6 +199,8 @@ public class ScrabbleController implements ActionListener {
             }
         }
         return false;
+        */
+
     }
 
     public int calculateScore(String s){
