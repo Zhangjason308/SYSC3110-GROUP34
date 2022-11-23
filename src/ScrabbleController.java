@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class ScrabbleController implements ActionListener {
     private ScrabbleGame model;
 
+    public static final char BLANK = '!';
+
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
     private ArrayList<SelectionData> specialButtons;
@@ -64,8 +66,6 @@ public class ScrabbleController implements ActionListener {
         selectedBoardButtons.clear();
         selectedHandButtons.clear();
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
@@ -135,6 +135,22 @@ public class ScrabbleController implements ActionListener {
                 int handIndex = Integer.parseInt(input[0]);
                 //remove piece from hand
                 System.out.println("button from hand, index: " + handIndex + " text: " + button.getText());
+
+                if(button.getText().charAt(0) == BLANK){
+                    String newChar = JOptionPane.showInputDialog("Enter a single letter: ").trim().toLowerCase();
+
+                    if(newChar.length() == 1){
+                        if(model.getTurn()){
+                            model.getPlayer1Hand().changeBlankValue(handIndex, newChar.charAt(0));
+                        }
+                        else{
+                            model.getPlayer2Hand().changeBlankValue(handIndex, newChar.charAt(0));
+                        }
+
+                    }
+                    model.updateViews();
+                    return;
+                }
 
                 if(button.getText().equals(" ") || button.getText().equals("")){
                     System.out.println("No piece there");
