@@ -1,4 +1,6 @@
+
 import javax.swing.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -183,6 +185,211 @@ public class ScrabbleGame {
         return false;
     }
 
+    public ArrayList<String> getBranchWords( ArrayList<SelectionData> selectedBoardButtons) {
+
+        ArrayList<String> branchWords = new ArrayList<>(ScrabbleGame.HAND_SIZE);
+
+        if (isXAligned(selectedBoardButtons)) {
+            for (SelectionData sd : selectedBoardButtons) {
+                StringBuilder word = new StringBuilder();
+
+                int x = sd.getX();
+                int y = sd.getY();
+                Piece tracker = sd.getPiece();
+                while (tracker.getLetter() != ' ') {
+                    if (y==0) {
+                        y--;
+                        break;
+                    }
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    y--;
+                    tracker =getBoard().getPiece(x, y);
+                }// tracker has position of first letter in branch
+                y++;
+                tracker = getBoard().getPiece(x, y);
+
+                while (tracker.getLetter() != ' ') {
+                    if (y == 14) {
+                        break;
+                    }
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    tracker = getBoard().getPiece(x, y);
+                    if(tracker.getLetter() != ' '){
+                        word.append(tracker.getLetter());
+                    }
+                    y++;
+                }
+                branchWords.add(word.toString());
+            }
+        } else {
+            // foreach selData d in selectedBoardButtons in x dir
+            // get vertical word by iterating all the way up
+            // Create a String word that iterates down until theres no more letters -> This is the main word
+            // For every selectedBoardButton added, iterate left until theres no more words, then iterate all the way right -> these are the branch words
+            for (SelectionData sd : selectedBoardButtons) {
+                StringBuilder word = new StringBuilder();
+
+                int x = sd.getX();
+                int y = sd.getY();
+                Piece tracker = sd.getPiece();
+                while (tracker.getLetter() != ' ') {
+                    if (x==0) {
+                        x--;
+                        break;
+                    }
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    x--;
+                    tracker = getBoard().getPiece(x, y);
+                }// tracker has position of first letter in branch
+                x++;
+                tracker = getBoard().getPiece(x, y);
+
+                while (tracker.getLetter() != ' ') {
+                    if (x == 14) {
+                        break;
+                    }
+                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                    tracker = getBoard().getPiece(x, y);
+                    if(tracker.getLetter() != ' '){
+                        word.append(tracker.getLetter());
+                    }
+                    x++;
+                }
+                branchWords.add(word.toString());
+            }
+            //for every word in branchWords and word, check if they are all valid words in the dictionary, if Yes, then call calculateScore()
+        }
+        int index = 0;
+        ArrayList<String> toReturn = new ArrayList<>();
+        for (String s : branchWords) {
+            String str = s.trim();
+            if(str.length() != 0 && str.length() != 1){
+                toReturn.add(str);
+            }
+        }
+        System.out.println("Branch words length: " + toReturn.size());
+        return toReturn;
+    }
+
+    public String getWord( ArrayList<SelectionData> selectedBoardButtons){
+
+        if(selectedBoardButtons.isEmpty()){
+            System.out.println("in getWord Function: selectedBoardButtons is empty");
+            return "";
+        }
+
+        StringBuilder word = new StringBuilder();
+
+        int x = selectedBoardButtons.get(0).getX();
+        int y = selectedBoardButtons.get(0).getY();
+        //Piece tracker = model.getBoard().getPiece(x,y);
+        Piece tracker = selectedBoardButtons.get(0).getPiece();
+        if (isXAligned(selectedBoardButtons)) {
+            while (tracker.getLetter() != ' ') {
+
+                if(x == 0){
+                    x--;
+                    break;
+                }
+                x--;
+                tracker = getBoard().getPiece(x, y);
+            }// tracker has position of first letter in branch
+            x++;
+            tracker = getBoard().getPiece(x, y);
+            System.out.println(tracker.getLetter());
+
+            while (tracker.getLetter() != ' ') {
+
+                tracker = getBoard().getPiece(x, y);
+                System.out.println(word);
+                word.append(tracker.getLetter());
+                if(x == 14){
+                    break;
+                }
+                x++;
+            }
+
+        } else {
+
+            while (tracker.getLetter() != ' ') {
+                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                if(y == 0){
+                    y--;
+                    break;
+                }
+                y--;
+                tracker = getBoard().getPiece(x, y);
+            }// tracker has position of first letter in branch
+            y++;
+            tracker = getBoard().getPiece(x, y);
+
+            while (tracker.getLetter() != ' ') {
+
+                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
+                tracker = getBoard().getPiece(x, y);
+                word.append(tracker.getLetter());
+                if(y == 14){
+                    break;
+                }
+                y++;
+            }
+        }
+        String checkSizeStr = word.toString().trim();
+        if(checkSizeStr.length() == 1 && !getBranchWords(selectedBoardButtons).isEmpty()){
+            return "";
+        }
+        return checkSizeStr;
+    }
+
+
+    public boolean isValidWord(String word) throws IOException {  // this function works as is
+
+        Path path = Path.of("src/Dictionary.txt");
+        String dictionary = Files.readString(path);
+        String[] temp = dictionary.split("\n");
+
+        for (String s : temp) {
+            String str = s.trim();
+            if(str.compareTo(word) == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean[] lettersAreInLine( ArrayList<SelectionData> selectedBoardButtons) {
+
+        boolean xAligned = true;
+        boolean yAligned = true;
+
+        SelectionData previous = null;
+
+        for (SelectionData sd : selectedBoardButtons) {
+            if (previous == null) {
+                previous = sd;
+                continue;
+            }
+            if (sd.getX() != previous.getX()) {
+                yAligned = false;
+            }
+            if (sd.getY() != previous.getY()) {
+                xAligned = false;
+            }
+            previous = sd;
+        }
+        boolean[] booleans = new boolean[2];
+        booleans[0] = xAligned;
+        booleans[1] = yAligned;
+        return booleans;
+    } // comment
+    public boolean isXAligned(ArrayList<SelectionData> selectedBoardButtons){
+        boolean[] bool = lettersAreInLine(selectedBoardButtons);
+        return bool[0];
+    }
+    public boolean isYAligned(ArrayList<SelectionData> selectedBoardButtons){
+        boolean[] bool = lettersAreInLine(selectedBoardButtons);
+        return bool[1];
+    }
     public void play() {
         if(getTurn()){
             refillHand(player1Hand);
