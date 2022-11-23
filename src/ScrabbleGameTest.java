@@ -126,7 +126,7 @@ class ScrabbleGameTest {
         h.addPiece(p);
         h.addPiece(p);
         h.addPiece(p);
-        game.swapLettersFromHand(h);
+        game.refillHand(h);
 
         assertEquals(7,h.sizeOfHand());
 

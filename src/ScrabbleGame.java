@@ -12,6 +12,7 @@ public class ScrabbleGame {
 
     public static final int SIZE = 15;
     public static final int HAND_SIZE = 7;
+    public static final int BOARD_MIDDLE = 7;
     public static final boolean player1 = true;
     public static final boolean player2 = false;
 
@@ -133,7 +134,7 @@ public class ScrabbleGame {
         else{
             return player2Hand.removePiece(index);
         }
-    }
+    } // comment
     public void placePiece(SelectionData data){
         scrabbleBoard.placePiece(data);
     }
@@ -150,23 +151,43 @@ public class ScrabbleGame {
     public void swap(){
         System.out.println("swap was pressed");
         if(turn){
-            swapLettersFromHand(player1Hand);
+            refillHand(player1Hand);
         }
         else{
-            swapLettersFromHand(player2Hand);
+            refillHand(player2Hand);
         }
         changeTurn();
         updateViews();
     }
-    public void swapLettersFromHand(Hand hand){ // only to be called in the swap function
+    public void refillHand(Hand hand){ // only to be called in the swap function
         hand.addPieces(bag.grabPieces(HAND_SIZE - hand.sizeOfHand())); // gets rid of pieces doesn't add them to bag
     }
 
-    public void play(ArrayList<SelectionData> placedPieces) {
-
-        for (SelectionData sd : placedPieces) {
-            getBoard().placePiece(sd);
+    public boolean firstTurnPlayedCenter(){
+        if(scrabbleBoard.getPiece(BOARD_MIDDLE, BOARD_MIDDLE).getLetter() != ' '){
+            return true;
         }
+        return false;
+    }
+
+    public boolean surroundingPiecesArentEmpty(ArrayList<SelectionData> sd){ // doesnt quite work, will always be true beacause letters they place count as a surrounding piece to otehr letter they place in that turn
+        boolean hasPieceBeside = false;
+        for (SelectionData data : sd) {
+            if(scrabbleBoard.getPiece(data.getX()-1, data.getY()).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX()+1, data.getY()).getLetter() != ' '){
+                return true;
+            }
+            if(scrabbleBoard.getPiece(data.getX(), data.getY()-1).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX(), data.getY()+1).getLetter() != ' '){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void play() {
+        if(getTurn()){
+            refillHand(player1Hand);
+        }
+        else {refillHand(player2Hand);}
         changeTurn();
         updateViews();
 

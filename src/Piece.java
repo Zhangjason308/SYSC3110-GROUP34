@@ -29,7 +29,6 @@ public class Piece {
         pieceMap.put('x', 8);
         pieceMap.put('q', 10);
         pieceMap.put('z', 10);
-
     }
     /**
      *
@@ -45,23 +44,14 @@ public class Piece {
         return piece;
     }
 
+    public void setLetter(char c){
+        piece = c;
+    }
+
     public boolean equals(Piece p){
         if (this.getLetter() ==  p.getLetter()) {
             return true;
         }
         return false;
     }
-
-    public static void main(String args[]) {
-        Piece p = new Piece('Q');
-        Piece p1 = new Piece('Q');
-        if (p.equals(p1)) {
-            System.out.println(p.getLetter());
-        }
-        //System.out.println("SCORE for p: "+ pieceMap.get('A'));
-        //System.out.println("SCORE for p1: "+ pieceMap.get('Z'));
-
-    }
-
-
 }
