@@ -50,17 +50,4 @@ public class Piece {
         }
         return false;
     }
-
-    public static void main(String args[]) {
-        Piece p = new Piece('Q');
-        Piece p1 = new Piece('Q');
-        if (p.equals(p1)) {
-            System.out.println(p.getLetter());
-        }
-        //System.out.println("SCORE for p: "+ pieceMap.get('A'));
-        //System.out.println("SCORE for p1: "+ pieceMap.get('Z'));
-
-    }
-
-
 }

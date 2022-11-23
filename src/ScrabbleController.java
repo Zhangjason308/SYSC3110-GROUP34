@@ -274,52 +274,51 @@ public class ScrabbleController implements ActionListener {
 
             if(button.getText() == "Play"){
 
-                if (isXAligned() || isYAligned()){ // all x or y indexes are same
+                if(model.firstTurnPlayedCenter() && model.surroundingPiecesArentEmpty(selectedBoardButtons)){
+                    if (isXAligned() || isYAligned()){ // all x or y indexes are same
 
-                    String word = getWord(); //gets the word (including the letters in potential spaces)
-                    ArrayList<String> branches = getBranchWords();
-                    System.out.println(branches);
-                    System.out.println(word);
-                    int score = 0;
-                    try {
-                        if(word.length() == 0 || isValidWord(word)){
-                            score += calculateScore(word);
-                            for (String s : branches) {
-                                if(isValidWord(s)){
-                                    score += calculateScore(s);
-                                }
-                                else{
-                                    System.out.println("Invalid word: " + s);
-                                    revertSelections();
-                                    score = 0;
-                                    break;
+                        String word = getWord(); //gets the word (including the letters in potential spaces)
+                        ArrayList<String> branches = getBranchWords();
+                        System.out.println(branches);
+                        System.out.println(word);
+                        int score = 0;
+                        try {
+                            if(word.length() == 0 || isValidWord(word)){
+                                score += calculateScore(word);
+                                for (String s : branches) {
+                                    if(isValidWord(s)){
+                                        score += calculateScore(s);
+                                    }
+                                    else{
+                                        System.out.println("Invalid word: " + s);
+                                        revertSelections();
+                                        score = 0;
+                                        break;
+                                    }
                                 }
                             }
+                            else{
+                                System.out.println("Invalid word: " + word);
+                            }
+
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        if(score == 0){
+                            System.out.println("invalid word");
                         }
                         else{
-                            System.out.println("Invalid word: " + word);
+                            BoardPanel.disableButtons(selectedBoardButtons);
+                            model.addScore(score);
+                            model.play();
+                            clearSelections();
                         }
-
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    if(score == 0){
-                        System.out.println("invalid word");
                     }
                     else{
-                        BoardPanel.disableButtons(selectedBoardButtons);
-                        model.addScore(score);
-                        model.play();
-                        clearSelections();
+                        System.out.println("Invalid Placements");
+                        revertSelections();
                     }
                 }
-                else{
-                    System.out.println("Invalid Placements");
-                    revertSelections();
-                }
-
-
-
             }
             else if(button.getText() == "Skip"){
                 revertSelections();
@@ -413,28 +412,4 @@ public class ScrabbleController implements ActionListener {
         selectedHandButtons.add(sd);
     }
 
-    public static void main(String[] args) {
-        ScrabbleGame game = new ScrabbleGame();
-        SelectionData piece1 = new SelectionData(2, 2, new Piece('c'));
-        SelectionData piece2 = new SelectionData(2, 3, new Piece('a'));
-        SelectionData piece3 = new SelectionData(2, 4, new Piece('t'));
-
-        SelectionData piece4 = new SelectionData(3, 2, new Piece('h'));
-        SelectionData piece5 = new SelectionData(3, 3, new Piece('o'));
-        SelectionData piece6 = new SelectionData(3, 4, new Piece('p'));
-
-        game.placePiece(piece1);
-        game.placePiece(piece2);
-        game.placePiece(piece3);
-        game.placePiece(piece4);
-        game.placePiece(piece5);
-        game.placePiece(piece6);
-
-        /*ScrabbleController sc = new ScrabbleController(game);
-        sc.addToSelectedBoardButtonsForTesting(piece1);
-        sc.addToSelectedBoardButtonsForTesting(piece2);
-        sc.addToSelectedBoardButtonsForTesting(piece3);
-        System.out.println(sc.getBranchWords());
-        System.out.println(sc.getWord());*/
-    }
 }

@@ -3,7 +3,15 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class BoardPanel extends JPanel implements ScrabbleView {
+
     static private JButton[][] buttons;
+
+    final static int NUM_OF_BLUE_POSITIONS = 8;
+    final static int NUM_OF_RED_POSITIONS = 16;
+
+    final static int[][] MULTIPLIER_POSITIONS_BLUE = {{0, 14, 0, 14, 5, 9, 5, 9}, {0, 0, 14, 14, 5, 5, 9, 9}};
+
+    final static int[][] MULTIPLIER_POSITIONS_RED = {{1, 2, 3, 4, 13, 12, 11, 10, 1, 2, 3, 4, 13, 12, 11, 10}, {1, 2, 3, 4, 1, 2, 3, 4, 13, 12, 11, 10, 13, 12, 11, 10}};
 
     public BoardPanel(ScrabbleController controller) {
         super();
@@ -26,30 +34,13 @@ public class BoardPanel extends JPanel implements ScrabbleView {
         }
         //this.setForeground(Color.RED);
         //this.setOpaque(true);
-        buttons[0][0].setBackground(Color.blue);
-        buttons[14][0].setBackground(Color.blue);
-        buttons[0][14].setBackground(Color.blue);
-        buttons[14][14].setBackground(Color.blue);
-        buttons[1][1].setBackground(Color.red);
-        buttons[2][2].setBackground(Color.red);
-        buttons[3][3].setBackground(Color.red);
-        buttons[4][4].setBackground(Color.red);
-        buttons[5][5].setBackground(Color.blue);
-        buttons[13][1].setBackground(Color.red);
-        buttons[12][2].setBackground(Color.red);
-        buttons[11][3].setBackground(Color.red);
-        buttons[10][4].setBackground(Color.red);
-        buttons[9][5].setBackground(Color.blue);
-        buttons[1][13].setBackground(Color.red);
-        buttons[2][12].setBackground(Color.red);
-        buttons[3][11].setBackground(Color.red);
-        buttons[4][10].setBackground(Color.red);
-        buttons[5][9].setBackground(Color.blue);
-        buttons[13][13].setBackground(Color.red);
-        buttons[12][12].setBackground(Color.red);
-        buttons[11][11].setBackground(Color.red);
-        buttons[10][10].setBackground(Color.red);
-        buttons[9][9].setBackground(Color.blue);
+
+        for (int i = 0; i < NUM_OF_BLUE_POSITIONS; i++){
+            buttons[MULTIPLIER_POSITIONS_BLUE[0][i]][MULTIPLIER_POSITIONS_BLUE[1][i]].setBackground(Color.blue);
+        }
+        for (int i = 0; i < NUM_OF_RED_POSITIONS; i++){
+            buttons[MULTIPLIER_POSITIONS_RED[0][i]][MULTIPLIER_POSITIONS_RED[1][i]].setBackground(Color.red);
+        }
         buttons[7][7].setBackground(Color.orange);
         this.setVisible(true);
 
