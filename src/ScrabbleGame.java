@@ -212,7 +212,9 @@ public class ScrabbleGame {
         return list;
     }
 
-    public  void playAI(Hand hand) {
+    public  ArrayList<ArrayList<Character>> playAI(Hand hand) {
+        ArrayList<ArrayList<Character>> possibleSolutions = new ArrayList<ArrayList<Character>>();
+
         ArrayList<Character> handList = new ArrayList<Character>();
 
         for (Piece piece : hand.getHandPieces()) {
@@ -229,7 +231,6 @@ public class ScrabbleGame {
 
                 for (Character letter : dict) {
                     if(tempHandList.contains(letter)) {
-                        System.out.println(letter);
                         tempHandList.remove(tempHandList.indexOf(letter));
                         tempDictList.remove(tempDictList.indexOf(letter));
                     }
@@ -237,21 +238,20 @@ public class ScrabbleGame {
                 //for(Character temp : tempDictList){
                    // System.out.println(temp);
                // }
-                if(tempDictList.size() == 0) {
+                if(tempDictList.size() == 1) {
+                    System.out.println("Dict word:");
+                    ArrayList<Character> tempChar = new ArrayList<Character>();
                     for(Character letter : dict) {
-                        System.out.println(letter);
-
+                        tempChar.add(letter);
                     }
-                    System.out.println("boop");
-
-
+                    possibleSolutions.add(tempChar);
                 }
 
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        return possibleSolutions;
 
 
         /*
