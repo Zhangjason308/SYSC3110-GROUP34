@@ -1,10 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ScrabbleController implements ActionListener {
@@ -32,14 +28,7 @@ public class ScrabbleController implements ActionListener {
 
 
 
-    public int calculateScore(String s){
-        char[] arr = s.toCharArray();
-        int score = 0;
-        for(char c : arr){
-            score += Piece.pieceMap.get(c);
-        }
-        return score;
-    }
+
 
     public void revertSelections(){
         for (SelectionData sd : selectedBoardButtons) {
@@ -66,6 +55,20 @@ public class ScrabbleController implements ActionListener {
         selectedBoardButtons.clear();
         selectedHandButtons.clear();
     }
+
+
+    public void skip(){
+        revertSelections();
+        clearSelections();
+        model.skip();
+    }
+
+    public void swap(){
+        clearSelections();
+        model.swap();
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
@@ -75,63 +78,23 @@ public class ScrabbleController implements ActionListener {
 
             if(button.getText() == PLAY){
 
-                if(model.firstTurnPlayedCenter() && model.surroundingPiecesArentEmpty(selectedBoardButtons)){
-                    if (model.isXAligned(selectedBoardButtons) || model.isYAligned(selectedBoardButtons)){ // all x or y indexes are same
-
-                        String word = model.getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
-                        ArrayList<String> branches = model.getBranchWords(selectedBoardButtons);
-                        System.out.println(branches);
-                        System.out.println(word);
-                        int score = 0;
-                        try {
-                            if(word.length() == 0 || model.isValidWord(word)){
-                                score += calculateScore(word);
-                                for (String s : branches) {
-                                    if(model.isValidWord(s)){
-                                        score += calculateScore(s);
-                                    }
-                                    else{
-                                        System.out.println("Invalid word: " + s);
-                                        revertSelections();
-                                        score = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            else{
-                                System.out.println("Invalid word: " + word);
-                            }
-
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        if(score == 0){
-                            System.out.println("invalid word");
-                        }
-                        else{
-                            BoardPanel.disableButtons(selectedBoardButtons);
-                            model.addScore(score);
-                            model.play();
-                            clearSelections();
-                        }
-                    }
-                    else{
-                        System.out.println("Invalid Placements");
-                        revertSelections();
-                    }
+                if(model.playWordOnBoard(selectedBoardButtons)){
+                    clearSelections();
                 }
+                else {
+                    clearSelections();
+                }
+
             }
             else if(button.getText() == SKIP){
-                revertSelections();
-                clearSelections();
-                model.skip();
+               skip();
             }
             else if(button.getText() == SWAP ){ // doesn't return to bag (deletes them)
-                clearSelections();
-                model.swap();
+                swap();
             }
             else if(input.length == 1){ //it's a button from hand deal with accordingly
                 // add to selected Pieces or buttons or whatever
+
                 int handIndex = Integer.parseInt(input[0]);
                 //remove piece from hand
                 System.out.println("button from hand, index: " + handIndex + " text: " + button.getText());

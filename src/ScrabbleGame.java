@@ -30,6 +30,9 @@ public class ScrabbleGame {
     private Status status;
     private List<ScrabbleView> views; //always use a list
 
+    private ArrayList<SelectionData> specialBlueButtons;
+    private ArrayList<SelectionData> specialRedButtons;
+
     private ArrayList<ArrayList<Character>> list;
     public ScrabbleGame() {
         // initializing game elements
@@ -44,7 +47,8 @@ public class ScrabbleGame {
         scrabbleBoard = new Board();
         turn = player1;
         views = new ArrayList<>();
-
+        specialBlueButtons = new ArrayList<>();
+        specialRedButtons = new ArrayList<>();
         list = new ArrayList<ArrayList<Character>>();
     }
 
@@ -118,6 +122,55 @@ public class ScrabbleGame {
     public boolean endConditionIsMet(){
         if((player1Hand.sizeOfHand() < 7 || player2Hand.sizeOfHand() < 7) && bag.numberOfRemainingPieces() <= 0){
             return true;
+        }
+        return false;
+    }
+
+    public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
+        if(firstTurnPlayedCenter() && surroundingPiecesArentEmpty(selectedBoardButtons)){
+            if (isXAligned(selectedBoardButtons) || isYAligned(selectedBoardButtons)){ // all x or y indexes are same
+                String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
+                ArrayList<String> branches = getBranchWords(selectedBoardButtons);
+                System.out.println(branches);
+                System.out.println(word);
+                int score = 0;
+
+                try {
+                    if(word.length() == 0 || isValidWord(word)){
+                        score += calculateScore(word);
+                        for (String s : branches) {
+                            if(isValidWord(s)){
+                                score += calculateScore(s);
+                            }
+                            else{
+                                System.out.println("Invalid word: " + s);
+                                score = 0;
+                                return false;
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("Invalid word: " + word);
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if(score == 0){
+                    System.out.println("invalid word");
+                }
+                else{
+                    BoardPanel.disableButtons(selectedBoardButtons);
+                    addScore(score);
+                    play();
+                    return true;
+
+                }
+            }
+            else{
+                System.out.println("Invalid Placements");
+                return false;
+
+            }
         }
         return false;
     }
@@ -282,6 +335,21 @@ public class ScrabbleGame {
 
         int x = selectedBoardButtons.get(0).getX();
         int y = selectedBoardButtons.get(0).getY();
+
+        for (int i = 0; i < selectedBoardButtons.size(); i++) {
+            for (int j = 0 ; j < BoardPanel.NUM_OF_BLUE_POSITIONS; j++) {
+
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[1][j]) {
+                    specialBlueButtons.add(selectedBoardButtons.get(i));
+                }
+            }
+            for (int j = 0 ; j < BoardPanel.NUM_OF_RED_POSITIONS; j++) {
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_RED[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_RED[1][j]) {
+                    specialRedButtons.add(selectedBoardButtons.get(i));
+                }
+            }
+
+        }
         //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (isXAligned(selectedBoardButtons)) {
@@ -342,6 +410,8 @@ public class ScrabbleGame {
     }
 
 
+
+
     public boolean isValidWord(String word) throws IOException {  // this function works as is
 
         Path path = Path.of("src/Dictionary.txt");
@@ -355,6 +425,25 @@ public class ScrabbleGame {
             }
         }
         return false;
+    }
+    public int calculateScore(String s){
+        char[] arr = s.toCharArray();
+        int score = 0;
+        for(char c : arr){
+            score += Piece.pieceMap.get(c);
+        }
+        for (SelectionData sd: specialBlueButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*3;
+            score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
+        }
+
+        for (SelectionData sd: specialRedButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*2;
+            score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
+        }
+        specialBlueButtons.clear();
+        specialRedButtons.clear();
+        return score;
     }
 
     public boolean[] lettersAreInLine( ArrayList<SelectionData> selectedBoardButtons) {
@@ -390,16 +479,7 @@ public class ScrabbleGame {
         boolean[] bool = lettersAreInLine(selectedBoardButtons);
         return bool[1];
     }
-    public void play() {
-        if(getTurn()){
-            refillHand(player1Hand);
-        }
-        else {refillHand(player2Hand);}
-        changeTurn();
-        updateViews();
 
-        System.out.println("play was pressed");
-    }
 
     public ArrayList<ArrayList<Character>> getList() throws IOException{
 
@@ -418,8 +498,38 @@ public class ScrabbleGame {
 
         return list;
     }
+    public void play() {
+        if(getTurn()){
+            refillHand(player1Hand);
+        }
+        else {
+            refillHand(player2Hand);
+            playBot();
+        }
+        changeTurn();
+        updateViews();
 
-    public  void playAI(Hand hand) {
+        System.out.println("play was pressed");
+    }
+    public void playBot() {
+        if (!getTurn()){ //
+            SelectionData sd = new SelectionData(0,1, new Piece('i'));
+            SelectionData sd2 = new SelectionData(0,2, new Piece('m'));
+           scrabbleBoard.placePiece(sd);
+            scrabbleBoard.placePiece(sd2);
+           //for (int i = 0; i < Board.SIZE; i++) {
+              //  for (int j = 0; j < Board.SIZE; j++) {
+                   // if (scrabbleBoard.getPiece(i,j).getLetter() != ' ') {
+                     // for (Piece p: player2Hand.getHandPieces()) {
+
+                      }
+                      //scrabbleBoard.
+                      //  }
+                   // }
+                }
+           // }
+
+    public  void playAI(Hand hand) { //calebs implementation
         ArrayList<Character> handList = new ArrayList<Character>();
 
         for (Piece piece : hand.getHandPieces()) {
@@ -458,6 +568,7 @@ public class ScrabbleGame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
 
 
