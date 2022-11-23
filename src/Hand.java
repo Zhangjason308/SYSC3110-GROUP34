@@ -30,6 +30,12 @@ public class Hand{
         }
     }
 
+    public void changeBlankValue(int index, char newChar){
+        if(pieces.get(index).getLetter() == '!'){
+            pieces.get(index).setLetter(newChar);
+        }
+    }
+
     public ArrayList<Character> getHandAsChars(){
         ArrayList<Character> chars = new ArrayList<>();
         for (Piece p : pieces) {

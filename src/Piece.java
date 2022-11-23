@@ -44,6 +44,10 @@ public class Piece {
         return piece;
     }
 
+    public void setLetter(char c){
+        piece = c;
+    }
+
     public boolean equals(Piece p){
         if (this.getLetter() ==  p.getLetter()) {
             return true;

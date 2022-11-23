@@ -249,7 +249,7 @@ public class Game {
                     }
                     i++;
                 }
-                roundTotal += Bag.POINTS[i];;
+                //roundTotal += Bag.POINTS[i];;
             }
         }
         return roundTotal;
