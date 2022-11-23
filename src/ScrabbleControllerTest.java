@@ -299,7 +299,7 @@ public class ScrabbleControllerTest {
     public void calculateScore() {
         testGame = new ScrabbleGame();
         testController = new ScrabbleController(testGame);
-        assertEquals(testController.calculateScore("HI"), 5);
+        assertEquals(testGame.calculateScore("HI"), 5);
     }
 
     @Test
@@ -335,5 +335,5 @@ public class ScrabbleControllerTest {
 
     }
 
-    }
+}
 

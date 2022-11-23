@@ -36,8 +36,8 @@ public class Board {
     public String toString(){  // this function works as is
         String output = "\n\n\t\t\t\t\t\tSCRABBLE BOARD\n";
 
-        for(int y = 0; y<15; y++){
-            for(int x = 0; x<15; x++){
+        for(int x = 0; x<15; x++){
+            for(int y = 0; y<15; y++){
                 output += " | " + arr[x][y].getLetter();
             }
             output += " |\n";
