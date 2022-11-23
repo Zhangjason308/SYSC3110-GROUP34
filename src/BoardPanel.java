@@ -8,7 +8,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {
 
     final static int NUM_OF_BLUE_POSITIONS = 8;
     final static int NUM_OF_RED_POSITIONS = 16;
-
     final static int[][] MULTIPLIER_POSITIONS_BLUE = {{0, 14, 0, 14, 5, 9, 5, 9}, {0, 0, 14, 14, 5, 5, 9, 9}};
 
     final static int[][] MULTIPLIER_POSITIONS_RED = {{1, 2, 3, 4, 13, 12, 11, 10, 1, 2, 3, 4, 13, 12, 11, 10}, {1, 2, 3, 4, 1, 2, 3, 4, 13, 12, 11, 10, 13, 12, 11, 10}};

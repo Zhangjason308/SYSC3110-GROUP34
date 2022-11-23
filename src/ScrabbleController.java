@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,13 +13,15 @@ public class ScrabbleController implements ActionListener {
 
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
-    private ArrayList<SelectionData> specialButtons;
+    private ArrayList<SelectionData> specialBlueButtons;
+    private ArrayList<SelectionData> specialRedButtons;
 
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
         selectedBoardButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
-        specialButtons = new ArrayList<>();
+        specialBlueButtons = new ArrayList<>();
+        specialRedButtons = new ArrayList<>();
     }
 
     public void getspecialButtons(ArrayList<SelectionData> sbb) {
@@ -149,6 +150,21 @@ public class ScrabbleController implements ActionListener {
 
         int x = selectedBoardButtons.get(0).getX();
         int y = selectedBoardButtons.get(0).getY();
+
+        for (int i = 0; i < selectedBoardButtons.size(); i++) {
+            for (int j = 0 ; j < BoardPanel.NUM_OF_BLUE_POSITIONS; j++) {
+
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[1][j]) {
+                    specialBlueButtons.add(selectedBoardButtons.get(i));
+                }
+            }
+            for (int j = 0 ; j < BoardPanel.NUM_OF_RED_POSITIONS; j++) {
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_RED[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_RED[1][j]) {
+                    specialRedButtons.add(selectedBoardButtons.get(i));
+                }
+            }
+
+        }
         //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (isXAligned()) {
@@ -237,6 +253,17 @@ public class ScrabbleController implements ActionListener {
         for(char c : arr){
             score += Piece.pieceMap.get(c);
         }
+        for (SelectionData sd: specialBlueButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*3;
+            score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
+        }
+
+        for (SelectionData sd: specialRedButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*2;
+            score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
+        }
+        specialBlueButtons.clear();
+        specialRedButtons.clear();
         return score;
     }
 
@@ -285,6 +312,7 @@ public class ScrabbleController implements ActionListener {
                         try {
                             if(word.length() == 0 || isValidWord(word)){
                                 score += calculateScore(word);
+
                                 for (String s : branches) {
                                     if(isValidWord(s)){
                                         score += calculateScore(s);
@@ -380,6 +408,7 @@ public class ScrabbleController implements ActionListener {
                     else{
                         SelectionData data = new SelectionData(x, y, selectedHandButtons.get(0).getPiece());
                         selectedBoardButtons.add(data);
+
                         model.getBoard().placePiece(data);
                         selectedHandButtons.remove(0);
                     }
