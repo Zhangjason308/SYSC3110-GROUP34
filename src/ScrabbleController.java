@@ -9,6 +9,7 @@ public class ScrabbleController implements ActionListener {
     public static final char BLANK = '!';
 
     private ArrayList<SelectionData> selectedBoardButtons;
+    private ArrayList<SelectionData> selectedBoardAIButtons;
     private ArrayList<SelectionData> selectedHandButtons;
     private ArrayList<SelectionData> specialButtons;
 
@@ -19,6 +20,7 @@ public class ScrabbleController implements ActionListener {
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
         selectedBoardButtons = new ArrayList<>();
+        selectedBoardAIButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
         specialButtons = new ArrayList<>();
     }
@@ -84,30 +86,37 @@ public class ScrabbleController implements ActionListener {
                     System.out.println("Player 2 turn");
                     for (int i = 0; i < Board.SIZE; i++) {
                         for (int j = 0; j < Board.SIZE; j++) {
-                            if (model.getBoard().getPiece(i,j ).getLetter() != ' ') {
-                                System.out.println("Lucky Letter: " +model.getBoard().getPiece(i,j).getLetter() + model.getBoard().toString());
-                                //for (Piece p : model.getPlayer2Hand().getHandPieces()) {
-                                    if (model.getBoard().getPiece(i-1, j).getLetter() == ' ') {
-                                        SelectionData sd = new SelectionData(i, j-1, model.getPlayer2Hand().getHandPieces().get(0));
-                                        selectedBoardButtons.add(sd);
-                                        model.getPlayer2Hand().removePiece(0);
+                            if (model.getBoard().getPiece(j,i ).getLetter() != ' ') {
+                                selectedBoardAIButtons.clear();
+                                System.out.println("Lucky Letter: " +model.getBoard().getPiece(j,i).getLetter() + model.getBoard().toString());
+                                for (Piece p : model.getPlayer2Hand().getHandPieces()) {
+                                    if (model.getBoard().getPiece(j-1, i).getLetter() == ' ') {
+                                        SelectionData sd = new SelectionData(j,i-1, p);
+                                        selectedBoardAIButtons.add(sd);
+                                        //model.getPlayer2Hand().removePiece();
                                         model.getBoard().placePiece(sd);
-                                        System.out.println(selectedBoardButtons.size()+"=====");
-                                        System.out.println("selectedAIButton: " + selectedBoardButtons.get(0).getPiece().getLetter());
-                                        if (model.playWordOnBoard(selectedBoardButtons)) {
-                                            System.out.println("Player 2 successfully placed a letter :" + selectedBoardButtons.get(0).getPiece().getLetter());
+                                        System.out.println(selectedBoardAIButtons.size()+"=====");
+                                        System.out.println("selectedAIButton: " + selectedBoardAIButtons.get(0).getPiece().getLetter());
+                                        if (model.playWordOnBoard(selectedBoardAIButtons)) {
+                                            System.out.println("Player 2 successfully placed a letter :" + selectedBoardAIButtons.get(0).getPiece().getLetter());
+                                            model.getPlayer2Hand().getHandPieces().remove(p);
                                             //model.changeTurn();
                                             //model.updateViews();
                                             //model.refillHand(model.getPlayer2Hand());
                                             clearSelections();
-
                                             break;
-
                                         }
+                                        else {
+                                            model.getBoard().removePiece(j-1,i);
+                                            selectedBoardAIButtons.clear();
+                                            continue;
+                                        }
+
+
                                     }
 
 
-                               // }
+                               }
 
                             }
 
