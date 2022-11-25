@@ -45,7 +45,7 @@ public class ScrabbleController implements ActionListener {
                                 System.out.println("Lucky Letter: " +model.getBoard().getPiece(j,i).getLetter() + model.getBoard().toString());
                                 for (Piece p : model.getPlayer2Hand().getHandPieces()) {
                                     if (model.getBoard().getPiece(j-1, i).getLetter() == ' ') {
-                                        SelectionData sd = new SelectionData(j,i-1, p);
+                                        SelectionData sd = new SelectionData(j-1,i, p);
                                         model.getSelectedBoardButtons().add(sd);
                                         //model.getPlayer2Hand().removePiece();
                                         model.getBoard().placePiece(sd);
