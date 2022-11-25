@@ -325,7 +325,7 @@ public class ScrabbleControllerTest {
         testController.addToSelectedHandButtonsForTesting(d3);
         testController.addToSelectedHandButtonsForTesting(d4);
         testGame.getWord(selectedBoardButtons5);
-        testController.revertSelections();
+        //testController.revertSelections();
         assertTrue(testController.getSelectedBoardButtonsForTesting().isEmpty());
         assertTrue(testController.getSelectedHandButtonsForTesting().isEmpty());
     }
