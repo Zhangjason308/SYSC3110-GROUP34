@@ -26,6 +26,10 @@ public class ScrabbleGame {
         return selectedBoardAIButtons;
     }
 
+    public ArrayList<SelectionData> getSelectedHandButtons() {
+        return selectedHandButtons;
+    }
+
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED}
 
     private int player1Score;
