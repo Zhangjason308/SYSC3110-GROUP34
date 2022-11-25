@@ -31,13 +31,13 @@ public class ScrabbleControllerTest {
         selectedBoardButtons.add(d4);
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertTrue(testGame.lettersAreInLine(selectedBoardButtons)[0]);
         assertTrue(testGame.lettersAreInLine(selectedBoardButtons)[1]);
@@ -56,13 +56,13 @@ public class ScrabbleControllerTest {
         selectedBoardButtons1.add(d3);
         selectedBoardButtons1.add(d4);
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertTrue(testGame.lettersAreInLine(selectedBoardButtons1)[0]);
         assertFalse(testGame.lettersAreInLine(selectedBoardButtons1)[1]);
@@ -81,13 +81,13 @@ public class ScrabbleControllerTest {
         selectedBoardButtons2.add(d3);
         selectedBoardButtons2.add(d4);
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertFalse(testGame.lettersAreInLine(selectedBoardButtons2)[0]);
         assertFalse(testGame.lettersAreInLine(selectedBoardButtons2)[1]);
@@ -111,13 +111,13 @@ public class ScrabbleControllerTest {
         selectedBoardButtons2.add(d3);
         selectedBoardButtons2.add(d4);
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertEquals(testGame.getWord(selectedBoardButtons2), "lean");
 
@@ -131,13 +131,13 @@ public class ScrabbleControllerTest {
         d4 = new SelectionData(4,1, new Piece('n'));
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
         ArrayList<SelectionData> selectedBoardButtons1 = new ArrayList<>();
         selectedBoardButtons1.add(d1);
         selectedBoardButtons1.add(d2);
@@ -161,11 +161,11 @@ public class ScrabbleControllerTest {
         selectedBoardButtons3.add(d4);
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
 
         assertEquals(testGame.getWord(selectedBoardButtons3), "lean");
@@ -187,13 +187,13 @@ public class ScrabbleControllerTest {
 
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
 
         assertEquals(testGame.getWord(selectedBoardButtons4), "");
     }
@@ -222,19 +222,19 @@ public class ScrabbleControllerTest {
         selectedBoardButtons4.add(d7);
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
         testBoard.placePiece(d5);
-        testController.addToSelectedBoardButtonsForTesting(d5);
+        //testController.addToSelectedBoardButtonsForTesting(d5);
         testBoard.placePiece(d6);
-        testController.addToSelectedBoardButtonsForTesting(d6);
+        //testController.addToSelectedBoardButtonsForTesting(d6);
         testBoard.placePiece(d7);
-        testController.addToSelectedBoardButtonsForTesting(d7);
+        //testController.addToSelectedBoardButtonsForTesting(d7);
 
         assertEquals(testGame.getBranchWords(selectedBoardButtons4).get(0), "as");
 
@@ -261,19 +261,19 @@ public class ScrabbleControllerTest {
 
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
         testBoard.placePiece(d3);
-        testController.addToSelectedBoardButtonsForTesting(d3);
+        //testController.addToSelectedBoardButtonsForTesting(d3);
         testBoard.placePiece(d4);
-        testController.addToSelectedBoardButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d4);
         testBoard.placePiece(d5);
-        testController.addToSelectedBoardButtonsForTesting(d5);
+        //testController.addToSelectedBoardButtonsForTesting(d5);
         testBoard.placePiece(d6);
-        testController.addToSelectedBoardButtonsForTesting(d6);
+        //testController.addToSelectedBoardButtonsForTesting(d6);
         testBoard.placePiece(d7);
-        testController.addToSelectedBoardButtonsForTesting(d7);
+        //testController.addToSelectedBoardButtonsForTesting(d7);
 
         assertEquals(testGame.getBranchWords(selectedBoardButtons5).get(0), "as");
     }
@@ -319,15 +319,15 @@ public class ScrabbleControllerTest {
 
 
         testBoard.placePiece(d1);
-        testController.addToSelectedBoardButtonsForTesting(d1);
+        //testController.addToSelectedBoardButtonsForTesting(d1);
         testBoard.placePiece(d2);
-        testController.addToSelectedBoardButtonsForTesting(d2);
-        testController.addToSelectedHandButtonsForTesting(d3);
-        testController.addToSelectedHandButtonsForTesting(d4);
+        //testController.addToSelectedBoardButtonsForTesting(d2);
+        //testController.addToSelectedHandButtonsForTesting(d3);
+        //testController.addToSelectedHandButtonsForTesting(d4);
         testGame.getWord(selectedBoardButtons5);
-        testController.revertSelections();
-        assertTrue(testController.getSelectedBoardButtonsForTesting().isEmpty());
-        assertTrue(testController.getSelectedHandButtonsForTesting().isEmpty());
+        //testController.revertSelections();
+        //assertTrue(testController.getSelectedBoardButtonsForTesting().isEmpty());
+        //assertTrue(testController.getSelectedHandButtonsForTesting().isEmpty());
     }
 
     @Test
