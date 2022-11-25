@@ -700,4 +700,3 @@ public class ScrabbleGame {
 
 
 }
-

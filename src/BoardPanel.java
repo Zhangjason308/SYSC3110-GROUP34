@@ -43,7 +43,7 @@ public class BoardPanel extends JPanel implements ScrabbleView {
         buttons[7][7].setBackground(Color.orange);
         this.setVisible(true);
 
-            }
+    }
 
     static public void disableButtons(ArrayList<SelectionData> sData){
         for (SelectionData sd : sData) {
@@ -63,4 +63,3 @@ public class BoardPanel extends JPanel implements ScrabbleView {
         }
     }
 }
-
