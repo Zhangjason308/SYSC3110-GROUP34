@@ -22,10 +22,6 @@ public class ScrabbleGame {
         return selectedBoardButtons;
     }
 
-    public ArrayList<SelectionData> getSelectedBoardAIButtons() {
-        return selectedBoardAIButtons;
-    }
-
     public ArrayList<SelectionData> getSelectedHandButtons() {
         return selectedHandButtons;
     }
@@ -44,9 +40,7 @@ public class ScrabbleGame {
 
     private ArrayList<SelectionData> specialBlueButtons;
     private ArrayList<SelectionData> specialRedButtons;
-    private ArrayList<SelectionData> selectedAIButtons;
     private ArrayList<SelectionData> selectedBoardButtons;
-    private ArrayList<SelectionData> selectedBoardAIButtons;
     private ArrayList<SelectionData> selectedHandButtons;
     private ArrayList<SelectionData> specialButtons;
 
@@ -67,9 +61,7 @@ public class ScrabbleGame {
         views = new ArrayList<>();
         specialBlueButtons = new ArrayList<>();
         specialRedButtons = new ArrayList<>();
-        selectedAIButtons = new ArrayList<>();
         selectedBoardButtons = new ArrayList<>();
-        selectedBoardAIButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
         specialButtons = new ArrayList<>();
         list = new ArrayList<ArrayList<Character>>();
@@ -217,6 +209,7 @@ public class ScrabbleGame {
         return false;
     }
     public void revertSelections() {
+
         for (SelectionData sd : selectedBoardButtons) {
             if (getTurn()) {
                 getPlayer1Hand().addPiece(sd.getPiece());
@@ -236,7 +229,6 @@ public class ScrabbleGame {
     }
 
     public void clearSelections() {
-        selectedBoardAIButtons.clear();
         selectedBoardButtons.clear();
         selectedHandButtons.clear();
     }
@@ -519,41 +511,6 @@ public class ScrabbleGame {
     }
 
     public void playBot() {
-        if (!getTurn()) { //
-            //SelectionData sd = new SelectionData(0, 1, new Piece('i'));
-            //SelectionData sd2 = new SelectionData(0, 2, new Piece('m'));
-            //scrabbleBoard.placePiece(sd);
-            //scrabbleBoard.placePiece(sd2);
-            for (int i = 0; i < Board.SIZE; i++) {
-                for (int j = 0; j < Board.SIZE; j++) {
-                    if (scrabbleBoard.getPiece(i, j).getLetter() != ' ') {
-                        for (Piece p : player2Hand.getHandPieces()) {
-                            if (scrabbleBoard.getPiece(i-1,j).getLetter() == ' '){
-                                selectedAIButtons.add(new SelectionData(i-1,j,p));
-                                System.out.println("selectedAIButton: " + selectedAIButtons.get(0).getPiece().getLetter());
-                                if (playWordOnBoard(selectedAIButtons)) {
-                                    break;
-                                }
-                            }
-                            else if(scrabbleBoard.getPiece(i+1,j).getLetter() == ' '){
-                                selectedAIButtons.add(new SelectionData(i+1,j,p));
-                                if (playWordOnBoard(selectedAIButtons)) {
-                                    scrabbleBoard.placePiece(selectedAIButtons.get(0));
-                                    break;
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-
-                }
-
-
-        }
-         }
     }
     public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
         if (firstTurnPlayedCenter()) {
@@ -572,32 +529,40 @@ public class ScrabbleGame {
                                 score += calculateScore(s);
                             } else {
                                 System.out.println("Invalid word: " + s);
-
+                                revertSelections();
                                 score = 0;
+                                updateViews();
                                 return false;
                             }
                         }
                     } else {
                         System.out.println("Invalid word: " + word);
+                        updateViews();
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 if (score == 0) {
                     System.out.println("invalid word");
+                    updateViews();
                 } else {
                     BoardPanel.disableButtons(selectedBoardButtons);
                     addScore(score);
                     play();
+                    updateViews();
                     return true;
 
                 }
             } else {
                 System.out.println("Invalid Placements");
+                revertSelections();
+                updateViews();
                 return false;
 
             }
+
         }
+        updateViews();
         return false;
     }
     // }

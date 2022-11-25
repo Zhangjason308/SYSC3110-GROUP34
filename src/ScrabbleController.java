@@ -31,7 +31,7 @@ public class ScrabbleController implements ActionListener {
 
                 if (model.getTurn()) {
                     System.out.println("Player 1 turn");
-                    if (model.playWordOnBoard(model.getSelectedBoardAIButtons())) {
+                    if (model.playWordOnBoard(model.getSelectedBoardButtons())) {
                         model.clearSelections();
                     } else {
                         model.clearSelections();
@@ -41,18 +41,18 @@ public class ScrabbleController implements ActionListener {
                     for (int i = 0; i < Board.SIZE; i++) {
                         for (int j = 0; j < Board.SIZE; j++) {
                             if (model.getBoard().getPiece(j,i ).getLetter() != ' ') {
-                                model.getSelectedBoardAIButtons().clear();
+                                model.getSelectedBoardButtons().clear();
                                 System.out.println("Lucky Letter: " +model.getBoard().getPiece(j,i).getLetter() + model.getBoard().toString());
                                 for (Piece p : model.getPlayer2Hand().getHandPieces()) {
                                     if (model.getBoard().getPiece(j-1, i).getLetter() == ' ') {
                                         SelectionData sd = new SelectionData(j,i-1, p);
-                                        model.getSelectedBoardAIButtons().add(sd);
+                                        model.getSelectedBoardButtons().add(sd);
                                         //model.getPlayer2Hand().removePiece();
                                         model.getBoard().placePiece(sd);
-                                        System.out.println(model.getSelectedBoardAIButtons().size()+"=====");
-                                        System.out.println("selectedAIButton: " + model.getSelectedBoardAIButtons().get(0).getPiece().getLetter());
-                                        if (model.playWordOnBoard(model.getSelectedBoardAIButtons())) {
-                                            System.out.println("Player 2 successfully placed a letter :" + model.getSelectedBoardAIButtons().get(0).getPiece().getLetter());
+                                        System.out.println(model.getSelectedBoardButtons().size()+"=====");
+                                        System.out.println("selectedAIButton: " + model.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                        if (model.playWordOnBoard(model.getSelectedBoardButtons())) {
+                                            System.out.println("Player 2 successfully placed a letter :" + model.getSelectedBoardButtons().get(0).getPiece().getLetter());
                                             model.getPlayer2Hand().getHandPieces().remove(p);
                                             //model.changeTurn();
                                             //model.updateViews();
@@ -62,7 +62,7 @@ public class ScrabbleController implements ActionListener {
                                         }
                                         else {
                                             model.getBoard().removePiece(j-1,i);
-                                            model.getSelectedBoardAIButtons().clear();
+                                            model.getSelectedBoardButtons().clear();
                                             continue;
                                         }
 
