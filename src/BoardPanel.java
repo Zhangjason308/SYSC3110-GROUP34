@@ -25,9 +25,9 @@ public class BoardPanel extends JPanel implements ScrabbleView {
                 JButton b = new JButton(" ");
                 //b.setBackground(Color.RED);
                 b.setOpaque(true);
-                b.setActionCommand(i + " " +j);
+                b.setActionCommand(j + " " +i);
                 b.addActionListener(controller);
-                buttons[i][j] = b;
+                buttons[j][i] = b;
                 this.add(b);
             }
         }
@@ -43,24 +43,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {
         buttons[7][7].setBackground(Color.orange);
         this.setVisible(true);
 
-<<<<<<< HEAD
-=======
-            }
-    public int getMultipliers(int x, int y) {
-        int multiplier;
-        if (buttons[x][y].getBackground() == Color.WHITE) {
-             multiplier = 1;
-        }
-        else {
-            if (buttons[x][y].getBackground() == Color.blue) {
-                multiplier = 3;
-            } else { //color red
-                multiplier = 2;
-            }
-            buttons[x][y].setBackground(Color.WHITE);
-        }
-        return multiplier;
->>>>>>> c964b12c42faa0667cd8637529423f5aaedc8b2c
     }
 
     static public void disableButtons(ArrayList<SelectionData> sData){
@@ -76,7 +58,7 @@ public class BoardPanel extends JPanel implements ScrabbleView {
 
         for (int i  = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                buttons[i][j].setText(Character.toString(board.getPiece(i, j).getLetter()));
+                buttons[j][i].setText(Character.toString(board.getPiece(j, i).getLetter()));
             }
         }
     }
