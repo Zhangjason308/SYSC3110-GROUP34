@@ -7,13 +7,14 @@ public class GameButtonPanel extends JPanel {
     JButton swap; //
     ScrabbleGame game;
 
+    Game g;
     public GameButtonPanel(ScrabbleController controller) {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setSize(600,500);
-         play = new JButton(ScrabbleController.PLAY);
-         skip = new JButton(ScrabbleController.SKIP);
-         swap = new JButton(ScrabbleController.SWAP);
+         play = new JButton("Play");
+         skip = new JButton("Skip");
+         swap = new JButton("Swap");
         this.add(play);
         this.add(skip);
         this.add(swap);
