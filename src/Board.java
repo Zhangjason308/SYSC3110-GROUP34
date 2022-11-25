@@ -11,7 +11,7 @@ public class Board {
         arr = new Piece[15][15]; //Change to Element After, and once changed to type PIECE, every element will be null
        for (int i = 0; i<15; i++) {
             for(int j = 0; j<15; j++){
-                arr[i][j]= new Piece(' ');
+                arr[j][i]= new Piece(' ');
             }
         }
     }
@@ -38,7 +38,7 @@ public class Board {
 
         for(int x = 0; x<15; x++){
             for(int y = 0; y<15; y++){
-                output += " | " + arr[x][y].getLetter();
+                output += " | " + arr[y][x].getLetter();
             }
             output += " |\n";
             for(int i = 0; i<32; i++){

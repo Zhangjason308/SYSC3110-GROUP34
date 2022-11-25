@@ -38,12 +38,13 @@ public class ScrabbleController implements ActionListener {
                     }
                 } else {
                     System.out.println("Player 2 turn");
+                    istrueword:
                     for (int i = 0; i < Board.SIZE; i++) {
                         for (int j = 0; j < Board.SIZE; j++) {
                             if (model.getBoard().getPiece(j,i ).getLetter() != ' ') {
                                 model.getSelectedBoardButtons().clear();
                                 System.out.println("Lucky Letter: " +model.getBoard().getPiece(j,i).getLetter() + model.getBoard().toString());
-                                for (Piece p : model.getPlayer2Hand().getHandPieces()) {
+                                Piece p = model.getPlayer2Hand().getHandPieces().get(0);
                                     if (model.getBoard().getPiece(j-1, i).getLetter() == ' ') {
                                         SelectionData sd = new SelectionData(j-1,i, p);
                                         model.getSelectedBoardButtons().add(sd);
@@ -58,7 +59,7 @@ public class ScrabbleController implements ActionListener {
                                             //model.updateViews();
                                             //model.refillHand(model.getPlayer2Hand());
                                             model.clearSelections();
-                                            break;
+                                            break istrueword;
                                         }
                                         else {
                                             model.getBoard().removePiece(j-1,i);
@@ -75,7 +76,6 @@ public class ScrabbleController implements ActionListener {
                             }
 
 
-                        }
 
 
                     }
