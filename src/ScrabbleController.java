@@ -9,9 +9,9 @@ public class ScrabbleController implements ActionListener {
     public static final char BLANK = '!';
 
 
-    private static String PLAY = "Play";
-    private static String SWAP = "Swap";
-    private static String SKIP = "Skip";
+    public static String PLAY = "Play";
+    public static String SWAP = "Swap";
+    public static String SKIP = "Skip";
 
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
