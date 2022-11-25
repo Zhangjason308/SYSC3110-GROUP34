@@ -11,7 +11,7 @@ public class Board {
         arr = new Piece[15][15]; //Change to Element After, and once changed to type PIECE, every element will be null
        for (int i = 0; i<15; i++) {
             for(int j = 0; j<15; j++){
-                arr[j][i]= new Piece(' ');
+                arr[i][j]= new Piece(' ');
             }
         }
     }
@@ -36,9 +36,9 @@ public class Board {
     public String toString(){  // this function works as is
         String output = "\n\n\t\t\t\t\t\tSCRABBLE BOARD\n";
 
-        for(int x = 0; x<15; x++){
-            for(int y = 0; y<15; y++){
-                output += " | " + arr[y][x].getLetter();
+        for(int y = 0; y<15; y++){
+            for(int x = 0; x<15; x++){
+                output += " | " + arr[x][y].getLetter();
             }
             output += " |\n";
             for(int i = 0; i<32; i++){
