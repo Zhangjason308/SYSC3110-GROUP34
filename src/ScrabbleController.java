@@ -8,10 +8,6 @@ public class ScrabbleController implements ActionListener {
 
     public static final char BLANK = '!';
 
-    private ArrayList<SelectionData> selectedBoardButtons;
-    private ArrayList<SelectionData> selectedBoardAIButtons;
-    private ArrayList<SelectionData> selectedHandButtons;
-    private ArrayList<SelectionData> specialButtons;
 
     private static String PLAY = "Play";
     private static String SWAP = "Swap";
@@ -19,51 +15,9 @@ public class ScrabbleController implements ActionListener {
 
     public ScrabbleController(ScrabbleGame model) {
         this.model = model;
-        selectedBoardButtons = new ArrayList<>();
-        selectedBoardAIButtons = new ArrayList<>();
-        selectedHandButtons = new ArrayList<>();
-        specialButtons = new ArrayList<>();
+
     }
 
-    public void getspecialButtons(ArrayList<SelectionData> sbb) {
-    }
-
-
-    public void revertSelections() {
-        for (SelectionData sd : selectedBoardButtons) {
-            if (model.getTurn()) {
-                model.getPlayer1Hand().addPiece(sd.getPiece());
-            } else {
-                model.getPlayer2Hand().addPiece(sd.getPiece());
-            }
-            model.removeFromBoard(sd.getX(), sd.getY());
-        }
-        selectedBoardButtons = new ArrayList<>();
-        for (SelectionData sd : selectedHandButtons) {
-            if (model.getTurn()) {
-                model.getPlayer1Hand().addPiece(sd.getPiece());
-            } else {
-                model.getPlayer2Hand().addPiece(sd.getPiece());
-            }
-        }
-    }
-
-    public void clearSelections() {
-        selectedBoardButtons.clear();
-        selectedHandButtons.clear();
-    }
-
-
-    public void skip() {
-        revertSelections();
-        clearSelections();
-        model.skip();
-    }
-
-    public void swap() {
-        clearSelections();
-        model.swap();
-    }
 
 
     @Override
@@ -78,7 +32,7 @@ public class ScrabbleController implements ActionListener {
                 if (model.getTurn()) {
                     System.out.println("Player 1 turn");
                     if (model.playWordOnBoard(selectedBoardButtons)) {
-                        clearSelections();
+                        model.clearSelections();
                     } else {
                         clearSelections();
                     }
@@ -129,9 +83,12 @@ public class ScrabbleController implements ActionListener {
 
 
         } else if (button.getText() == SKIP) {
-            skip();
+                model.revertSelections();
+                model.clearSelections();
+                model.skip();
         } else if (button.getText() == SWAP) { // doesn't return to bag (deletes them)
-            swap();
+                model.clearSelections();
+                model.swap();
         } else if (input.length == 1) { //it's a button from hand deal with accordingly
             // add to selected Pieces or buttons or whatever
 

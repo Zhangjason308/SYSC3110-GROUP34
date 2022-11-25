@@ -18,6 +18,14 @@ public class ScrabbleGame {
     public static final boolean player1 = true;
     public static final boolean player2 = false;
 
+    public ArrayList<SelectionData> getSelectedBoardButtons() {
+        return selectedBoardButtons;
+    }
+
+    public ArrayList<SelectionData> getSelectedBoardAIButtons() {
+        return selectedBoardAIButtons;
+    }
+
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED}
 
     private int player1Score;
@@ -33,6 +41,10 @@ public class ScrabbleGame {
     private ArrayList<SelectionData> specialBlueButtons;
     private ArrayList<SelectionData> specialRedButtons;
     private ArrayList<SelectionData> selectedAIButtons;
+    private ArrayList<SelectionData> selectedBoardButtons;
+    private ArrayList<SelectionData> selectedBoardAIButtons;
+    private ArrayList<SelectionData> selectedHandButtons;
+    private ArrayList<SelectionData> specialButtons;
 
     private ArrayList<ArrayList<Character>> list;
 
@@ -52,6 +64,10 @@ public class ScrabbleGame {
         specialBlueButtons = new ArrayList<>();
         specialRedButtons = new ArrayList<>();
         selectedAIButtons = new ArrayList<>();
+        selectedBoardButtons = new ArrayList<>();
+        selectedBoardAIButtons = new ArrayList<>();
+        selectedHandButtons = new ArrayList<>();
+        specialButtons = new ArrayList<>();
         list = new ArrayList<ArrayList<Character>>();
     }
 
@@ -196,6 +212,31 @@ public class ScrabbleGame {
         }
         return false;
     }
+    public void revertSelections() {
+        for (SelectionData sd : selectedBoardButtons) {
+            if (getTurn()) {
+                getPlayer1Hand().addPiece(sd.getPiece());
+            } else {
+                getPlayer2Hand().addPiece(sd.getPiece());
+            }
+            removeFromBoard(sd.getX(), sd.getY());
+        }
+        selectedBoardButtons = new ArrayList<>();
+        for (SelectionData sd : selectedHandButtons) {
+            if (getTurn()) {
+                getPlayer1Hand().addPiece(sd.getPiece());
+            } else {
+                getPlayer2Hand().addPiece(sd.getPiece());
+            }
+        }
+    }
+
+    public void clearSelections() {
+        selectedBoardAIButtons.clear();
+        selectedBoardButtons.clear();
+        selectedHandButtons.clear();
+    }
+
 
     public ArrayList<String> getBranchWords(ArrayList<SelectionData> selectedBoardButtons) {
 
@@ -527,6 +568,7 @@ public class ScrabbleGame {
                                 score += calculateScore(s);
                             } else {
                                 System.out.println("Invalid word: " + s);
+
                                 score = 0;
                                 return false;
                             }
