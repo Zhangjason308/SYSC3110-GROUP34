@@ -1,17 +1,13 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
-
-public class Board {
+public class Board {//
 
     public static final int SIZE = 15;
     Piece[][] arr;
 
     public Board(){
         arr = new Piece[15][15]; //Change to Element After, and once changed to type PIECE, every element will be null
-       for (int i = 0; i<15; i++) {
+        for (int i = 0; i<15; i++) {
             for(int j = 0; j<15; j++){
-                arr[i][j]= new Piece(' ');
+                arr[j][i]= new Piece(' ');
             }
         }
     }
@@ -36,9 +32,9 @@ public class Board {
     public String toString(){  // this function works as is
         String output = "\n\n\t\t\t\t\t\tSCRABBLE BOARD\n";
 
-        for(int y = 0; y<15; y++){
-            for(int x = 0; x<15; x++){
-                output += " | " + arr[x][y].getLetter();
+        for(int x = 0; x<15; x++){
+            for(int y = 0; y<15; y++){
+                output += " | " + arr[y][x].getLetter();
             }
             output += " |\n";
             for(int i = 0; i<32; i++){
@@ -49,5 +45,4 @@ public class Board {
         return output;
     }
 }
-
 

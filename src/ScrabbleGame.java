@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.*;
 
-public class ScrabbleGame {
+public class ScrabbleGame {//
 
 
     public static final int SIZE = 15;
@@ -17,6 +17,14 @@ public class ScrabbleGame {
     public static final int BOARD_MIDDLE = 7;
     public static final boolean player1 = true;
     public static final boolean player2 = false;
+
+    public ArrayList<SelectionData> getSelectedBoardButtons() {
+        return selectedBoardButtons;
+    }
+
+    public ArrayList<SelectionData> getSelectedHandButtons() {
+        return selectedHandButtons;
+    }
 
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED}
 
@@ -32,8 +40,12 @@ public class ScrabbleGame {
 
     private ArrayList<SelectionData> specialBlueButtons;
     private ArrayList<SelectionData> specialRedButtons;
+    private ArrayList<SelectionData> selectedBoardButtons;
+    private ArrayList<SelectionData> selectedHandButtons;
+    private ArrayList<SelectionData> specialButtons;
 
     private ArrayList<ArrayList<Character>> list;
+
     public ScrabbleGame() {
         // initializing game elements
         status = Status.UNDECIDED;
@@ -49,6 +61,9 @@ public class ScrabbleGame {
         views = new ArrayList<>();
         specialBlueButtons = new ArrayList<>();
         specialRedButtons = new ArrayList<>();
+        selectedBoardButtons = new ArrayList<>();
+        selectedHandButtons = new ArrayList<>();
+        specialButtons = new ArrayList<>();
         list = new ArrayList<ArrayList<Character>>();
     }
 
@@ -57,10 +72,11 @@ public class ScrabbleGame {
     }
 
     public void changeTurn() {
-        if(turn == player1){
+        if (turn == player1) {
             turn = player2;
+        } else {
+            turn = player1;
         }
-        else {turn = player1;}
     }
 
     public Status getStatus() {
@@ -71,10 +87,11 @@ public class ScrabbleGame {
         return turn;
     }
 
-    public int getPlayer1Score(){
+    public int getPlayer1Score() {
         return player1Score;
     }
-    public int getPlayer2Score(){
+
+    public int getPlayer2Score() {
         return player2Score;
     }
 
@@ -82,163 +99,142 @@ public class ScrabbleGame {
         return bag;
     }
 
-    public Hand getPlayer1Hand(){
+    public Hand getPlayer1Hand() {
         return player1Hand;
     }
-    public Hand getPlayer2Hand(){
+
+    public Hand getPlayer2Hand() {
         return player2Hand;
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return scrabbleBoard;
     }
 
-    public List<ScrabbleView> getViews(){
+    public List<ScrabbleView> getViews() {
         return views;
     }
 
-    public void addScore(int score){
-        if(turn){
+    public void addScore(int score) {
+        if (turn) {
             player1Score += score;
-        }
-        else{
+        } else {
             player2Score += score;
         }
     }
 
-    public void updateViews(){
+    public void updateViews() {
         for (ScrabbleView v : views) {
             v.update(this);
         }
     }
 
     public void updateStatus() {
-        if(endConditionIsMet()){
+        if (endConditionIsMet()) {
             status = calculateWinner();
-        }else{
+        } else {
             status = Status.UNDECIDED;
         }
     }
-    public boolean endConditionIsMet(){
-        if((player1Hand.sizeOfHand() < 7 || player2Hand.sizeOfHand() < 7) && bag.numberOfRemainingPieces() <= 0){
+
+    public boolean endConditionIsMet() {
+        if ((player1Hand.sizeOfHand() < 7 || player2Hand.sizeOfHand() < 7) && bag.numberOfRemainingPieces() <= 0) {
             return true;
         }
         return false;
     }
 
-    public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
-        if(firstTurnPlayedCenter() && surroundingPiecesArentEmpty(selectedBoardButtons)){
-            if (isXAligned(selectedBoardButtons) || isYAligned(selectedBoardButtons)){ // all x or y indexes are same
-                String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
-                ArrayList<String> branches = getBranchWords(selectedBoardButtons);
-                System.out.println(branches);
-                System.out.println(word);
-                int score = 0;
 
-                try {
-                    if(word.length() == 0 || isValidWord(word)){
-                        score += calculateScore(word);
-                        for (String s : branches) {
-                            if(isValidWord(s)){
-                                score += calculateScore(s);
-                            }
-                            else{
-                                System.out.println("Invalid word: " + s);
-                                score = 0;
-                                return false;
-                            }
-                        }
-                    }
-                    else{
-                        System.out.println("Invalid word: " + word);
-                    }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                if(score == 0){
-                    System.out.println("invalid word");
-                }
-                else{
-                    BoardPanel.disableButtons(selectedBoardButtons);
-                    addScore(score);
-                    play();
-                    return true;
-
-                }
-            }
-            else{
-                System.out.println("Invalid Placements");
-                return false;
-
-            }
-        }
-        return false;
-    }
-
-    public Status calculateWinner(){
-        if(player1Score == player2Score){
+    public Status calculateWinner() {
+        if (player1Score == player2Score) {
             return Status.TIE;
         }
-        return (player1Score > player2Score)? Status.PLAYER_1_WON: Status.PLAYER_2_WON;
+        return (player1Score > player2Score) ? Status.PLAYER_1_WON : Status.PLAYER_2_WON;
     }
 
-    public Piece removeFromHand(int index){
-        if(turn){
+    public Piece removeFromHand(int index) {
+        if (turn) {
             return player1Hand.removePiece(index);
-        }
-        else{
+        } else {
             return player2Hand.removePiece(index);
         }
     } // comment
-    public void placePiece(SelectionData data){
+
+    public void placePiece(SelectionData data) {
         scrabbleBoard.placePiece(data);
     }
-    public Piece removeFromBoard(int x, int y){
+
+    public Piece removeFromBoard(int x, int y) {
         return scrabbleBoard.removePiece(x, y);
     }
 
-    public void skip(){
+    public void skip() {
         System.out.println("skip was pressed");
         changeTurn();
         updateViews();
     }
 
-    public void swap(){
+    public void swap() {
         System.out.println("swap was pressed");
-        if(turn){
+        if (turn) {
             refillHand(player1Hand);
-        }
-        else{
+        } else {
             refillHand(player2Hand);
         }
         changeTurn();
         updateViews();
     }
-    public void refillHand(Hand hand){ // only to be called in the swap function
+
+    public void refillHand(Hand hand) { // only to be called in the swap function
         hand.addPieces(bag.grabPieces(HAND_SIZE - hand.sizeOfHand())); // gets rid of pieces doesn't add them to bag
     }
 
-    public boolean firstTurnPlayedCenter(){
-        if(scrabbleBoard.getPiece(BOARD_MIDDLE, BOARD_MIDDLE).getLetter() != ' '){
+    public boolean firstTurnPlayedCenter() {
+        if (scrabbleBoard.getPiece(BOARD_MIDDLE, BOARD_MIDDLE).getLetter() != ' ') {
             return true;
         }
         return false;
     }
 
-    public boolean surroundingPiecesArentEmpty(ArrayList<SelectionData> sd){ // doesnt quite work, will always be true beacause letters they place count as a surrounding piece to otehr letter they place in that turn
+    public boolean surroundingPiecesArentEmpty(ArrayList<SelectionData> sd) { // doesnt quite work, will always be true beacause letters they place count as a surrounding piece to otehr letter they place in that turn
         boolean hasPieceBeside = false;
         for (SelectionData data : sd) {
-            if(scrabbleBoard.getPiece(data.getX()-1, data.getY()).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX()+1, data.getY()).getLetter() != ' '){
+            if (scrabbleBoard.getPiece(data.getX() - 1, data.getY()).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX() + 1, data.getY()).getLetter() != ' ') {
                 return true;
             }
-            if(scrabbleBoard.getPiece(data.getX(), data.getY()-1).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX(), data.getY()+1).getLetter() != ' '){
+            if (scrabbleBoard.getPiece(data.getX(), data.getY() - 1).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX(), data.getY() + 1).getLetter() != ' ') {
                 return true;
             }
         }
         return false;
     }
+    public void revertSelections() {
 
-    public ArrayList<String> getBranchWords( ArrayList<SelectionData> selectedBoardButtons) {
+        for (SelectionData sd : selectedBoardButtons) {
+            if (getTurn()) {
+                getPlayer1Hand().addPiece(sd.getPiece());
+            } else {
+                getPlayer2Hand().addPiece(sd.getPiece());
+            }
+            removeFromBoard(sd.getX(), sd.getY());
+        }
+        selectedBoardButtons = new ArrayList<>();
+        for (SelectionData sd : selectedHandButtons) {
+            if (getTurn()) {
+                getPlayer1Hand().addPiece(sd.getPiece());
+            } else {
+                getPlayer2Hand().addPiece(sd.getPiece());
+            }
+        }
+    }
+
+    public void clearSelections() {
+        selectedBoardButtons.clear();
+        selectedHandButtons.clear();
+    }
+
+
+    public ArrayList<String> getBranchWords(ArrayList<SelectionData> selectedBoardButtons) {
 
         ArrayList<String> branchWords = new ArrayList<>(ScrabbleGame.HAND_SIZE);
 
@@ -250,13 +246,13 @@ public class ScrabbleGame {
                 int y = sd.getY();
                 Piece tracker = sd.getPiece();
                 while (tracker.getLetter() != ' ') {
-                    if (y==0) {
+                    if (y == 0) {
                         y--;
                         break;
                     }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     y--;
-                    tracker =getBoard().getPiece(x, y);
+                    tracker = getBoard().getPiece(x, y);
                 }// tracker has position of first letter in branch
                 y++;
                 tracker = getBoard().getPiece(x, y);
@@ -267,7 +263,7 @@ public class ScrabbleGame {
                     }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = getBoard().getPiece(x, y);
-                    if(tracker.getLetter() != ' '){
+                    if (tracker.getLetter() != ' ') {
                         word.append(tracker.getLetter());
                     }
                     y++;
@@ -286,7 +282,7 @@ public class ScrabbleGame {
                 int y = sd.getY();
                 Piece tracker = sd.getPiece();
                 while (tracker.getLetter() != ' ') {
-                    if (x==0) {
+                    if (x == 0) {
                         x--;
                         break;
                     }
@@ -303,7 +299,7 @@ public class ScrabbleGame {
                     }
                     //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = getBoard().getPiece(x, y);
-                    if(tracker.getLetter() != ' '){
+                    if (tracker.getLetter() != ' ') {
                         word.append(tracker.getLetter());
                     }
                     x++;
@@ -316,7 +312,7 @@ public class ScrabbleGame {
         ArrayList<String> toReturn = new ArrayList<>();
         for (String s : branchWords) {
             String str = s.trim();
-            if(str.length() != 0 && str.length() != 1){
+            if (str.length() != 0 && str.length() != 1) {
                 toReturn.add(str);
             }
         }
@@ -324,9 +320,9 @@ public class ScrabbleGame {
         return toReturn;
     }
 
-    public String getWord( ArrayList<SelectionData> selectedBoardButtons){
+    public String getWord(ArrayList<SelectionData> selectedBoardButtons) {
 
-        if(selectedBoardButtons.isEmpty()){
+        if (selectedBoardButtons.isEmpty()) {
             System.out.println("in getWord Function: selectedBoardButtons is empty");
             return "";
         }
@@ -337,13 +333,13 @@ public class ScrabbleGame {
         int y = selectedBoardButtons.get(0).getY();
 
         for (int i = 0; i < selectedBoardButtons.size(); i++) {
-            for (int j = 0 ; j < BoardPanel.NUM_OF_BLUE_POSITIONS; j++) {
+            for (int j = 0; j < BoardPanel.NUM_OF_BLUE_POSITIONS; j++) {
 
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[1][j]) {
                     specialBlueButtons.add(selectedBoardButtons.get(i));
                 }
             }
-            for (int j = 0 ; j < BoardPanel.NUM_OF_RED_POSITIONS; j++) {
+            for (int j = 0; j < BoardPanel.NUM_OF_RED_POSITIONS; j++) {
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_RED[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_RED[1][j]) {
                     specialRedButtons.add(selectedBoardButtons.get(i));
                 }
@@ -355,7 +351,7 @@ public class ScrabbleGame {
         if (isXAligned(selectedBoardButtons)) {
             while (tracker.getLetter() != ' ') {
 
-                if(x == 0){
+                if (x == 0) {
                     x--;
                     break;
                 }
@@ -371,7 +367,7 @@ public class ScrabbleGame {
                 tracker = getBoard().getPiece(x, y);
                 System.out.println(word);
                 word.append(tracker.getLetter());
-                if(x == 14){
+                if (x == 14) {
                     break;
                 }
                 x++;
@@ -381,7 +377,7 @@ public class ScrabbleGame {
 
             while (tracker.getLetter() != ' ') {
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
-                if(y == 0){
+                if (y == 0) {
                     y--;
                     break;
                 }
@@ -396,20 +392,18 @@ public class ScrabbleGame {
                 //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 tracker = getBoard().getPiece(x, y);
                 word.append(tracker.getLetter());
-                if(y == 14){
+                if (y == 14) {
                     break;
                 }
                 y++;
             }
         }
         String checkSizeStr = word.toString().trim();
-        if(checkSizeStr.length() == 1 && !getBranchWords(selectedBoardButtons).isEmpty()){
+        if (checkSizeStr.length() == 1 && !getBranchWords(selectedBoardButtons).isEmpty()) {
             return "";
         }
         return checkSizeStr;
     }
-
-
 
 
     public boolean isValidWord(String word) throws IOException {  // this function works as is
@@ -420,25 +414,26 @@ public class ScrabbleGame {
 
         for (String s : temp) {
             String str = s.trim();
-            if(str.compareTo(word) == 0){
+            if (str.compareTo(word) == 0) {
                 return true;
             }
         }
         return false;
     }
-    public int calculateScore(String s){
+
+    public int calculateScore(String s) {
         char[] arr = s.toCharArray();
         int score = 0;
-        for(char c : arr){
+        for (char c : arr) {
             score += Piece.pieceMap.get(c);
         }
-        for (SelectionData sd: specialBlueButtons) {
-            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*3;
+        for (SelectionData sd : specialBlueButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter()) * 3;
             score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
         }
 
-        for (SelectionData sd: specialRedButtons) {
-            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter())*2;
+        for (SelectionData sd : specialRedButtons) {
+            score += sd.getPiece().pieceMap.get(sd.getPiece().getLetter()) * 2;
             score -= sd.getPiece().pieceMap.get(sd.getPiece().getLetter());
         }
         specialBlueButtons.clear();
@@ -446,7 +441,7 @@ public class ScrabbleGame {
         return score;
     }
 
-    public boolean[] lettersAreInLine( ArrayList<SelectionData> selectedBoardButtons) {
+    public boolean[] lettersAreInLine(ArrayList<SelectionData> selectedBoardButtons) {
 
         boolean xAligned = true;
         boolean yAligned = true;
@@ -471,26 +466,28 @@ public class ScrabbleGame {
         booleans[1] = yAligned;
         return booleans;
     } // comment
-    public boolean isXAligned(ArrayList<SelectionData> selectedBoardButtons){
+
+    public boolean isXAligned(ArrayList<SelectionData> selectedBoardButtons) {
         boolean[] bool = lettersAreInLine(selectedBoardButtons);
         return bool[0];
     }
-    public boolean isYAligned(ArrayList<SelectionData> selectedBoardButtons){
+
+    public boolean isYAligned(ArrayList<SelectionData> selectedBoardButtons) {
         boolean[] bool = lettersAreInLine(selectedBoardButtons);
         return bool[1];
     }
 
 
-    public ArrayList<ArrayList<Character>> getList() throws IOException{
+    public ArrayList<ArrayList<Character>> getList() throws IOException {
 
         Path path = Path.of("src\\Dictionary.txt");
         String dictionary = Files.readString(path);
         String[] temp = dictionary.split("\n");
 
 
-        for(String s : temp){
+        for (String s : temp) {
             ArrayList<Character> tempChar = new ArrayList<Character>();
-            for(int i = 0; i < s.length(); i++){
+            for (int i = 0; i < s.length(); i++) {
                 tempChar.add(s.charAt(i));
             }
             list.add(tempChar);
@@ -498,38 +495,81 @@ public class ScrabbleGame {
 
         return list;
     }
+
     public void play() {
-        if(getTurn()){
+        if (getTurn()) {
             refillHand(player1Hand);
-        }
-        else {
+        } else {
             refillHand(player2Hand);
-            playBot();
+            //playBot();
         }
         changeTurn();
         updateViews();
 
+
         System.out.println("play was pressed");
     }
+
     public void playBot() {
-        if (!getTurn()){ //
-            SelectionData sd = new SelectionData(0,1, new Piece('i'));
-            SelectionData sd2 = new SelectionData(0,2, new Piece('m'));
-           scrabbleBoard.placePiece(sd);
-            scrabbleBoard.placePiece(sd2);
-           //for (int i = 0; i < Board.SIZE; i++) {
-              //  for (int j = 0; j < Board.SIZE; j++) {
-                   // if (scrabbleBoard.getPiece(i,j).getLetter() != ' ') {
-                     // for (Piece p: player2Hand.getHandPieces()) {
+    }
+    public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
+        if (firstTurnPlayedCenter()) {
+            if (isXAligned(selectedBoardButtons) || isYAligned(selectedBoardButtons)) { // all x or y indexes are same
+                String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
+                ArrayList<String> branches = getBranchWords(selectedBoardButtons);
+                System.out.println(branches);
+                System.out.println(word);
+                int score = 0;
 
-                      }
-                      //scrabbleBoard.
-                      //  }
-                   // }
+                try {
+                    if (word.length() == 0 || isValidWord(word)) {
+                        score += calculateScore(word);
+                        for (String s : branches) {
+                            if (isValidWord(s)) {
+                                score += calculateScore(s);
+                            } else {
+                                System.out.println("Invalid word: " + s);
+                                revertSelections();
+                                score = 0;
+                                updateViews();
+                                return false;
+                            }
+                        }
+                    } else {
+                        System.out.println("Invalid word: " + word);
+                        updateViews();
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
-           // }
+                if (score == 0) {
+                    System.out.println("invalid word");
+                    updateViews();
+                } else {
+                    BoardPanel.disableButtons(selectedBoardButtons);
+                    addScore(score);
+                    play();
+                    updateViews();
+                    return true;
 
-    public  void playAI(Hand hand) { //calebs implementation
+                }
+            } else {
+                System.out.println("Invalid Placements");
+                revertSelections();
+                updateViews();
+                return false;
+
+            }
+
+        }
+        updateViews();
+        return false;
+    }
+    // }
+
+    public ArrayList<ArrayList<Character>>  playAI(Hand hand) { //calebs implementation
+
+        ArrayList<ArrayList<Character>> possibleSolutions = new ArrayList<ArrayList<Character>>();
         ArrayList<Character> handList = new ArrayList<Character>();
 
         for (Piece piece : hand.getHandPieces()) {
@@ -545,30 +585,28 @@ public class ScrabbleGame {
 
 
                 for (Character letter : dict) {
-                    if(tempHandList.contains(letter)) {
-                        System.out.println(letter);
+                    if (tempHandList.contains(letter)) {
                         tempHandList.remove(tempHandList.indexOf(letter));
                         tempDictList.remove(tempDictList.indexOf(letter));
                     }
                 }
                 //for(Character temp : tempDictList){
-                   // System.out.println(temp);
-               // }
-                if(tempDictList.size() == 0) {
-                    for(Character letter : dict) {
-                        System.out.println(letter);
-
+                // System.out.println(temp);
+                // }
+                if (tempDictList.size() == 1) {
+                    System.out.println("Dict word:");
+                    ArrayList<Character> tempChar = new ArrayList<Character>();
+                    for (Character letter : dict) {
+                        tempChar.add(letter);
                     }
-                    System.out.println("boop");
-
-
+                    possibleSolutions.add(tempChar);
                 }
 
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        return possibleSolutions;
 
 
 
@@ -658,13 +696,7 @@ public class ScrabbleGame {
     }
 
          */
-        }
-    public static void main(String[] args) {
-        ScrabbleGame gam = new ScrabbleGame();
-        Bag bag1 = new Bag();
-        Hand han = new Hand();
-        han.addPieces(bag1.grabPieces(7));
-        gam.playAI(han);
     }
+
 
 }

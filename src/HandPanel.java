@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class HandPanel extends JPanel implements ScrabbleView{
+public class HandPanel extends JPanel implements ScrabbleView{//
     private JButton[] buttons;
 
     public HandPanel(ScrabbleController controller) {

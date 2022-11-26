@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Hand{
+public class Hand{//
 
     ArrayList<Piece> pieces;
 
