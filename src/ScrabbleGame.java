@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.*;
 
-public class ScrabbleGame {
+public class ScrabbleGame {//
 
 
     public static final int SIZE = 15;

@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GameButtonPanel extends JPanel {
+public class GameButtonPanel extends JPanel {//
     JButton play;
     JButton skip;
     JButton swap; //

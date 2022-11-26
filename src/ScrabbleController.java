@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class ScrabbleController implements ActionListener {
+public class ScrabbleController implements ActionListener {//
     private ScrabbleGame model;
 
     public static final char BLANK = '!';

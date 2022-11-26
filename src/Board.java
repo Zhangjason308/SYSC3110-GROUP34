@@ -1,4 +1,4 @@
-public class Board {
+public class Board {//
 
     public static final int SIZE = 15;
     Piece[][] arr;

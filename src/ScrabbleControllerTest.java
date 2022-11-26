@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ScrabbleControllerTest {
+public class ScrabbleControllerTest {//
     ScrabbleGame testGame = new ScrabbleGame();
     ScrabbleController testController = new ScrabbleController(testGame);
     Board testBoard = new Board();

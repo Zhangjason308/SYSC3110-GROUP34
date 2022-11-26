@@ -1,4 +1,4 @@
-public class SelectionData {
+public class SelectionData {//
     private int x;
     private int y;
     private Piece p;
