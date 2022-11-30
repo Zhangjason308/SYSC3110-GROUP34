@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Hand{//
+public class Hand implements Serializable {//
 
     ArrayList<Piece> pieces;
 

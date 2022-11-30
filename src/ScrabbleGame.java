@@ -1,7 +1,7 @@
 
 import javax.swing.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -610,14 +610,48 @@ public class ScrabbleGame {//
         return false;
     }
 
+    public void saveSerializable (String fileName){
+
+        try {
+            OutputStream outputStream = new FileOutputStream(fileName);
+            ObjectOutputStream obOut = new ObjectOutputStream(outputStream);
+
+            obOut.writeObject(this);
+
+            outputStream.flush();
+            outputStream.close();
+            obOut.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    static public ScrabbleGame importAddressBookSerializable (String fileName){
+        try {
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fileIn);
+            ScrabbleGame book = (ScrabbleGame) ois.readObject();
+            ois.close();
+            fileIn.close();
+            return book;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private boolean wordisConnected() {
-        for (SelectionData d: selectionController.getSelectedBoardButtons()) {
+        for (SelectionData d : selectionController.getSelectedBoardButtons()) {
 
         }
         return isValidWord("brown");
-    }
 
-    public ArrayList<ArrayList<Character>> getList() throws IOException {
+
+
+
+    }
+    public ArrayList<ArrayList<Character>> getList () throws IOException {
 
         String[] temp = getDictionary();
 
@@ -633,8 +667,7 @@ public class ScrabbleGame {//
         return list;
     }
     // }
-
-    public ArrayList<ArrayList<Character>>  playAI(Hand hand) { //calebs implementation
+    public ArrayList<ArrayList<Character>> playAI (Hand hand){ //calebs implementation
 
         ArrayList<ArrayList<Character>> possibleSolutions = new ArrayList<ArrayList<Character>>();
         ArrayList<Character> handList = new ArrayList<Character>();
@@ -766,6 +799,4 @@ public class ScrabbleGame {//
 
          */
     }
-
-
 }

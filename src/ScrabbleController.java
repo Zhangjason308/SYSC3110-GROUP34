@@ -24,6 +24,12 @@ public class ScrabbleController implements ActionListener {
 
             if (button.getText() == PLAY) {
                 model.play();
+            } else if (e.getSource() == view.saveSerialized) {
+                String fileName = JOptionPane.showInputDialog("enter name of file to be saved to: ").trim();
+                model.saveSerializable(fileName);
+            } else if (e.getSource() == view.getFileSerialized) {
+                String fileName = JOptionPane.showInputDialog("enter name of file to be imported: ").trim();
+                model = ScrabbleGame.importAddressBookSerializable(fileName);
             } else if (button.getText() == SKIP) {
                     model.skip();
             } else if (button.getText() == SWAP) {

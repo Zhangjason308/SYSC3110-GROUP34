@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.HashMap;
-public class Piece {//
+public class Piece implements Serializable {//
     char piece;
     public static final HashMap<Character, Integer> pieceMap = new HashMap<>();
     static {
