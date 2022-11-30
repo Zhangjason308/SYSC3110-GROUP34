@@ -10,7 +10,8 @@ public class ScrabbleFrame extends JFrame {//
         HandPanel handPanel = new HandPanel(sc);
         BoardPanel boardPanel = new BoardPanel(sc);
         GameButtonPanel gameButtonPanel = new GameButtonPanel(sc);
-        MenuBarPanel menuBarPanel = new MenuBarPanel();
+        MenuBarController menuBarController = new MenuBarController(model);
+        MenuBarPanel menuBarPanel = new MenuBarPanel(menuBarController);
         InfoPanel infoPanel = new InfoPanel();
         model.addScrabbleView(handPanel);
         model.addScrabbleView(boardPanel);
