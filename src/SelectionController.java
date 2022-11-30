@@ -1,7 +1,8 @@
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SelectionController {
+public class SelectionController implements Serializable {
     ScrabbleGame model;
     private ArrayList<SelectionData> specialBlueButtons;
 
