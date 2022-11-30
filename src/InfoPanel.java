@@ -79,12 +79,4 @@ public class InfoPanel extends JPanel implements ScrabbleView{
         tilesLeftLabel.setText(String.valueOf(tilesLeft));
         gameTurnLabel.setText("turn: " + (gameTurn ? "Player 1" : "Player 2"));
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.add(new InfoPanel());
-        frame.setSize(800, 1000);
-        frame.setVisible(true);
-
-    }
 }

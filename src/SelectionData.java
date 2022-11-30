@@ -34,11 +34,4 @@ public class SelectionData {
     public int getX(){
         return x;
     }
-
-    public static void main(String args[]) {
-        SelectionData d = new SelectionData("t_11_12");
-        System.out.println(d.getCoord(true));
-        System.out.println(d.getCoord(false));
-        System.out.println(d.getPiece().getLetter());
-    }
 }

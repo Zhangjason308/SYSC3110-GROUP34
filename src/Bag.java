@@ -99,18 +99,4 @@ public class Bag {
         }
         return bagString;
     }
-/*
-    public ArrayList<Piece> Swap(ArrayList<Piece> p){
-
-    }*/
-
-    public static void main(String args[]) {
-        Bag bag = new Bag();
-        System.out.println(bag.toString());
-        ArrayList<Piece> p = bag.grabPieces(7);
-        for (Piece d : p) {
-            System.out.println(d.getLetter());
-        }
-        System.out.println(bag.toString());
-    }
 }
