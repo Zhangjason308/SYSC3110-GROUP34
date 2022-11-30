@@ -12,7 +12,7 @@ public class MenuBarController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if (o instanceof JMenuItem) {
-
+            JMenuItem menuItem = (JMenu)
         }
     }
 }
