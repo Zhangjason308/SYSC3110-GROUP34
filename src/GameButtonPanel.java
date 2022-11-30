@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GameButtonPanel extends JPanel {
+public class GameButtonPanel extends JPanel {//
     JButton play;
     JButton skip;
     JButton swap; //
@@ -11,9 +11,9 @@ public class GameButtonPanel extends JPanel {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setSize(600,500);
-         play = new JButton(ScrabbleController.PLAY);
-         skip = new JButton(ScrabbleController.SKIP);
-         swap = new JButton(ScrabbleController.SWAP);
+        play = new JButton(ScrabbleController.PLAY);
+        skip = new JButton(ScrabbleController.SKIP);
+        swap = new JButton(ScrabbleController.SWAP);
         this.add(play);
         this.add(skip);
         this.add(swap);

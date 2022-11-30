@@ -1,3 +1,3 @@
-public class Ai {
+public class Ai {//
 
 }

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BoardPanel extends JPanel implements ScrabbleView {
+public class BoardPanel extends JPanel implements ScrabbleView {////
 
     static private JButton[][] buttons;
 
@@ -63,4 +63,3 @@ public class BoardPanel extends JPanel implements ScrabbleView {
         }
     }
 }
-

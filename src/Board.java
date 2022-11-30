@@ -1,15 +1,11 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
-
-public class Board {
+public class Board {//
 
     public static final int SIZE = 15;
     Piece[][] arr;
 
     public Board(){
         arr = new Piece[15][15]; //Change to Element After, and once changed to type PIECE, every element will be null
-       for (int i = 0; i<15; i++) {
+        for (int i = 0; i<15; i++) {
             for(int j = 0; j<15; j++){
                 arr[j][i]= new Piece(' ');
             }
@@ -49,5 +45,4 @@ public class Board {
         return output;
     }
 }
-
 

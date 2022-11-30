@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ScrabbleFrame extends JFrame {
+public class ScrabbleFrame extends JFrame {//
 
     public ScrabbleFrame() {
         super("Scrabble");

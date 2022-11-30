@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-public class InfoPanel extends JPanel implements ScrabbleView{
+public class InfoPanel extends JPanel implements ScrabbleView{//
     private JLabel tilesLeftLabel;
     private JLabel playerOne;
     private JLabel playerTwo;
