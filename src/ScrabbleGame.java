@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.*;
 
-public class ScrabbleGame {//
+public class ScrabbleGame implements Serializable{//
 
 
     public static final int SIZE = 15;
@@ -632,10 +632,10 @@ public class ScrabbleGame {//
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream ois = new ObjectInputStream(fileIn);
-            ScrabbleGame book = (ScrabbleGame) ois.readObject();
+            ScrabbleGame game = (ScrabbleGame) ois.readObject();
             ois.close();
             fileIn.close();
-            return book;
+            return game;
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -710,93 +710,5 @@ public class ScrabbleGame {//
 
         return possibleSolutions;
 
-
-
-        /*
-            ArrayList<ArrayList<Character>> possibleWord = new ArrayList<ArrayList<Character>>();
-
-            ArrayList<Character> handList = new ArrayList<Character>();
-            HashMap<Character,Integer> map = new HashMap<Character,Integer>();
-            ArrayList<Character> count = new ArrayList<Character>();
-
-            for(Piece piece : hand.getHandPieces()){
-
-                handList.add(piece.getLetter());
-
-            }
-            for (char letter : bag.getAlph()){
-                if(Collections.frequency(handList, letter) > 0){
-                    map.put(letter, Collections.frequency(handList, letter));
-                    if(count.contains(letter) == false){
-                        count.add(letter);
-                    }
-
-                }
-            }
-        try {
-            for(ArrayList<Character> dict : getList()){
-                if (dict.size() <= 7){
-                    //System.out.println(dict.get(0));
-                    HashMap<Character,Integer> mapDict = new HashMap<Character,Integer>();
-                    ArrayList<Character> countDict = new ArrayList<Character>();
-                    for (char letter : count) {
-                        //System.out.println("letters");
-                        //System.out.println(letter);
-                        if (Collections.frequency(dict, letter) > 0) {
-                            mapDict.put(letter, Collections.frequency(dict, letter));
-                            if(countDict.contains((letter)) == false){
-                                countDict.add(letter);
-                            }
-                        }
-                    }
-                    int validWord = 0;
-                    for(Character diffLettersDict : countDict){
-                        for(Character diffLettersInput : count){
-                            System.out.println(diffLettersDict);
-                            System.out.println(diffLettersInput);
-                            System.out.println("boop");
-                            if (diffLettersDict == diffLettersInput){
-                                //System.out.println(diffLettersDict);
-                                //System.out.println(mapDict.get(diffLettersDict));
-                                //System.out.println(diffLettersInput);
-                                //System.out.println(map.get(diffLettersInput));
-                                if (mapDict.get(diffLettersDict) <= map.get(diffLettersInput)){
-                                    validWord++;
-                                }
-                            }
-                        }
-                    }
-                    System.out.println("done loop");
-                    //System.out.println("got here boo");
-                    //System.out.println(validWord);
-                    //System.out.println(count.size());
-                    //System.out.println(countDict.size());
-                    if(validWord == count.size()){
-                        //System.out.println(validWord);
-                        possibleWord.add(dict);
-                        //System.out.println("these are dict");
-                        for(Character test : dict){
-                            System.out.println(test);
-                        }
-                        //System.out.println("these are hand");
-                        //System.out.println(hand.toString());
-                    }
-                }
-
-        }
-            System.out.println("got here 1");
-            for (ArrayList<Character> test : possibleWord){
-                //System.out.println(test.toString());
-                //System.out.println("got here");
-            }
-            return possibleWord;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-         */
     }
 }
