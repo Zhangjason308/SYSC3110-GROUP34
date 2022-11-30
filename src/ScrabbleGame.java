@@ -459,108 +459,108 @@ public class ScrabbleGame {//
                     if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
                         selectionController.getSelectedBoardButtons().clear();
                         System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
-                        Piece p = player2Hand.getHandPieces().get(0);
-                        if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
-                            SelectionData sd = new SelectionData(j - 1, i, p);
-                            selectionController.getSelectedBoardButtons().add(sd);
-                            //model.getPlayer2Hand().removePiece();
-                            scrabbleBoard.placePiece(sd);
-                            System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                            System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                            if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                player2Hand.getHandPieces().remove(p);
-                                //model.changeTurn();
-                                //model.updateViews();
-                                //model.refillHand(model.getPlayer2Hand());
-                                selectionController.clearSelectionButtons();
-                                break istrueword;
-                            } else {
-                                scrabbleBoard.removePiece(j - 1, i);
-                                selectionController.getSelectedBoardButtons().clear();
-                                continue;
+                        //Piece p = player2Hand.getHandPieces().get(pieceIndex);
+                        for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
+                            Piece p = player2Hand.getHandPieces().get(k);
+                            if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
+                                SelectionData sd = new SelectionData(j - 1, i, p);
+                                selectionController.getSelectedBoardButtons().add(sd);
+                                //model.getPlayer2Hand().removePiece();
+                                scrabbleBoard.placePiece(sd);
+                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
+                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
+                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                    player2Hand.getHandPieces().remove(p);
+                                    //model.changeTurn();
+                                    //model.updateViews();
+                                    //model.refillHand(model.getPlayer2Hand());
+                                    refillHand(getCurrentHand());
+                                    changeTurn();
+                                    selectionController.clearSelectionButtons();
+                                    break istrueword;
+                                } else {
+                                    scrabbleBoard.removePiece(j - 1, i);
+                                    selectionController.getSelectedBoardButtons().clear();
+                                    continue;
+                                }
                             }
-
-
-                        }
-                        else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
-                            SelectionData sd = new SelectionData(j + 1, i, p);
-                            selectionController.getSelectedBoardButtons().add(sd);
-                            //model.getPlayer2Hand().removePiece();
-                           scrabbleBoard.placePiece(sd);
-                            System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                            System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                            if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                player2Hand.getHandPieces().remove(p);
-                                //model.changeTurn();
-                                //model.updateViews();
-                                //model.refillHand(model.getPlayer2Hand());
-                                selectionController.clearSelectionButtons();
-                                break istrueword;
-                            } else {
-                                scrabbleBoard.removePiece(j +1, i);
-                                selectionController.getSelectedBoardButtons().clear();
-                                continue;
+                            else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
+                                SelectionData sd = new SelectionData(j + 1, i, p);
+                                selectionController.getSelectedBoardButtons().add(sd);
+                                //model.getPlayer2Hand().removePiece();
+                                scrabbleBoard.placePiece(sd);
+                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
+                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
+                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                    player2Hand.getHandPieces().remove(p);
+                                    //model.changeTurn();
+                                    //model.updateViews();
+                                    //model.refillHand(model.getPlayer2Hand());
+                                    refillHand(getCurrentHand());
+                                    changeTurn();
+                                    selectionController.clearSelectionButtons();
+                                    break istrueword;
+                                } else {
+                                    scrabbleBoard.removePiece(j +1, i);
+                                    selectionController.getSelectedBoardButtons().clear();
+                                    continue;
+                                }
                             }
-
-
-                        }
-                        else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
-                            SelectionData sd = new SelectionData(j , i+1, p);
-                            selectionController.getSelectedBoardButtons().add(sd);
-                            //model.getPlayer2Hand().removePiece();
-                            scrabbleBoard.placePiece(sd);
-                            System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                            System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                            if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                player2Hand.getHandPieces().remove(p);
-                                //model.changeTurn();
-                                //model.updateViews();
-                                //model.refillHand(model.getPlayer2Hand());
-                                selectionController.clearSelectionButtons();
-                                break istrueword;
-                            } else {
-                                scrabbleBoard.removePiece(j , i+1);
-                                selectionController.getSelectedBoardButtons().clear();
-                                continue;
+                            else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
+                                SelectionData sd = new SelectionData(j , i+1, p);
+                                selectionController.getSelectedBoardButtons().add(sd);
+                                //model.getPlayer2Hand().removePiece();
+                                scrabbleBoard.placePiece(sd);
+                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
+                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
+                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                    player2Hand.getHandPieces().remove(p);
+                                    //model.changeTurn();
+                                    //model.updateViews();
+                                    //model.refillHand(model.getPlayer2Hand());
+                                    refillHand(getCurrentHand());
+                                    changeTurn();
+                                    selectionController.clearSelectionButtons();
+                                    break istrueword;
+                                } else {
+                                    scrabbleBoard.removePiece(j , i+1);
+                                    selectionController.getSelectedBoardButtons().clear();
+                                    continue;
+                                }
                             }
-
-
-                        }
-                        else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
-                            SelectionData sd = new SelectionData(j , i-1, p);
-                            selectionController.getSelectedBoardButtons().add(sd);
-                            //model.getPlayer2Hand().removePiece();
-                            scrabbleBoard.placePiece(sd);
-                            System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                            System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                            if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                player2Hand.getHandPieces().remove(p);
-                                //model.changeTurn();
-                                //model.updateViews();
-                                //model.refillHand(model.getPlayer2Hand());
-                                selectionController.clearSelectionButtons();
-                                break istrueword;
-                            } else {
-                                scrabbleBoard.removePiece(j , i-1);
-                                selectionController.getSelectedBoardButtons().clear();
-                                continue;
+                            else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
+                                SelectionData sd = new SelectionData(j , i-1, p);
+                                selectionController.getSelectedBoardButtons().add(sd);
+                                //model.getPlayer2Hand().removePiece();
+                                scrabbleBoard.placePiece(sd);
+                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
+                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
+                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
+                                    player2Hand.getHandPieces().remove(p);
+                                    //model.changeTurn();
+                                    //model.updateViews();
+                                    //model.refillHand(model.getPlayer2Hand());
+                                    refillHand(getCurrentHand());
+                                    changeTurn();
+                                    selectionController.clearSelectionButtons();
+                                    break istrueword;
+                                } else {
+                                    scrabbleBoard.removePiece(j , i-1);
+                                    selectionController.getSelectedBoardButtons().clear();
+                                    continue;
+                                }
                             }
-
-
                         }
-
-
                     }
-
                 }
-
-
             }
+            selectionController.revertSelections();
         }
+        updateViews();
     }
 
     public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
