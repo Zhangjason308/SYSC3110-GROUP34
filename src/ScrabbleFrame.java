@@ -10,6 +10,7 @@ public class ScrabbleFrame extends JFrame {//
         HandPanel handPanel = new HandPanel(sc);
         BoardPanel boardPanel = new BoardPanel(sc);
         GameButtonPanel gameButtonPanel = new GameButtonPanel(sc);
+        MenuBarPanel menuBarPanel = new MenuBarPanel();
         InfoPanel infoPanel = new InfoPanel();
         model.addScrabbleView(handPanel);
         model.addScrabbleView(boardPanel);
@@ -17,7 +18,7 @@ public class ScrabbleFrame extends JFrame {//
         final JTextArea gameName = new JTextArea("SCRABBLE"); //Make it have an actionlistener to change player everytime
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout(20,20));
-        this.add(gameName, BorderLayout.NORTH);
+        this.add(menuBarPanel, BorderLayout.NORTH);
         this.add(handPanel, BorderLayout.SOUTH);
         this.add(gameButtonPanel, BorderLayout.LINE_START);
         this.add(boardPanel, BorderLayout.CENTER);

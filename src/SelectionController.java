@@ -136,7 +136,7 @@ public class SelectionController {
 
             System.out.println(handIndex);
 
-            model.getSelectionController().addToHandButtons(data);
+            model.selectionController.addToHandButtons(data);
 
             System.out.println(selectedHandButtons.get(0).getX() + " <- Hand Index");
         }

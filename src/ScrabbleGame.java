@@ -58,9 +58,6 @@ public class ScrabbleGame {//
         views.add(v);
     }
 
-    public SelectionController getSelectionController(){
-        return selectionController;
-    }
 
     public void selectHandButton(int handIndex, String buttonText){
         selectionController.selectHandButton(handIndex, buttonText);
@@ -564,7 +561,7 @@ public class ScrabbleGame {//
     }
 
     public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
-        if (firstTurnPlayedCenter()) {
+        if (firstTurnPlayedCenter() & wordisConnected()) {
             if (selectionController.isXAligned() || selectionController.isYAligned()) { // all x or y indexes are same
                 String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
                 ArrayList<String> branches = getBranchWords(selectedBoardButtons);
@@ -611,6 +608,13 @@ public class ScrabbleGame {//
         }
         updateViews();
         return false;
+    }
+
+    private boolean wordisConnected() {
+        for (SelectionData d: selectionController.getSelectedBoardButtons()) {
+
+        }
+        return isValidWord("brown");
     }
 
     public ArrayList<ArrayList<Character>> getList() throws IOException {
