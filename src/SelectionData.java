@@ -1,4 +1,6 @@
-public class SelectionData {//
+import java.io.Serializable;
+
+public class SelectionData implements Serializable {
     private int x;
     private int y;
     private Piece p;

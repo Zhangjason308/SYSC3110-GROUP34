@@ -628,6 +628,35 @@ public class ScrabbleGame implements Serializable{//
 
     }
 
+    public void setGameFromLoad(ScrabbleGame game){
+
+        this.turn = game.getTurn();
+        this.player1Score = game.getPlayer1Score();
+        this.player2Score = game.getPlayer2Score();
+
+        this.player1Hand = game.getPlayer1Hand();
+        this.player2Hand = game.getPlayer2Hand();
+
+        this.scrabbleBoard = game.getBoard();
+        this.bag = game.getBag();
+
+        this.selectionController = game.getSelectionController();
+
+        ArrayList<SelectionData> placedPieces = new ArrayList<>();
+        for (int i = 0; i < Board.SIZE; i++) { // y
+            for (int j = 0; j < Board.SIZE; j++) { // x
+                if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
+                    placedPieces.add(new SelectionData(j, i, scrabbleBoard.getPiece(j, i)));
+                }
+            }
+        }
+        BoardPanel.disableButtons(placedPieces);
+    }
+
+    private SelectionController getSelectionController() {
+        return this.selectionController;
+    }
+
     static public ScrabbleGame importAddressBookSerializable (String fileName){
         try {
             FileInputStream fileIn = new FileInputStream(fileName);

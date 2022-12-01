@@ -27,14 +27,14 @@ public class MenuBarController implements ActionListener {
                 model.saveSerializable(fileName);
             } else if (menu.getText().equals(LOAD)) {
                 String fileName = JOptionPane.showInputDialog("enter name of file to be imported: ").trim();
-                model = ScrabbleGame.importAddressBookSerializable(fileName);
+                ScrabbleGame loadedGame = ScrabbleGame.importAddressBookSerializable(fileName);
+                model.setGameFromLoad(loadedGame);
                 model.updateViews();
             } else if (menu.getText().equals(REDO)) {
 
             } else if (menu.getText().equals(UNDO)) {
 
             }
-            
         }
     }
 }
