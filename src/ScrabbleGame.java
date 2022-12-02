@@ -63,7 +63,6 @@ public class ScrabbleGame implements Serializable{//
         views.add(v);
     }
 
-
     public void selectHandButton(int handIndex, String buttonText){
         selectionController.selectHandButton(handIndex, buttonText);
         updateViews();
@@ -76,7 +75,12 @@ public class ScrabbleGame implements Serializable{//
 
     public void changeTurn() {
         SavedGameState gameTurn = new SavedGameState(this);
-        storedTurns.add(gameTurn);
+        if(storedTurns.size() == turnNumber){
+            storedTurns.add(gameTurn);
+        }
+        else{
+            storedTurns.set(turnNumber, gameTurn);
+        }
         if (turn == player1) {
             turn = player2;
         } else {
@@ -201,18 +205,20 @@ public class ScrabbleGame implements Serializable{//
         }
         BoardPanel.resetDisabledButtons();
         turnNumber--;
-        setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.reDisableButtons();
         updateViews();
     }
     public void redo() {
         selectionController.revertSelections();
-        if(turnNumber == storedTurns.size() - 1){
+        if(turnNumber == storedTurns.size()){
             JOptionPane.showMessageDialog(null, "Nothing to redo");
             return;
         }
         BoardPanel.resetDisabledButtons();
         turnNumber++;
-        setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.reDisableButtons();
         updateViews();
     }
 
@@ -238,19 +244,6 @@ public class ScrabbleGame implements Serializable{//
     public boolean firstTurnPlayedCenter() {
         if (scrabbleBoard.getPiece(BOARD_MIDDLE, BOARD_MIDDLE).getLetter() != ' ') {
             return true;
-        }
-        return false;
-    }
-
-    public boolean surroundingPiecesArentEmpty(ArrayList<SelectionData> sd) { // doesnt quite work, will always be true beacause letters they place count as a surrounding piece to otehr letter they place in that turn
-        boolean hasPieceBeside = false;
-        for (SelectionData data : sd) {
-            if (scrabbleBoard.getPiece(data.getX() - 1, data.getY()).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX() + 1, data.getY()).getLetter() != ' ') {
-                return true;
-            }
-            if (scrabbleBoard.getPiece(data.getX(), data.getY() - 1).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX(), data.getY() + 1).getLetter() != ' ') {
-                return true;
-            }
         }
         return false;
     }

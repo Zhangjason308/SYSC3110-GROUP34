@@ -54,7 +54,4 @@ public class SavedGameState {
     public SelectionController getSelectionController() {
         return selectionController;
     }
-
-
-
 }

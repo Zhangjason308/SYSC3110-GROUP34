@@ -30,7 +30,6 @@ public class MenuBarController implements ActionListener {
                 model.updateViews();
             } else if (menu.getText().equals(REDO)) {
                 model.redo();
-
             } else if (menu.getText().equals(UNDO)) {
                 model.undo();
             }
