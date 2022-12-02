@@ -23,8 +23,7 @@ public class ScrabbleGame implements Serializable{//
     private int player1Score;
 
     private int player2Score;
-
-    private int turnNum;
+    
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -56,8 +55,6 @@ public class ScrabbleGame implements Serializable{//
 
         list = new ArrayList<ArrayList<Character>>();
 
-        turnNum = 0;
-
         storedTurns = new ArrayList<>();
         turnNumber = 0;
     }
@@ -78,7 +75,6 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void changeTurn() {
-        turnNum++;
         SavedGameState gameTurn = new SavedGameState(this);
         storedTurns.add(gameTurn);
         if (turn == player1) {
@@ -187,7 +183,7 @@ public class ScrabbleGame implements Serializable{//
         } else {
             return player2Hand.removePiece(index);
         }
-    } // comment
+    }
 
     public void placePiece(SelectionData data) {
         scrabbleBoard.placePiece(data);
@@ -740,7 +736,7 @@ public class ScrabbleGame implements Serializable{//
         if(!turn){
            return true;
         }
-        if(turnNum == 0){
+        if(turnNumber == 0){
             return true;
         }
         /*
