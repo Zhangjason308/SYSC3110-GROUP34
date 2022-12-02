@@ -647,14 +647,12 @@ public class ScrabbleGame implements Serializable{//
                     addScore(score);
                     updateViews();
                     return true;
-
                 }
             } else {
                 System.out.println("Invalid Placements");
                 selectionController.revertSelections();
                 updateViews();
                 return false;
-
             }
 
         }
@@ -896,23 +894,5 @@ public class ScrabbleGame implements Serializable{//
         return possibleSolutions;
 
     }
-
-    public void psuedoCode(){
-        /*for ( each selection data  d){
-
-            if(d != ' '){
-
-                for( each selection data a){
-                    if(d.getX == a.getX && d.getY == a.getY){
-                     //its in not on the board, its a selection data thing
-                     continue checking other sides
-                    }
-                }
-
-            }
-        }
-
-
-         */
-    }
+    
 }
