@@ -10,9 +10,7 @@ public class MenuBarController implements ActionListener {
 
     private static final String SAVE = "Save";
     private static final String LOAD = "Load";
-
     private static final String REDO = "Redo";
-
     private static final String UNDO = "Undo";
     public MenuBarController(ScrabbleGame model) {
         this.model = model;
@@ -31,9 +29,10 @@ public class MenuBarController implements ActionListener {
                 model.setGameFromLoad(loadedGame);
                 model.updateViews();
             } else if (menu.getText().equals(REDO)) {
+                model.redo();
 
             } else if (menu.getText().equals(UNDO)) {
-
+                model.undo();
             }
         }
     }
