@@ -85,6 +85,24 @@ public class SelectionController implements Serializable {
 
         SelectionData previous = null;
 
+        if(selectedBoardButtons.size() == 1){
+            boolean[] booleans = new boolean[2];
+            int x = selectedBoardButtons.get(0).getX();
+            int y = selectedBoardButtons.get(0).getY();
+            if(model.getBoard().getPiece(x - 1, y).getLetter() == ' ' && model.getBoard().getPiece(x + 1, y).getLetter() == ' '){
+                xAligned = false;
+            }
+            if(model.getBoard().getPiece(x, y - 1).getLetter() == ' ' && model.getBoard().getPiece(x, y + 1).getLetter() == ' '){
+                yAligned = false;
+            }
+            if(xAligned && yAligned){ // if both are true then it doesn't matter, defaults to xAligned
+                yAligned = false;
+            }
+            booleans[0] = xAligned;
+            booleans[1] = yAligned;
+            return booleans;
+        }
+
         for (SelectionData sd : selectedBoardButtons) {
             if (previous == null) {
                 previous = sd;

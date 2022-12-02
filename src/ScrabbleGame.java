@@ -23,7 +23,7 @@ public class ScrabbleGame implements Serializable{//
     private int player1Score;
 
     private int player2Score;
-    
+
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -254,10 +254,6 @@ public class ScrabbleGame implements Serializable{//
         }
         return false;
     }
-
-
-
-
 
     public ArrayList<String> getBranchWords(ArrayList<SelectionData> selectedBoardButtons) {
 
@@ -615,7 +611,7 @@ public class ScrabbleGame implements Serializable{//
                 System.out.println(branches);
                 System.out.println(word);
                 int score = 0;
-                    if (word.length() == 0 || isValidWord(word)) {
+                    if (isValidWord(word)) {
                         score += calculateScore(word);
                         for (String s : branches) {
                             if (isValidWord(s)) {
