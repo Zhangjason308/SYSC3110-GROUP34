@@ -25,6 +25,8 @@ public class ScrabbleGame implements Serializable{//
     private int player1Score;
 
     private int player2Score;
+
+    private int turnNum;
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -52,6 +54,8 @@ public class ScrabbleGame implements Serializable{//
         selectionController = new SelectionController(this);
 
         list = new ArrayList<ArrayList<Character>>();
+
+        turnNum = 0;
     }
 
     public void addScrabbleView(ScrabbleView v) {
@@ -70,6 +74,7 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void changeTurn() {
+        turnNum++;
         if (turn == player1) {
             turn = player2;
         } else {
@@ -561,9 +566,13 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public Boolean playWordOnBoard(ArrayList<SelectionData> selectedBoardButtons) {
-        if (firstTurnPlayedCenter() & wordisConnected()) {
+        if (firstTurnPlayedCenter() && wordisConnected()) {
             if (selectionController.isXAligned() || selectionController.isYAligned()) { // all x or y indexes are same
                 String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
+                if(word.length() == 0){
+                    System.out.println("mainline word is 0");
+                   return false;
+                }
                 ArrayList<String> branches = getBranchWords(selectedBoardButtons);
                 System.out.println(branches);
                 System.out.println(word);
@@ -671,14 +680,103 @@ public class ScrabbleGame implements Serializable{//
     }
 
     private boolean wordisConnected() {
-        for (SelectionData d : selectionController.getSelectedBoardButtons()) {
+        if(!turn){
+           return true;
+        }
+        if(turnNum == 0){
+            return true;
+        }
+        /*
+        if (selectionController.getSelectedBoardButtons().size() == 1){
+            SelectionData onlyValue = selectionController.getSelectedBoardButtons().get(0);
+            if (scrabbleBoard.getPiece(onlyValue.getX()+1, onlyValue.getY()).getLetter() != ' '){
+                return true;
+            }
+
+            if (scrabbleBoard.getPiece(onlyValue.getX()-1, onlyValue.getY()).getLetter() != ' '){
+                return true;
+            }
+
+            if (scrabbleBoard.getPiece(onlyValue.getX(), onlyValue.getY()+1).getLetter() != ' '){
+                return true;
+            }
+
+
+            if (scrabbleBoard.getPiece(onlyValue.getX(), onlyValue.getY()-1).getLetter() != ' '){
+                return true;
+            }
+        }
+
+         */
+
+
+        if (selectionController.isXAligned() || selectionController.isYAligned()) {
+            System.out.println("booglywoogly");
+            //int values[] = new int[selectionController.getSelectedBoardButtons().size()];
+            for (SelectionData d : selectionController.getSelectedBoardButtons()){
+                System.out.println(d.getPiece().getLetter());
+                if (scrabbleBoard.getPiece(d.getX() + 1, d.getY()).getLetter() != ' ') {
+                    boolean selectionDataThing = false;
+                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
+                        if (d.getX() + 1 == a.getX() && d.getY() == a.getY()) {
+                            selectionDataThing = true;
+                            break;
+                        }
+                    }
+                    if (!selectionDataThing) {
+                        return true;
+                    }
+
+                }
+
+                if (scrabbleBoard.getPiece(d.getX() - 1, d.getY()).getLetter() != ' ') {
+                    boolean selectionDataThing = false;
+                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
+                        if (d.getX() - 1 == a.getX() && d.getY() == a.getY()) {
+                            selectionDataThing = true;
+                            break;
+                        }
+                    }
+                    if (!selectionDataThing) {
+                        return true;
+                    }
+
+                }
+
+                if (scrabbleBoard.getPiece(d.getX(), d.getY()+1).getLetter() != ' ') {
+                    boolean selectionDataThing = false;
+                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
+                        if (d.getX() == a.getX() && d.getY()+1 == a.getY()) {
+                            selectionDataThing = true;
+                            break;
+                        }
+                    }
+                    if (!selectionDataThing) {
+                        return true;
+                    }
+
+                }
+
+                if (scrabbleBoard.getPiece(d.getX(), d.getY()-1).getLetter() != ' ') {
+                    boolean selectionDataThing = false;
+                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
+                        if (d.getX() == a.getX() && d.getY()-1 == a.getY()) {
+                            selectionDataThing = true;
+                            break;
+                        }
+                    }
+                    if (!selectionDataThing) {
+                        return true;
+                    }
+
+                }
+
+            }
+
+
 
         }
-        return isValidWord("brown");
-
-
-
-
+        return false;
     }
     public ArrayList<ArrayList<Character>> getList () throws IOException {
 
