@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedGameState {
+public class SavedGameState implements Serializable {
 
     private int player1Score;
     private int player2Score;
