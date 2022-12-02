@@ -490,7 +490,7 @@ public class ScrabbleGame implements Serializable{//
         }
         else {
             System.out.println("Player 2 turn");
-            boolean aicantplay = true;
+            boolean aiCantPlay = true;
             istrueword:
             for (int i = 0; i < Board.SIZE; i++) {
                 for (int j = 0; j < Board.SIZE; j++) {
@@ -516,7 +516,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
-                                    aicantplay = false;
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j - 1, i);
@@ -540,7 +540,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
-                                    aicantplay = false;
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j +1, i);
@@ -564,7 +564,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
-                                    aicantplay = false;
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j , i+1);
@@ -588,7 +588,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
-                                    aicantplay = false;
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j , i-1);
@@ -600,7 +600,7 @@ public class ScrabbleGame implements Serializable{//
                     }
                 }
             }
-            if (aicantplay) {
+            if (aiCantPlay) {
                 skip();
             }
             selectionController.revertSelections();
