@@ -1,9 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
-import java.util.*;
 
 public class Bag implements Serializable {
 
@@ -31,6 +28,10 @@ public class Bag implements Serializable {
         }
         // Collections.shuffle(letterBag); the grab function pulls from a random index so randomizing the bag can be optional
     }
+
+    /**
+     * @return
+     */
     public int numberOfRemainingPieces(){
         return bagPieces.size();
     }
