@@ -19,14 +19,11 @@ public class ScrabbleGame implements Serializable{//
     public static final boolean player2 = false;
     public static final char BLANK = '!';
 
-
-
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED;}
     private int player1Score;
 
     private int player2Score;
 
-    private int turnNum;
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -36,6 +33,9 @@ public class ScrabbleGame implements Serializable{//
     private List<ScrabbleView> views; //always use a list
     private ArrayList<ArrayList<Character>> list;
     SelectionController selectionController;
+
+    private ArrayList<SavedGameState> storedTurns;
+    private int turnNumber;
 
     public ScrabbleGame() {
         // initializing game elements
@@ -55,13 +55,13 @@ public class ScrabbleGame implements Serializable{//
 
         list = new ArrayList<ArrayList<Character>>();
 
-        turnNum = 0;
+        storedTurns = new ArrayList<>();
+        turnNumber = 0;
     }
 
     public void addScrabbleView(ScrabbleView v) {
         views.add(v);
     }
-
 
     public void selectHandButton(int handIndex, String buttonText){
         selectionController.selectHandButton(handIndex, buttonText);
@@ -74,12 +74,19 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void changeTurn() {
-        turnNum++;
+        SavedGameState gameTurn = new SavedGameState(this);
+        if(storedTurns.size() == turnNumber){
+            storedTurns.add(gameTurn);
+        }
+        else{
+            storedTurns.set(turnNumber, gameTurn);
+        }
         if (turn == player1) {
             turn = player2;
         } else {
             turn = player1;
         }
+        turnNumber++;
     }
 
     public Status getStatus() {
@@ -126,6 +133,17 @@ public class ScrabbleGame implements Serializable{//
         return views;
     }
 
+    private ArrayList<SavedGameState> getStoredTurns() {
+        return storedTurns;
+    }
+    private int getTurnNumber(){
+        return turnNumber;
+    }
+
+    public SelectionController getSelectionController() {
+        return this.selectionController;
+    }
+
     public void addScore(int score) {
         if (turn) {
             player1Score += score;
@@ -169,7 +187,7 @@ public class ScrabbleGame implements Serializable{//
         } else {
             return player2Hand.removePiece(index);
         }
-    } // comment
+    }
 
     public void placePiece(SelectionData data) {
         scrabbleBoard.placePiece(data);
@@ -177,6 +195,31 @@ public class ScrabbleGame implements Serializable{//
 
     public Piece removeFromBoard(int x, int y) {
         return scrabbleBoard.removePiece(x, y);
+    }
+
+    public void undo() {
+        selectionController.revertSelections();
+        if(turnNumber == 0){
+            JOptionPane.showMessageDialog(null, "Nothing to undo");
+            return;
+        }
+        BoardPanel.resetDisabledButtons();
+        turnNumber--;
+        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.reDisableButtons();
+        updateViews();
+    }
+    public void redo() {
+        selectionController.revertSelections();
+        if(turnNumber == storedTurns.size()){
+            JOptionPane.showMessageDialog(null, "Nothing to redo");
+            return;
+        }
+        BoardPanel.resetDisabledButtons();
+        turnNumber++;
+        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
+        this.reDisableButtons();
+        updateViews();
     }
 
     public void skip() {
@@ -204,23 +247,6 @@ public class ScrabbleGame implements Serializable{//
         }
         return false;
     }
-
-    public boolean surroundingPiecesArentEmpty(ArrayList<SelectionData> sd) { // doesnt quite work, will always be true beacause letters they place count as a surrounding piece to otehr letter they place in that turn
-        boolean hasPieceBeside = false;
-        for (SelectionData data : sd) {
-            if (scrabbleBoard.getPiece(data.getX() - 1, data.getY()).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX() + 1, data.getY()).getLetter() != ' ') {
-                return true;
-            }
-            if (scrabbleBoard.getPiece(data.getX(), data.getY() - 1).getLetter() != ' ' || scrabbleBoard.getPiece(data.getX(), data.getY() + 1).getLetter() != ' ') {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-
 
     public ArrayList<String> getBranchWords(ArrayList<SelectionData> selectedBoardButtons) {
 
@@ -465,10 +491,12 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void play(){
+
         if(turn){ // player 1 turn
             if(playWordOnBoard(selectionController.getSelectedBoardButtons())){
                 System.out.println("Word Was Placed Successfully");
 
+                selectionController.clearSelectionButtons();
                 refillHand(getCurrentHand());
                 changeTurn();
             }
@@ -480,6 +508,7 @@ public class ScrabbleGame implements Serializable{//
         }
         else {
             System.out.println("Player 2 turn");
+            boolean aiCantPlay = true;
             istrueword:
             for (int i = 0; i < Board.SIZE; i++) {
                 for (int j = 0; j < Board.SIZE; j++) {
@@ -512,6 +541,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j - 1, i);
@@ -546,6 +576,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j +1, i);
@@ -578,6 +609,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j , i+1);
@@ -610,6 +642,7 @@ public class ScrabbleGame implements Serializable{//
                                     refillHand(getCurrentHand());
                                     changeTurn();
                                     selectionController.clearSelectionButtons();
+                                    aiCantPlay = false;
                                     break istrueword;
                                 } else {
                                     scrabbleBoard.removePiece(j , i-1);
@@ -622,6 +655,9 @@ public class ScrabbleGame implements Serializable{//
                         }
                     }
                 }
+            }
+            if (aiCantPlay) {
+                skip();
             }
             selectionController.revertSelections();
         }
@@ -640,7 +676,7 @@ public class ScrabbleGame implements Serializable{//
                 System.out.println(branches);
                 System.out.println(word);
                 int score = 0;
-                    if (word.length() == 0 || isValidWord(word)) {
+                    if (isValidWord(word)) {
                         score += calculateScore(word);
                         for (String s : branches) {
                             if (isValidWord(s)) {
@@ -667,14 +703,12 @@ public class ScrabbleGame implements Serializable{//
                     addScore(score);
                     updateViews();
                     return true;
-
                 }
             } else {
                 System.out.println("Invalid Placements");
                 selectionController.revertSelections();
                 updateViews();
                 return false;
-
             }
 
         }
@@ -697,11 +731,9 @@ public class ScrabbleGame implements Serializable{//
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    public void setGameFromLoad(ScrabbleGame game){
-
+    public void setGameContents(ScrabbleGame game){
         this.turn = game.getTurn();
         this.player1Score = game.getPlayer1Score();
         this.player2Score = game.getPlayer2Score();
@@ -713,7 +745,23 @@ public class ScrabbleGame implements Serializable{//
         this.bag = game.getBag();
 
         this.selectionController = game.getSelectionController();
+    }
 
+    public void setGameContents(SavedGameState gameState){
+        this.turn = gameState.getTurn();
+        this.player1Score = gameState.getPlayer1Score();
+        this.player2Score = gameState.getPlayer2Score();
+
+        this.player1Hand = gameState.getPlayer1Hand();
+        this.player2Hand = gameState.getPlayer2Hand();
+
+        this.scrabbleBoard = gameState.getScrabbleBoard();
+        this.bag = gameState.getBag();
+
+        this.selectionController = gameState.getSelectionController();
+    }
+
+    private void reDisableButtons(){
         ArrayList<SelectionData> placedPieces = new ArrayList<>();
         for (int i = 0; i < Board.SIZE; i++) { // y
             for (int j = 0; j < Board.SIZE; j++) { // x
@@ -725,8 +773,9 @@ public class ScrabbleGame implements Serializable{//
         BoardPanel.disableButtons(placedPieces);
     }
 
-    private SelectionController getSelectionController() {
-        return this.selectionController;
+    public void setGameFromLoad(ScrabbleGame game){
+        setGameContents(game);
+        reDisableButtons();
     }
 
     static public ScrabbleGame importAddressBookSerializable (String fileName){
@@ -746,7 +795,7 @@ public class ScrabbleGame implements Serializable{//
         if(!turn){
            return true;
         }
-        if(turnNum == 0){
+        if(turnNumber == 0){
             return true;
         }
         /*
@@ -900,4 +949,5 @@ public class ScrabbleGame implements Serializable{//
         return possibleSolutions;
 
     }
+    
 }

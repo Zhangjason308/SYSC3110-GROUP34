@@ -21,6 +21,8 @@ public class MenuBarPanel extends JPanel {
         edit.add(redo);
         save.addActionListener(mbc);
         load.addActionListener(mbc);
+        undo.addActionListener(mbc);
+        redo.addActionListener(mbc);
         this.setVisible(true);
 
     }

@@ -52,6 +52,14 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
             buttons[x][y].setEnabled(false);
         }
     }
+
+    static public void resetDisabledButtons(){
+        for (int i = 0; i<15; i++) {
+            for(int j = 0; j<15; j++){
+                buttons[j][i].setEnabled(true);
+            }
+        }
+    }
     @Override
     public void update(ScrabbleGame model) {
         Board board = model.getBoard();
