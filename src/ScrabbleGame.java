@@ -465,7 +465,7 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public int getPieceAround(int i, int j, int iNum, int jNum, Piece p) {
-        SelectionData sd = new SelectionData(j + jNum, i, p);
+        SelectionData sd = new SelectionData(j + jNum, i+iNum, p);
         selectionController.getSelectedBoardButtons().add(sd);
         //model.getPlayer2Hand().removePiece();
         scrabbleBoard.placePiece(sd);
@@ -482,7 +482,7 @@ public class ScrabbleGame implements Serializable{//
             selectionController.clearSelectionButtons();
             return 0;
         } else {
-            scrabbleBoard.removePiece(j + jNum, i);
+            scrabbleBoard.removePiece(j + jNum, i+iNum);
             selectionController.getSelectedBoardButtons().clear();
             return 1;
         }
@@ -520,6 +520,7 @@ public class ScrabbleGame implements Serializable{//
                             Piece p = player2Hand.getHandPieces().get(k);
                             if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
                                 if(getPieceAround(i, j, 0, -1, p) == 0){
+                                    aiCantPlay = false;
                                     break istrueword;
                                 }
                                 else {
@@ -555,6 +556,7 @@ public class ScrabbleGame implements Serializable{//
 
                             else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
                                 if(getPieceAround(i, j, 0, 1, p) == 0){
+                                    aiCantPlay = false;
                                     break istrueword;
                                 }
                                 else {
@@ -588,6 +590,7 @@ public class ScrabbleGame implements Serializable{//
                             }
                             else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
                                 if(getPieceAround(i, j, 1, 0, p) == 0){
+                                    aiCantPlay = false;
                                     break istrueword;
                                 }
                                 else {
@@ -621,6 +624,7 @@ public class ScrabbleGame implements Serializable{//
                             }
                             else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
                                 if(getPieceAround(i, j, -1, 0, p) == 0){
+                                    aiCantPlay = false;
                                     break istrueword;
                                 }
                                 else {
@@ -791,6 +795,24 @@ public class ScrabbleGame implements Serializable{//
         }
     }
 
+    public int wordIsConnectedSubMethod(SelectionData d, int xInt, int yInt){
+        if (scrabbleBoard.getPiece(d.getX() + xInt, d.getY()+yInt).getLetter() != ' ') {
+            boolean selectionDataThing = false;
+            for (SelectionData a : selectionController.getSelectedBoardButtons()) {
+                if (d.getX() + xInt == a.getX() && d.getY()+yInt == a.getY()) {
+                    selectionDataThing = true;
+                    break;
+                }
+            }
+            if (!selectionDataThing) {
+                return 1;
+            }
+
+        }
+        return 0;
+    }
+
+
     private boolean wordisConnected() {
         if(!turn){
            return true;
@@ -826,6 +848,7 @@ public class ScrabbleGame implements Serializable{//
             //int values[] = new int[selectionController.getSelectedBoardButtons().size()];
             for (SelectionData d : selectionController.getSelectedBoardButtons()){
                 System.out.println(d.getPiece().getLetter());
+                /*
                 if (scrabbleBoard.getPiece(d.getX() + 1, d.getY()).getLetter() != ' ') {
                     boolean selectionDataThing = false;
                     for (SelectionData a : selectionController.getSelectedBoardButtons()) {
@@ -840,6 +863,13 @@ public class ScrabbleGame implements Serializable{//
 
                 }
 
+                 */
+
+                if(wordIsConnectedSubMethod(d, 1, 0) == 1){
+                    return true;
+                }
+
+                /*
                 if (scrabbleBoard.getPiece(d.getX() - 1, d.getY()).getLetter() != ' ') {
                     boolean selectionDataThing = false;
                     for (SelectionData a : selectionController.getSelectedBoardButtons()) {
@@ -854,6 +884,13 @@ public class ScrabbleGame implements Serializable{//
 
                 }
 
+                 */
+
+                if(wordIsConnectedSubMethod(d, -1, 0) == 1){
+                    return true;
+                }
+
+                /*
                 if (scrabbleBoard.getPiece(d.getX(), d.getY()+1).getLetter() != ' ') {
                     boolean selectionDataThing = false;
                     for (SelectionData a : selectionController.getSelectedBoardButtons()) {
@@ -868,6 +905,11 @@ public class ScrabbleGame implements Serializable{//
 
                 }
 
+                 */
+                if(wordIsConnectedSubMethod(d, 0, 1) == 1){
+                    return true;
+                }
+                /*
                 if (scrabbleBoard.getPiece(d.getX(), d.getY()-1).getLetter() != ' ') {
                     boolean selectionDataThing = false;
                     for (SelectionData a : selectionController.getSelectedBoardButtons()) {
@@ -882,6 +924,10 @@ public class ScrabbleGame implements Serializable{//
 
                 }
 
+                 */
+                if(wordIsConnectedSubMethod(d, 0, -1) == 1){
+                    return true;
+                }
             }
 
 
