@@ -1,7 +1,6 @@
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 public class MenuBarController implements ActionListener {
     private ScrabbleGame model;
@@ -25,9 +24,8 @@ public class MenuBarController implements ActionListener {
                 model.saveSerializable(fileName);
             } else if (menu.getText().equals(LOAD)) {
                 String fileName = JOptionPane.showInputDialog("enter name of file to be imported: ").trim();
-                ScrabbleGame loadedGame = ScrabbleGame.importAddressBookSerializable(fileName);
+                ScrabbleGame loadedGame = ScrabbleGame.importGameSerializable(fileName);
                 model.setGameFromLoad(loadedGame);
-                model.updateViews();
             } else if (menu.getText().equals(REDO)) {
                 model.redo();
             } else if (menu.getText().equals(UNDO)) {
