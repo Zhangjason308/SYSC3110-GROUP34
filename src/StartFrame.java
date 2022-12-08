@@ -20,12 +20,15 @@ public class StartFrame extends JFrame {
         super("Scrabble Game");
         BufferedImage boardImage1;
         try {
-            boardImage1 = ImageIO.read(new File("src/ScrabbleBoardImage1.jpg"));
+            boardImage1 = ImageIO.read(new File("src/Board1.jpg"));
+            //Graphics2D
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //boardImage1 = boardImage1.getScaledInstance(100,100,Image.SCALE_DEFAULT);
+        //Image scaledBoard1 = boardImage1.getScaledInstance(400,400,Image.SCALE_FAST);
         JLabel picLabel = new JLabel(new ImageIcon(boardImage1));
-        picLabel.setSize(500,500);
+        picLabel.setSize(400,400);
         this.add(picLabel,BorderLayout.CENTER);
         //ScrabbleFrame scrabbleFrame = new ScrabbleFrame();
         this.setLayout(new BorderLayout(20,20));
@@ -51,7 +54,7 @@ public class StartFrame extends JFrame {
         title.setEditable(false);
         start.add(playerSetting,BorderLayout.CENTER);
         start.add(starts,BorderLayout.SOUTH);
-        this.add(title, BorderLayout.NORTH);
+        this.add(picLabel, BorderLayout.NORTH);
         //this.add(playerSetting, BorderLayout.SOUTH);
         this.add(start, BorderLayout.SOUTH);
         this.setVisible(true);
