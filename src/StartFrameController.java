@@ -65,6 +65,7 @@ public class StartFrameController implements ActionListener {
                 }
 
                 new ScrabbleFrame(selectedButton,player2Selected);
+                startFrame.dispose();
             }
         }
     }
