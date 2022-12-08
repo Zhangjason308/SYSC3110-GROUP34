@@ -40,28 +40,30 @@ public class StartFrameController implements ActionListener {
             if (button.getText() == START){
                 System.out.println("this ran --------------- yay");
 
+                if(startFrame.getButtonGroup().getSelection() != null){
 
-                if(startFrame.getButtonGroup().getSelection().getActionCommand() == PLAYER2 ){
-                    player2Selected = true;
+                    if(startFrame.getButtonGroup().getSelection().getActionCommand() == PLAYER2 ){
+                        player2Selected = true;
+                    }
+
+                    else if(startFrame.getButtonGroup().getSelection().getActionCommand() == AI ){
+                        player2Selected = false;
+                    }
+                    if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD1 ){
+
+                        selectedButton = SEL1;
+                    }
+
+                    else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD2 ){
+
+                        selectedButton = SEL2;
+                    }
+                    else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD3 ){
+
+                        selectedButton = SEL3;
+                    }
                 }
 
-                else if(startFrame.getButtonGroup().getSelection().getActionCommand() == AI ){
-                    player2Selected = false;
-                }
-
-                if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD1 ){
-
-                    selectedButton = SEL1;
-                }
-
-                else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD2 ){
-
-                    selectedButton = SEL2;
-                }
-                else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD3 ){
-
-                    selectedButton = SEL3;
-                }
                 new ScrabbleFrame(selectedButton,player2Selected);
             }
         }
