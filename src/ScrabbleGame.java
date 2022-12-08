@@ -16,12 +16,9 @@ public class ScrabbleGame implements Serializable{//
     public static final boolean player1 = true;
     public static final boolean player2 = false;
     public static final char BLANK = '!';
-
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED;}
     private int player1Score;
-
     private int player2Score;
-
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -31,9 +28,9 @@ public class ScrabbleGame implements Serializable{//
     private List<ScrabbleView> views; //always use a list
     private ArrayList<ArrayList<Character>> list;
     SelectionController selectionController;
-
     private ArrayList<SavedGameState> storedTurns;
     private int turnNumber;
+
 
     public ScrabbleGame() {
         // initializing game elements

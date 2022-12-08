@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ScrabbleController implements ActionListener {
     private ScrabbleGame model;
-        public static String PLAY = "Play";
+    public static String PLAY = "Play";
     public static String SWAP = "Swap";
     public static String SKIP = "Skip";
 
