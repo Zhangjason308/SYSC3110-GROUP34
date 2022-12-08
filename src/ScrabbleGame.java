@@ -5,9 +5,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.*;
 
 public class ScrabbleGame implements Serializable{//
 
@@ -74,12 +72,12 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void changeTurn() {
-        SavedGameState gameTurn = new SavedGameState(this);
-        if(storedTurns.size() == turnNumber){
-            storedTurns.add(gameTurn);
+        System.out.println("Start of Change Turn -----------------------------------> TN: " + turnNumber + " ST.Size: " + storedTurns.size());
+        if(turnNumber == storedTurns.size()){
+            storedTurns.add(new SavedGameState(this));
         }
         else{
-            storedTurns.set(turnNumber, gameTurn);
+            storedTurns.set(turnNumber, new SavedGameState(this));
         }
         if (turn == player1) {
             turn = player2;
@@ -87,6 +85,35 @@ public class ScrabbleGame implements Serializable{//
             turn = player1;
         }
         turnNumber++;
+        System.out.println("End of Change Turn -----------------------------------> TN: " + turnNumber + "ST.Size: " + storedTurns.size());
+    }
+
+    public void undo() {
+        System.out.println("Start of Undo ----------------------------------->  TN: " + turnNumber);
+        if(turnNumber == 0){
+            JOptionPane.showMessageDialog(null, "Nothing To Undo");
+            return;
+        }
+        turnNumber--;
+        this.setGameContents(storedTurns.get(turnNumber));
+        updateViews();
+        System.out.println(this.getBoard().toString());
+        System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
+        System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
+        System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
+        System.out.println("End of Undo ----------------------------------->  TN: " + turnNumber);
+    }
+    public void redo() {
+        System.out.println("In Redo -----------------------------------> " + turnNumber + "ST.Size: " + storedTurns.size());
+        if(turnNumber == storedTurns.size()){
+            JOptionPane.showMessageDialog(null, "Nothing To Redo");
+            return;
+        }
+        turnNumber++;
+        this.setGameContents(storedTurns.get(turnNumber));
+        updateViews();
+        System.out.println(this.getBoard().toString());
+        System.out.println("End of Redo ----------------------------------->  TN: " + turnNumber);
     }
 
     public Status getStatus() {
@@ -132,10 +159,10 @@ public class ScrabbleGame implements Serializable{//
     public List<ScrabbleView> getViews() {
         return views;
     }
-
     private ArrayList<SavedGameState> getStoredTurns() {
         return storedTurns;
     }
+
     private int getTurnNumber(){
         return turnNumber;
     }
@@ -195,31 +222,6 @@ public class ScrabbleGame implements Serializable{//
 
     public Piece removeFromBoard(int x, int y) {
         return scrabbleBoard.removePiece(x, y);
-    }
-
-    public void undo() {
-        selectionController.revertSelections();
-        if(turnNumber == 0){
-            JOptionPane.showMessageDialog(null, "Nothing to undo");
-            return;
-        }
-        BoardPanel.resetDisabledButtons();
-        turnNumber--;
-        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
-        this.reDisableButtons();
-        updateViews();
-    }
-    public void redo() {
-        selectionController.revertSelections();
-        if(turnNumber == storedTurns.size()){
-            JOptionPane.showMessageDialog(null, "Nothing to redo");
-            return;
-        }
-        BoardPanel.resetDisabledButtons();
-        turnNumber++;
-        this.setGameContents(storedTurns.get(turnNumber)); // doesnt disable buttons, seperate funciton for that
-        this.reDisableButtons();
-        updateViews();
     }
 
     public void skip() {
@@ -750,19 +752,19 @@ public class ScrabbleGame implements Serializable{//
 
         this.selectionController = game.getSelectionController();
     }
+    public void setGameContents(SavedGameState game){
+        this.turn = game.getTurn();
+        this.player1Score = game.getPlayer1Score();
+        this.player2Score = game.getPlayer2Score();
 
-    public void setGameContents(SavedGameState gameState){
-        this.turn = gameState.getTurn();
-        this.player1Score = gameState.getPlayer1Score();
-        this.player2Score = gameState.getPlayer2Score();
+        this.player1Hand = game.getPlayer1Hand();
+        this.player2Hand = game.getPlayer2Hand();
 
-        this.player1Hand = gameState.getPlayer1Hand();
-        this.player2Hand = gameState.getPlayer2Hand();
+        this.scrabbleBoard = game.getScrabbleBoard();
+        this.bag = game.getBag();
 
-        this.scrabbleBoard = gameState.getScrabbleBoard();
-        this.bag = gameState.getBag();
-
-        this.selectionController = gameState.getSelectionController();
+        this.selectionController = game.getSelectionController();
+        this.selectionController.clearSelectionButtons();
     }
 
     private void reDisableButtons(){
@@ -778,11 +780,13 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void setGameFromLoad(ScrabbleGame game){
+        BoardPanel.resetDisabledButtons();
         setGameContents(game);
         reDisableButtons();
+        updateViews();
     }
 
-    static public ScrabbleGame importAddressBookSerializable (String fileName){
+    static public ScrabbleGame importGameSerializable(String fileName){
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream ois = new ObjectInputStream(fileIn);

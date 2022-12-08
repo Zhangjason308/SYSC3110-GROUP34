@@ -29,6 +29,7 @@ public class StartFrame extends JFrame {
     final JTextField playerOptions = new JTextField("Player Settings");
     final JTextField boardSelection = new JTextField("Board Settings");
     public StartFrame(){
+
         super("Scrabble Game");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         BufferedImage boardImage1;
