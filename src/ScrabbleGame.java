@@ -59,7 +59,8 @@ public class ScrabbleGame implements Serializable{//
         storedTurns = new ArrayList<>();
         turnNumber = 0;
 
-        selectedBoard
+        this.selectedBoard = selectedBoard;
+        this.player2Selected = player2Selected;
     }
 
     public void addScrabbleView(ScrabbleView v) {
@@ -514,25 +515,40 @@ public class ScrabbleGame implements Serializable{//
             }
         }
         else {
-            System.out.println("Player 2 turn");
-            boolean aiCantPlay = true;
-            istrueword:
-            for (int i = 0; i < Board.SIZE; i++) {
-                for (int j = 0; j < Board.SIZE; j++) {
-                    if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
-                        selectionController.getSelectedBoardButtons().clear();
-                        System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
-                        //Piece p = player2Hand.getHandPieces().get(pieceIndex);
-                        for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
-                            Piece p = player2Hand.getHandPieces().get(k);
-                            if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 0, -1, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                }
-                                else {
-                                    continue;
-                                }
+            if(player2Selected){
+                if(playWordOnBoard(selectionController.getSelectedBoardButtons())){
+                    System.out.println("Word Was Placed Successfully");
+
+                    selectionController.clearSelectionButtons();
+                    refillHand(getCurrentHand());
+                    changeTurn();
+                }
+                else{
+                    System.out.println("Word Was not Placed Successfully");
+
+                    selectionController.revertSelections();
+                }
+            }else {
+
+                System.out.println("Player 2 turn");
+                boolean aiCantPlay = true;
+                istrueword:
+                for (int i = 0; i < Board.SIZE; i++) {
+                    for (int j = 0; j < Board.SIZE; j++) {
+                        if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
+                            selectionController.getSelectedBoardButtons().clear();
+                            System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
+                            //Piece p = player2Hand.getHandPieces().get(pieceIndex);
+                            for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
+                                Piece p = player2Hand.getHandPieces().get(k);
+                                if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 0, -1, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j - 1, i, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -558,17 +574,17 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
+                                }
 
 
-                            else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 0, 1, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 0, 1, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j + 1, i, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -594,15 +610,15 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
-                            else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 1, 0, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
                                 }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 1, 0, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j , i+1, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -628,15 +644,15 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
-                            else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
-                                if(getPieceAround(i, j, -1, 0, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
                                 }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, -1, 0, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j , i-1, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -662,15 +678,16 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
+                                }
                             }
                         }
                     }
                 }
+                if (aiCantPlay) {
+                    skip();
+                }
+                selectionController.revertSelections();
             }
-            if (aiCantPlay) {
-                skip();
-            }
-            selectionController.revertSelections();
         }
         updateViews();
     }

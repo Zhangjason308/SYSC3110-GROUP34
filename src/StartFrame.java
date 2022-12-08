@@ -63,12 +63,17 @@ public class StartFrame extends JFrame {
         //ScrabbleFrame scrabbleFrame = new ScrabbleFrame();
         this.setLayout(new BorderLayout(20,120));
         player2.setText("Player 2");
+        player2.setActionCommand(StartFrameController.PLAYER2);
         player2.setBounds(120, 30, 120, 50);
         ai.setBounds(250, 30, 80, 50);
+        ai.setActionCommand(StartFrameController.AI);
         ai.setText("AI");
         board1.setText("Board 1");
+        board1.setActionCommand(StartFrameController.BOARD1);
         board2.setText("Board 2");
+        board2.setActionCommand(StartFrameController.BOARD2);
         board3.setText("Board 3");
+        board3.setActionCommand(StartFrameController.BOARD3);
         board1.setBounds(120, 80, 120, 10);
         board2.setBounds(120, 80, 120, 10);
         board3.setBounds(120, 80, 120, 10);
@@ -101,5 +106,11 @@ public class StartFrame extends JFrame {
         this.setSize(1000,800);
     }
 
+    public ButtonGroup getButtonGroup(){
+        return buttonGroup;
+    }
+    public ButtonGroup getBoardGroup(){
+        return boardGroup;
+    }
     public static void main(String args[]) { new StartFrame();}
 }

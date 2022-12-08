@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ScrabbleFrame extends JFrame {//
+public class ScrabbleFrame extends JFrame {
+    int selectedButton;
+    boolean player2Selected;
     public ScrabbleFrame(int selectedButton, boolean player2Selected ) {
         super("Scrabble");
-        ScrabbleGame model = new ScrabbleGame(selectedButton,player2Selected);
+        ScrabbleGame model = new ScrabbleGame(selectedButton, player2Selected);
         ScrabbleController sc = new ScrabbleController(model);
         HandPanel handPanel = new HandPanel(sc);
         BoardPanel boardPanel = new BoardPanel(sc);
@@ -34,9 +36,8 @@ public class ScrabbleFrame extends JFrame {//
     }
 
 
-    public static void main(String args[]) {
-        new ScrabbleFrame();
-    }
+   // public static void main(String args[]) {new ScrabbleFrame(selectedButton,player2Selected);
+
 
 //Notes: when the play button is pressed
 

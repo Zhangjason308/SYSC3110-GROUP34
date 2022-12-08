@@ -9,45 +9,59 @@ public class StartFrameController implements ActionListener {
     public static String BOARD2 = "Board2";
     public static String BOARD3 = "Board3";
 
+    public static int SEL1 = 0;
+    public static int SEL2 = 1;
+    public static int SEL3 = 2;
+
+    public static String PLAYER2 = "Player2";
+    public static String AI = "AI";
     public static String START = "Start";
     ScrabbleFrame frame;
+
+    StartFrame startFrame;
     int selectedButton;
     boolean player2Selected;
 
-    public StartFrameController() {
+    public StartFrameController(StartFrame startFrame) {
         selectedButton = 0;
         player2Selected = false;
         frame = new ScrabbleFrame(selectedButton,player2Selected);
+        this.startFrame = startFrame;
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-        if (o instanceof JRadioButton) {
-
-            JRadioButton button = (JRadioButton) o;
-
-                if (button.getText() == BOARD1) {
-                    //TODO
-                }
-                if (button.getText() == BOARD2) {
-                    //TODO
-                }
-
-                if (button.getText() == BOARD3) {
-                    //TODO
-                }
 
         if(o instanceof JButton){
 
-        }
-            JButton button1 = (JButton) o;
-            if (button1.getText() == START){
-                
+            JButton button = (JButton) o;
+            if (button.getText() == START){
+
+                if(startFrame.getButtonGroup().getSelection().getActionCommand() == PLAYER2 ){
+                    player2Selected = true;
+                }
+
+                else if(startFrame.getButtonGroup().getSelection().getActionCommand() == AI ){
+                    player2Selected = false;
+                }
+
+                if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD1 ){
+
+                    selectedButton = SEL1;
+                }
+
+                else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD2 ){
+
+                    selectedButton = SEL2;
+                }
+                else if(startFrame.getBoardGroup().getSelection().getActionCommand() == BOARD3 ){
+
+                    selectedButton = SEL3;
+                }
                 frame = new ScrabbleFrame(selectedButton,player2Selected);
             }
         }
     }
-
 }
