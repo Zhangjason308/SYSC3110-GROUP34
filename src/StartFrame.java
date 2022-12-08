@@ -43,6 +43,9 @@ public class StartFrame extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        
+        StartFrameController startFrameController = new StartFrameController(this);
+        
         JLabel picLabel1 = new JLabel(new ImageIcon(boardImage1));
         JLabel picLabel2 = new JLabel(new ImageIcon(boardImage2));
         JLabel picLabel3 = new JLabel(new ImageIcon(boardImage3));
@@ -98,6 +101,7 @@ public class StartFrame extends JFrame {
         title.setHorizontalAlignment(JTextField.CENTER);
         title.setEditable(false);
         start.add(playerSetting,BorderLayout.CENTER);
+        starts.addActionListener(startFrameController);
         start.add(starts,BorderLayout.SOUTH);
         this.add(title, BorderLayout.NORTH);
         this.add(boardPanel, BorderLayout.CENTER);

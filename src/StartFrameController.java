@@ -15,8 +15,8 @@ public class StartFrameController implements ActionListener {
 
     public static String PLAYER2 = "Player2";
     public static String AI = "AI";
-    public static String START = "Start";
-    ScrabbleFrame frame;
+    public static String START = "START";
+//    ScrabbleFrame frame;
 
     StartFrame startFrame;
     int selectedButton;
@@ -25,7 +25,7 @@ public class StartFrameController implements ActionListener {
     public StartFrameController(StartFrame startFrame) {
         selectedButton = 0;
         player2Selected = false;
-        frame = new ScrabbleFrame(selectedButton,player2Selected);
+        // frame = new ScrabbleFrame(selectedButton,player2Selected);
         this.startFrame = startFrame;
     }
 
@@ -38,6 +38,8 @@ public class StartFrameController implements ActionListener {
 
             JButton button = (JButton) o;
             if (button.getText() == START){
+                System.out.println("this ran --------------- yay");
+
 
                 if(startFrame.getButtonGroup().getSelection().getActionCommand() == PLAYER2 ){
                     player2Selected = true;
@@ -60,7 +62,7 @@ public class StartFrameController implements ActionListener {
 
                     selectedButton = SEL3;
                 }
-                frame = new ScrabbleFrame(selectedButton,player2Selected);
+                new ScrabbleFrame(selectedButton,player2Selected);
             }
         }
     }
