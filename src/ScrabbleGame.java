@@ -35,7 +35,10 @@ public class ScrabbleGame implements Serializable{//
     private ArrayList<SavedGameState> storedTurns;
     private int turnNumber;
 
-    public ScrabbleGame() {
+    int selectedBoard;
+    boolean player2Selected;
+
+    public ScrabbleGame(int selectedBoard, boolean player2Selected) {
         // initializing game elements
         status = Status.UNDECIDED;
         player1Score = 0;
@@ -55,6 +58,8 @@ public class ScrabbleGame implements Serializable{//
 
         storedTurns = new ArrayList<>();
         turnNumber = 0;
+
+        selectedBoard
     }
 
     public void addScrabbleView(ScrabbleView v) {
