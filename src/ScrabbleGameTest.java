@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScrabbleGameTest {//
 
+    int selectedBoard = 0;
+    boolean player2Selected = true;
+
 
     @Test
     void placeFirstWord() { //Makes sure first word has 1 piece in the center
@@ -12,7 +15,8 @@ class ScrabbleGameTest {//
 
     @Test
     void bagisOutofPieces()  { //Bag is out of pieces so game is over
-        ScrabbleGame game = new ScrabbleGame();
+        
+        ScrabbleGame game = new ScrabbleGame( selectedBoard, player2Selected);
         assertEquals(game.getBag().numberOfRemainingPieces(), 86);
         Hand hand = new Hand();
         hand.addPieces(game.getBag().grabPieces(86));
@@ -23,7 +27,7 @@ class ScrabbleGameTest {//
 
     @Test
     void addScore(){
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
         int score1 = 100;
         int score2 = 200;
         assertTrue(game.getTurn());
@@ -44,7 +48,7 @@ class ScrabbleGameTest {//
     @Test
     void updateStatus() {
 
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
         game.getBag().grabPieces(84);
         for (int i = 0; i< ScrabbleGame.HAND_SIZE;i++ ){
             game.getPlayer1Hand().removePiece(0);
@@ -69,7 +73,7 @@ class ScrabbleGameTest {//
 
     @Test
     void calculateWinner(){
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
 
         int score1 = 100;
         int score2 = 100;
@@ -118,7 +122,7 @@ class ScrabbleGameTest {//
     }
     @Test
     void swapLettersFromHand(){
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
     Hand h = new Hand();
     Piece p = new Piece('p');
         h.addPiece(p);
@@ -136,7 +140,7 @@ class ScrabbleGameTest {//
     @Test
     void removeFromHand(){ // test to ensure the correct hand is used
 
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
         int index = 4;
         //test for player1
         assertTrue(game.getTurn());
@@ -161,7 +165,7 @@ class ScrabbleGameTest {//
     }
     @Test
     void endConditionIsMet() {
-        ScrabbleGame game = new ScrabbleGame();
+        ScrabbleGame game = new ScrabbleGame(selectedBoard, player2Selected);
 
 
         game.getBag().grabPieces(84);
