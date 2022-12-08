@@ -1,6 +1,6 @@
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuBarController implements ActionListener {
     private ScrabbleGame model;
@@ -27,9 +27,15 @@ public class MenuBarController implements ActionListener {
                 ScrabbleGame loadedGame = ScrabbleGame.importGameSerializable(fileName);
                 model.setGameFromLoad(loadedGame);
             } else if (menu.getText().equals(REDO)) {
+                //System.out.println(model.getTurnNumber());
                 model.redo();
+                //System.out.println(model.getTurnNumber());
+                model.updateViews();
             } else if (menu.getText().equals(UNDO)) {
+                //System.out.println(model.getTurnNumber());
                 model.undo();
+                //model.updateViews();
+                //System.out.println(model.getTurnNumber());
             }
         }
     }

@@ -14,6 +14,9 @@ public class Board implements Serializable {//
         }
     }
 
+    public Piece[][] getBoard() {
+        return arr;
+    }
 
     public Piece getPiece(int x, int y) {
         return arr[x][y];

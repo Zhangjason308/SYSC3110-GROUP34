@@ -36,6 +36,10 @@ public class Bag implements Serializable {
         return bagPieces.size();
     }
 
+    public ArrayList<Piece> getBagPieces(){
+        return bagPieces;
+    }
+
     public char[] getAlph() {return ALPHABET;}
 
     public Piece grabPiece(){  //returns a random piece and removes that piece from this bag

@@ -74,11 +74,20 @@ public class ScrabbleGame implements Serializable{//
 
     public void changeTurn() {
         System.out.println("Start of Change Turn -----------------------------------> TN: " + turnNumber + " ST.Size: " + storedTurns.size());
+        //ScrabbleGame boogie = new ScrabbleGame(0, true);
+        //boogie =this;
+
         if(turnNumber == storedTurns.size()){
-            storedTurns.add(new SavedGameState(this));
+            SavedGameState current = new SavedGameState(this);
+            //System.out.println(current.toString());
+            storedTurns.add(turnNumber,current);
+
         }
         else{
             storedTurns.set(turnNumber, new SavedGameState(this));
+        }
+        for (SavedGameState s: getStoredTurns()) {
+            System.out.println(s.toString());
         }
         if (turn == player1) {
             turn = player2;
@@ -95,13 +104,18 @@ public class ScrabbleGame implements Serializable{//
             JOptionPane.showMessageDialog(null, "Nothing To Undo");
             return;
         }
-        turnNumber--;
-        this.setGameContents(storedTurns.get(turnNumber));
+        turnNumber = turnNumber-1;
+        this.setGameContents(storedTurns.get(turnNumber-1));
+
+        BoardPanel.resetDisabledButtons();
+        reDisableButtons();
         updateViews();
-        System.out.println(this.getBoard().toString());
-        System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
-        System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
-        System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
+        System.out.println(storedTurns.get(turnNumber).toString());
+        System.out.println(storedTurns.get(turnNumber-1).toString());
+        //System.out.println(this.getBoard().toString());
+        //System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
+        //System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
+        //System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
         System.out.println("End of Undo ----------------------------------->  TN: " + turnNumber);
     }
     public void redo() {
@@ -110,8 +124,11 @@ public class ScrabbleGame implements Serializable{//
             JOptionPane.showMessageDialog(null, "Nothing To Redo");
             return;
         }
-        turnNumber++;
+
         this.setGameContents(storedTurns.get(turnNumber));
+        BoardPanel.resetDisabledButtons();
+        reDisableButtons();
+        turnNumber++;
         updateViews();
         System.out.println(this.getBoard().toString());
         System.out.println("End of Redo ----------------------------------->  TN: " + turnNumber);
@@ -160,11 +177,11 @@ public class ScrabbleGame implements Serializable{//
     public List<ScrabbleView> getViews() {
         return views;
     }
-    private ArrayList<SavedGameState> getStoredTurns() {
+    public ArrayList<SavedGameState> getStoredTurns() {
         return storedTurns;
     }
 
-    private int getTurnNumber(){
+    public int getTurnNumber(){
         return turnNumber;
     }
 
