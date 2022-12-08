@@ -354,15 +354,23 @@ public class ScrabbleGame implements Serializable{//
 
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][1][j]) {
                     selectionController.addToBlueButtons(selectedBoardButtons.get(i));
+                    for (int z = 0; z < selectionController.getSpecialBlueButtons().size(); z++) {
+                        System.out.println("BLUE: " + selectionController.getSpecialBlueButtons().get(z).getPiece().getLetter());
+                    }
                 }
             }
+
             for (int j = 0; j < BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0].length; j++) {
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][1][j]) {
                     selectionController.addToRedButtons(selectedBoardButtons.get(i));
+                    for (int z = 0; z < selectionController.getSpecialRedButtons().size(); z++) {
+                        System.out.println("RED: " + selectionController.getSpecialRedButtons().get(z).getPiece().getLetter());
+                    }
                 }
             }
 
         }
+
         //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (selectionController.isXAligned()) {

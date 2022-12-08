@@ -74,8 +74,8 @@ public class SelectionController implements Serializable {
         for (SelectionData sd : selectedHandButtons) {
             model.getCurrentHand().addPiece(sd.getPiece());
         }
-
         clearSelectionButtons();
+        clearSpecialButtons();
     }
 
     public boolean[] lettersAreInLine() {
