@@ -17,6 +17,7 @@ public class StartFrame extends JFrame {
 
     private ButtonGroup buttonGroup = new ButtonGroup();
     public StartFrame(){
+
         super("Scrabble Game");
         BufferedImage boardImage1;
         try {
