@@ -347,14 +347,14 @@ public class ScrabbleGame implements Serializable{//
         int y = selectedBoardButtons.get(0).getY();
 
         for (int i = 0; i < selectedBoardButtons.size(); i++) {
-            for (int j = 0; j < BoardPanel.NUM_OF_BLUE_POSITIONS; j++) {
+            for (int j = 0; j < BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][0].length; j++) {
 
-                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_BLUE[1][j]) {
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][1][j]) {
                     selectionController.addToBlueButtons(selectedBoardButtons.get(i));
                 }
             }
-            for (int j = 0; j < BoardPanel.NUM_OF_RED_POSITIONS; j++) {
-                if (selectedBoardButtons.get(i).getX() == BoardPanel.MULTIPLIER_POSITIONS_RED[0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.MULTIPLIER_POSITIONS_RED[1][j]) {
+            for (int j = 0; j < BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0].length; j++) {
+                if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][1][j]) {
                     selectionController.addToRedButtons(selectedBoardButtons.get(i));
                 }
             }
