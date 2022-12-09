@@ -1,32 +1,34 @@
-README for Scrabble Project including: version 2.0 11/13/2022
+README for Scrabble Project including: version 3.0 11/22/2022
 
-Deliverable 2: GUI based version
+Deliverable 3: For this deliverable, we added tiles multipliers that multiply the score of the player that has a word passing through one of the multipliers, and an AI was added, which the user will be
+ playing against.
 
 Description:
 ------------
 
-- This project contains 15 java classes
+- This project contains fifteen java classes.
 
-- The Project is made up of three files:
-	Bag.java 				- model class
-	Board.java 				- model class
-	BoardPanel.java 			- view class
-	Dictionary.txt 			- Text File
-	GameButtonPanel 			- view class
-	Hand.java 				- model class
-	HandPanel.java 			- view class
-	InfoPanel.java 			- view class
-	Piece.java 				- model class
-	ScrabbleController.java 	- controller class
-	ScrabbleFrame.java 		- view class
-	ScrabbleGame.java 		- view class
-	ScrabbleGameTest.java		- test class
-	ScrabbleView.java 		- view class
-	SelectionData.java 		- data type class
+- The Project is made up of the following files:
+	Bag.java 				- model class (A single Java script)
+	Board.java 				- model class (A single Java script)
+	BoardPanel.java 			- view class  (A single Java script)
+	Dictionary.txt 			- A single text file
+	GameButtonPanel.java 		- view class  (A single Java script)
+	Hand.java 				- model class (A single Java script)
+	HandPanel.java 			- view class (A single Java script)
+	InfoPanel.java 			- view class  (A single Java script)
+	Piece.java 				- model class (A single Java script)
+	ScrabbleController.java 	- controller class (A single Java script)
+	ScrabbleFrame.java 		- view class (A single Java script)
+	ScrabbleGame.java 		- view class (A single Java script)
+	ScrabbleGameTest.java		- test class (A single Java script)
+	ScrabbleView.java 		- view class (A single Java script)
+	SelectionData.java 		- data type class (A single Java script)
+	UML					- A single image of a UML diagram
 
 Installation:
 -------------
-To be able to to run the program, you should have Java 15.0.2 or later installed on your 
+To be able to to run the program, you should have Java 15.0.2 or later installed on your
 computer.
 
 
@@ -61,25 +63,25 @@ This class will create a JPanel that displays the remaining pieces in the bag an
 This class will create a Piece that contains a character, and is assigned a points value.
 
 >ScrabbleController.java
-This class will react to alerts from the views by playing pieces on a board, checking for valid words, calculating the score, 
-skip a player's turn, and swapping a player's hand. This controller then updates the ScrabbleGame. 
+This class will react to alerts from the views by playing pieces on a board, checking for valid words, calculating the score,
+skip a player's turn, and swapping a player's hand. This controller then updates the ScrabbleGame.
 
 >ScrabbleFrame.java
 This class will create a JFrame that contains the BoardPanel, GameButtonPanel, HandPanel, and InfoPanel.
 
 >ScrabbleGame.java
-This class will create a game model of Scrabble.
+This class will handle the implementation of a game model of Scrabble.
 
 >ScrabbleGameTest.java
 This class will use JUnit to test various piece placements and internal methods.
 
 >ScrabbleView.java
-This interface contains an update method.
+This interface contains an update method, it handles Scrabble game's data presentation and user interaction.
 
 >SelectionData.java
 This class will parses JButtons to x-coordinate, y-coordinate, and Piece.
 
->
+
 Credits:
 --------
 Jalal Mourad
@@ -111,14 +113,14 @@ Jason Zhang
 	- ScrabbleGameTest.java
 	- UML
 	- Readme
-	
+
 Triton Crowley
 	- ScrabbleGame.java
 	- ScrabbleController.java
 	- Bag.java
 	- BoardPanel.java
 	- HandPanel.java
-	- ScrabbleGameTest.java 
+	- ScrabbleGameTest.java
 	- SelectionData.java
 	- UML
 	- Readme
@@ -128,18 +130,18 @@ NOTE:
 
 Copyright 2022 Jalal Mourad, Caleb Lui-Yee, Jason Zhang, Triton Crowley
 
-How to use: 
+How to use:
 
-1. Run the main.java file in ScrabbleFrame.java. 
-2. Player's turn:
-	
+1. Run the main.java file in ScrabbleFrame.java.
+2. Player's turn: Start from the yellow tile
+
 -------------------------------------------- Game Options: Play, Skip, Swap ---------------------------------------------
-	
+
 	Play:
 		1. Click desired number of pieces from the Hand
 		2. Click the piece placement on the board (If multiple pieces were selected, they will be placed in order of selection)
 		3. Select "Play"
-		Note: Invalid words or placements will return all pieces to Hand, and will ask player to retry 
+		Note: Invalid words or placements will return all pieces to Hand, and will ask player to retry
 
 	Skip:
 		1. Select "Skip"
@@ -147,9 +149,12 @@ How to use:
 	Swap:
 		1. Click desired number of pieces from the Hand
 		2. Select "Swap"
-		Note: If pieces are placed on the Board prior to swapping, they will return to hand, 
+		Note: If pieces are placed on the Board prior to swapping, they will return to hand,
 			and only the selected pieces from the Hand will be swapped.
 -------------------------------------------------------------------------------------------------------------------------
 
-3. Next Player's turn
-4. Repeat until Game Bag is empty, or no possible words can be made
+3. AI's turn
+4. If a word is placed on a multiplier, the player's score will me multiplied depending on the color of the multiplier it is placed on, red color
+tiles are x3 multipliers, and blue color tiles are x2 multipliers.
+5.Blank pieces are represented by "!" .
+6. Repeat until Game Bag is empty, or no possible words can be made
