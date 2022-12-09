@@ -5,7 +5,6 @@ import java.util.Random;
 public class Bag implements Serializable {
 
     final static char[] ALPHABET = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!'};
-    //final static int[] POINTS = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
     final static int[] NUMBER_OF_EACH = {9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1, 2};
     ArrayList<Piece> bagPieces;
 
@@ -40,15 +39,7 @@ public class Bag implements Serializable {
         return bagPieces;
     }
 
-    public char[] getAlph() {return ALPHABET;}
 
-    public Piece grabPiece(){  //returns a random piece and removes that piece from this bag
-        Random random = new Random();
-        int randIndex = random.nextInt(numberOfRemainingPieces());
-        Piece toReturn = bagPieces.get(randIndex);
-        bagPieces.remove(randIndex);
-        return toReturn;
-    }
     public ArrayList<Piece> grabPieces(int number){  //returns a random piece and removes that piece from this bag
 
         Random random = new Random();
@@ -63,12 +54,6 @@ public class Bag implements Serializable {
         return pieces;
     }
 
-    public void addPieces(Piece p) {
-        if(bagPieces.contains(p)){
-            int index = this.bagPieces.indexOf(p);
-            bagPieces.add(index, p);
-        }
-    }
 
     public String toString(){
         ArrayList<Piece> letters = bagPieces;

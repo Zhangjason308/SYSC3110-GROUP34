@@ -73,7 +73,6 @@ public class SavedGameState implements Serializable {
         gameState += "Player 1 Score :" + getPlayer1Score() + "\n";
         gameState += "Player 2 Score :" + getPlayer2Score() + "\n";
         gameState += "Bag Pieces :" + getBag().getBagPieces().size() + "\n";
-        //gameState += "Board: "+ getScrabbleBoard() + "\n";
 
         return gameState;
     }

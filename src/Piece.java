@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.util.HashMap;
-public class Piece implements Serializable {//
+public class Piece implements Serializable {
     char piece;
     public static final HashMap<Character, Integer> pieceMap = new HashMap<>();
     static {
@@ -49,10 +49,4 @@ public class Piece implements Serializable {//
         piece = c;
     }
 
-    public boolean equals(Piece p){
-        if (this.getLetter() ==  p.getLetter()) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -7,8 +7,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
     static private JButton[][] buttons;
     static private int boardNumber;
 
-    final static int NUM_OF_BLUE_POSITIONS = 8;
-    final static int NUM_OF_RED_POSITIONS = 16;
 
     //BOARD 1 SPECIAL TILES - REGULAR
     final static int[][] MULTIPLIER_POSITIONS_BLUE_BOARD1 = {{0, 14, 0, 14, 5, 9, 5, 9}, {0, 0, 14, 14, 5, 5, 9, 9}};
@@ -22,7 +20,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
     final static int[][] MULTIPLIER_POSITIONS_BLUE_BOARD3 = {{0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,6,6,6,6,6,6,6,6,8,8,8,8,8,8,8,8,10,10,10,10,10,10,10,10,12,12,12,12,12,12,12,12,14,14,14,14,14,14,14,14}, {0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14,0,2,4,6,8,10,12,14}};
     final static int[][] MULTIPLIER_POSITIONS_RED_BOARD3 = {{1,1,1,1,1,1,1,3,3,3,3,3,3,3,5,5,5,5,5,5,5,7,7,7,7,7,7,9,9,9,9,9,9,9,11,11,11,11,11,11,11,13,13,13,13,13,13,13}, {1,3,5,7,9,11,13,1,3,5,7,9,11,13,1,3,5,7,9,11,13,1,3,5,9,11,13,1,3,5,7,9,11,13,1,3,5,7,9,11,13,1,3,5,7,9,11,13}};
 
-    //I Apologize for the lack of compassion and consideration :)
     final static int[][][][] BOARD_TYPES = {{MULTIPLIER_POSITIONS_BLUE_BOARD1,MULTIPLIER_POSITIONS_RED_BOARD1},{MULTIPLIER_POSITIONS_BLUE_BOARD2,MULTIPLIER_POSITIONS_RED_BOARD2},{MULTIPLIER_POSITIONS_BLUE_BOARD3,MULTIPLIER_POSITIONS_RED_BOARD3}};
     public BoardPanel(ScrabbleController controller, int boardNumber) {
         super();
@@ -31,7 +28,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
         this.boardNumber = boardNumber;
 
 
-// why u following me huh
 
         buttons = new JButton[Board.SIZE][Board.SIZE];
 
@@ -59,9 +55,6 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
 
     }
 
-     public void setBoardNumber(int boardNumber) {
-        this.boardNumber = boardNumber;
-    }
 
     static public int getBoardNumber() {
         return boardNumber;

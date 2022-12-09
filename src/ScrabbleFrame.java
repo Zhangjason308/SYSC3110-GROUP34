@@ -36,9 +36,6 @@ public class ScrabbleFrame extends JFrame {
     }
 
 
-   // public static void main(String args[]) {new ScrabbleFrame(selectedButton,player2Selected);
-
-
 //Notes: when the play button is pressed
 
     //1: word and branch words are gotten

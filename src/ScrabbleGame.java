@@ -10,7 +10,6 @@ import java.util.List;
 public class ScrabbleGame implements Serializable{//
 
 
-    public static final int SIZE = 15;
     public static final int HAND_SIZE = 7;
     public static final int BOARD_MIDDLE = 7;
     public static final boolean player1 = true;
@@ -74,8 +73,6 @@ public class ScrabbleGame implements Serializable{//
 
     public void changeTurn() {
         System.out.println("Start of Change Turn -----------------------------------> TN: " + turnNumber + " ST.Size: " + storedTurns.size());
-        //ScrabbleGame boogie = new ScrabbleGame(0, true);
-        //boogie =this;
 
         if(turnNumber == storedTurns.size()){
             SavedGameState current = new SavedGameState(this);
@@ -112,10 +109,6 @@ public class ScrabbleGame implements Serializable{//
         updateViews();
         System.out.println(storedTurns.get(turnNumber).toString());
         System.out.println(storedTurns.get(turnNumber-1).toString());
-        //System.out.println(this.getBoard().toString());
-        //System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
-        //System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
-        //System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
         System.out.println("End of Undo ----------------------------------->  TN: " + turnNumber);
     }
     public void redo() {
@@ -146,10 +139,6 @@ public class ScrabbleGame implements Serializable{//
         return turn ? player1Hand : player2Hand;
     }
 
-    public int getCurrentPlayerScore(){
-        return turn ? player1Score : player2Score;
-    }
-
     public int getPlayer1Score() {
         return player1Score;
     }
@@ -174,15 +163,8 @@ public class ScrabbleGame implements Serializable{//
         return scrabbleBoard;
     }
 
-    public List<ScrabbleView> getViews() {
-        return views;
-    }
     public ArrayList<SavedGameState> getStoredTurns() {
         return storedTurns;
-    }
-
-    public int getTurnNumber(){
-        return turnNumber;
     }
 
     public SelectionController getSelectionController() {

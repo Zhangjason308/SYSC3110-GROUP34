@@ -37,46 +37,7 @@ public class Hand implements Serializable {//
         }
     }
 
-    public ArrayList<Character> getHandAsChars(){
-        ArrayList<Character> chars = new ArrayList<>();
-        for (Piece p : pieces) {
-            chars.add(p.getLetter());
-        }
-        return chars;
-    }
 
-    public Piece getPieceWithChar(char c){
-        for (int i = 0; i < sizeOfHand(); i++){
-            if(c == pieces.get(i).getLetter()){
-                return  pieces.get(i);
-            }
-        }
-        System.out.println("getIndexOfPieceWidth() returned a value of -1; the hand doesnt contain that char");
-        return null;
-    }
-
-    public boolean containsLetters(String str) {
-
-        int count = 0;
-        char[] arrOfInput = str.toCharArray();
-        ArrayList<Piece> arrOfPiece = new ArrayList<Piece>();
-
-        for (char c : arrOfInput) {
-            arrOfPiece.add(new Piece(c));
-        }
-
-        ArrayList<Piece> copy = this.getHandPieces();
-
-        for (Piece ap : arrOfPiece) {
-            if (copy.contains(ap)) {
-                copy.remove(ap);
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-    }
     public Piece removePiece(int i){
         return pieces.remove(i);
     }

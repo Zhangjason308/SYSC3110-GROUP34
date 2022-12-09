@@ -7,7 +7,6 @@ public class HandPanel extends JPanel implements ScrabbleView{//
     public HandPanel(ScrabbleController controller) {
         super();
         GridLayout buttonGrid = new GridLayout(1, ScrabbleGame.HAND_SIZE);
-        //this.setSize(800, 100);
         this.setLayout(buttonGrid); // 1X7
 
         buttons = new JButton[ScrabbleGame.HAND_SIZE];
