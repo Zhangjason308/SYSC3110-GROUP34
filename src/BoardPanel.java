@@ -24,12 +24,14 @@ public class BoardPanel extends JPanel implements ScrabbleView {////
 
     //I Apologize for the lack of compassion and consideration :)
     final static int[][][][] BOARD_TYPES = {{MULTIPLIER_POSITIONS_BLUE_BOARD1,MULTIPLIER_POSITIONS_RED_BOARD1},{MULTIPLIER_POSITIONS_BLUE_BOARD2,MULTIPLIER_POSITIONS_RED_BOARD2},{MULTIPLIER_POSITIONS_BLUE_BOARD3,MULTIPLIER_POSITIONS_RED_BOARD3}};
-    public BoardPanel(ScrabbleController controller) {
+    public BoardPanel(ScrabbleController controller, int boardNumber) {
         super();
         this.setLayout(new GridLayout(Board.SIZE, Board.SIZE));
         this.setSize(200,200);
-        boardNumber = 2;
+        this.boardNumber = boardNumber;
 
+
+// why u following me huh
 
         buttons = new JButton[Board.SIZE][Board.SIZE];
 

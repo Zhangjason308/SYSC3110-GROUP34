@@ -1,26 +1,34 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 public class SavedGameState implements Serializable {
 
     private int player1Score;
     private int player2Score;
-    private Hand player1Hand;
-    private Hand player2Hand;
-    private Board scrabbleBoard;
-    private Bag bag;
+    private Hand player1Hand = new Hand();
+    private Hand player2Hand = new Hand();
+    private Board scrabbleBoard = new Board();
+    private Bag bag = new Bag();
     private boolean turn;
     SelectionController selectionController;
 
     public SavedGameState(ScrabbleGame game){
+        bag.grabPieces(100);
         player1Score = game.getPlayer1Score();
         player2Score = game.getPlayer2Score();
-        player1Hand = game.getPlayer1Hand();
-        player2Hand = game.getPlayer2Hand();
-        scrabbleBoard = game.getBoard();
-        bag = game.getBag();
-        turn = game.getTurn();
+        for (int i = 0 ; i < game.getPlayer1Hand().getHandPieces().size(); i++) {
+            player1Hand.getHandPieces().add(new Piece(game.getPlayer1Hand().getHandPieces().get(i).getLetter()));
+            player2Hand.getHandPieces().add(new Piece(game.getPlayer2Hand().getHandPieces().get(i).getLetter()));
+        }
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
+                scrabbleBoard.getBoard()[i][j] = game.getBoard().getPiece(i,j);
+            }
+        }
+        System.out.println("Bag SIZE: "+game.getBag().getBagPieces().size());
+        for (int i = 0; i < game.getBag().getBagPieces().size(); i++) {
+            bag.getBagPieces().add(game.getBag().getBagPieces().get(i));
+        }
+        turn =game.getTurn();
         selectionController = game.getSelectionController();
     }
 
@@ -56,4 +64,17 @@ public class SavedGameState implements Serializable {
         return selectionController;
     }
 
+    public String toString() {
+        String gameState = "";
+        gameState += "Player 1 Turn? :" + getTurn() + "\n";
+        gameState += "-----------------------------------------\n";
+        gameState += "Player 1 Hand :" + getPlayer1Hand() + "\n";
+        gameState += "Player 2 Hand :" + getPlayer2Hand() + "\n";
+        gameState += "Player 1 Score :" + getPlayer1Score() + "\n";
+        gameState += "Player 2 Score :" + getPlayer2Score() + "\n";
+        gameState += "Bag Pieces :" + getBag().getBagPieces().size() + "\n";
+        //gameState += "Board: "+ getScrabbleBoard() + "\n";
+
+        return gameState;
+    }
 }

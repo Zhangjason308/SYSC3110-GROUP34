@@ -16,12 +16,9 @@ public class ScrabbleGame implements Serializable{//
     public static final boolean player1 = true;
     public static final boolean player2 = false;
     public static final char BLANK = '!';
-
     public enum Status {PLAYER_1_WON, PLAYER_2_WON, TIE, UNDECIDED;}
     private int player1Score;
-
     private int player2Score;
-
     private Hand player1Hand;
     private Hand player2Hand;
     private Board scrabbleBoard;
@@ -31,11 +28,12 @@ public class ScrabbleGame implements Serializable{//
     private List<ScrabbleView> views; //always use a list
     private ArrayList<ArrayList<Character>> list;
     SelectionController selectionController;
-
     private ArrayList<SavedGameState> storedTurns;
     private int turnNumber;
+    int selectedBoard;
+    boolean player2Selected;
 
-    public ScrabbleGame() {
+    public ScrabbleGame(int selectedBoard, boolean player2Selected) {
         // initializing game elements
         status = Status.UNDECIDED;
         player1Score = 0;
@@ -55,6 +53,9 @@ public class ScrabbleGame implements Serializable{//
 
         storedTurns = new ArrayList<>();
         turnNumber = 0;
+
+        this.selectedBoard = selectedBoard;
+        this.player2Selected = player2Selected;
     }
 
     public void addScrabbleView(ScrabbleView v) {
@@ -73,11 +74,20 @@ public class ScrabbleGame implements Serializable{//
 
     public void changeTurn() {
         System.out.println("Start of Change Turn -----------------------------------> TN: " + turnNumber + " ST.Size: " + storedTurns.size());
+        //ScrabbleGame boogie = new ScrabbleGame(0, true);
+        //boogie =this;
+
         if(turnNumber == storedTurns.size()){
-            storedTurns.add(new SavedGameState(this));
+            SavedGameState current = new SavedGameState(this);
+            //System.out.println(current.toString());
+            storedTurns.add(turnNumber,current);
+
         }
         else{
             storedTurns.set(turnNumber, new SavedGameState(this));
+        }
+        for (SavedGameState s: getStoredTurns()) {
+            System.out.println(s.toString());
         }
         if (turn == player1) {
             turn = player2;
@@ -94,13 +104,18 @@ public class ScrabbleGame implements Serializable{//
             JOptionPane.showMessageDialog(null, "Nothing To Undo");
             return;
         }
-        turnNumber--;
-        this.setGameContents(storedTurns.get(turnNumber));
+        turnNumber = turnNumber-1;
+        this.setGameContents(storedTurns.get(turnNumber-1));
+
+        BoardPanel.resetDisabledButtons();
+        reDisableButtons();
         updateViews();
-        System.out.println(this.getBoard().toString());
-        System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
-        System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
-        System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
+        System.out.println(storedTurns.get(turnNumber).toString());
+        System.out.println(storedTurns.get(turnNumber-1).toString());
+        //System.out.println(this.getBoard().toString());
+        //System.out.println(storedTurns.get(0).getScrabbleBoard().toString());
+        //System.out.println(storedTurns.get(0).getPlayer1Hand().toString() + "hand1");
+        //System.out.println(storedTurns.get(0).getPlayer2Hand().toString() + "hand2");
         System.out.println("End of Undo ----------------------------------->  TN: " + turnNumber);
     }
     public void redo() {
@@ -109,8 +124,11 @@ public class ScrabbleGame implements Serializable{//
             JOptionPane.showMessageDialog(null, "Nothing To Redo");
             return;
         }
-        turnNumber++;
+
         this.setGameContents(storedTurns.get(turnNumber));
+        BoardPanel.resetDisabledButtons();
+        reDisableButtons();
+        turnNumber++;
         updateViews();
         System.out.println(this.getBoard().toString());
         System.out.println("End of Redo ----------------------------------->  TN: " + turnNumber);
@@ -159,11 +177,11 @@ public class ScrabbleGame implements Serializable{//
     public List<ScrabbleView> getViews() {
         return views;
     }
-    private ArrayList<SavedGameState> getStoredTurns() {
+    public ArrayList<SavedGameState> getStoredTurns() {
         return storedTurns;
     }
 
-    private int getTurnNumber(){
+    public int getTurnNumber(){
         return turnNumber;
     }
 
@@ -353,15 +371,23 @@ public class ScrabbleGame implements Serializable{//
 
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][1][j]) {
                     selectionController.addToBlueButtons(selectedBoardButtons.get(i));
+                    for (int z = 0; z < selectionController.getSpecialBlueButtons().size(); z++) {
+                        System.out.println("BLUE: " + selectionController.getSpecialBlueButtons().get(z).getPiece().getLetter());
+                    }
                 }
             }
+
             for (int j = 0; j < BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0].length; j++) {
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][1][j]) {
                     selectionController.addToRedButtons(selectedBoardButtons.get(i));
+                    for (int z = 0; z < selectionController.getSpecialRedButtons().size(); z++) {
+                        System.out.println("RED: " + selectionController.getSpecialRedButtons().get(z).getPiece().getLetter());
+                    }
                 }
             }
 
         }
+
         //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (selectionController.isXAligned()) {
@@ -509,25 +535,40 @@ public class ScrabbleGame implements Serializable{//
             }
         }
         else {
-            System.out.println("Player 2 turn");
-            boolean aiCantPlay = true;
-            istrueword:
-            for (int i = 0; i < Board.SIZE; i++) {
-                for (int j = 0; j < Board.SIZE; j++) {
-                    if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
-                        selectionController.getSelectedBoardButtons().clear();
-                        System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
-                        //Piece p = player2Hand.getHandPieces().get(pieceIndex);
-                        for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
-                            Piece p = player2Hand.getHandPieces().get(k);
-                            if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 0, -1, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                }
-                                else {
-                                    continue;
-                                }
+            if(player2Selected){
+                if(playWordOnBoard(selectionController.getSelectedBoardButtons())){
+                    System.out.println("Word Was Placed Successfully");
+
+                    selectionController.clearSelectionButtons();
+                    refillHand(getCurrentHand());
+                    changeTurn();
+                }
+                else{
+                    System.out.println("Word Was not Placed Successfully");
+
+                    selectionController.revertSelections();
+                }
+            }else {
+
+                System.out.println("Player 2 turn");
+                boolean aiCantPlay = true;
+                istrueword:
+                for (int i = 0; i < Board.SIZE; i++) {
+                    for (int j = 0; j < Board.SIZE; j++) {
+                        if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
+                            selectionController.getSelectedBoardButtons().clear();
+                            System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
+                            //Piece p = player2Hand.getHandPieces().get(pieceIndex);
+                            for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
+                                Piece p = player2Hand.getHandPieces().get(k);
+                                if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 0, -1, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j - 1, i, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -553,17 +594,17 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
+                                }
 
 
-                            else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 0, 1, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j + 1, i).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 0, 1, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j + 1, i, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -589,15 +630,15 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
-                            else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
-                                if(getPieceAround(i, j, 1, 0, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
                                 }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, 1, 0, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j , i+1, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -623,15 +664,15 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
-                            }
-                            else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
-                                if(getPieceAround(i, j, -1, 0, p) == 0){
-                                    aiCantPlay = false;
-                                    break istrueword;
                                 }
-                                else {
-                                    continue;
-                                }
+                                else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
+                                    if(getPieceAround(i, j, -1, 0, p) == 0){
+                                        aiCantPlay = false;
+                                        break istrueword;
+                                    }
+                                    else {
+                                        continue;
+                                    }
                                 /*
                                 SelectionData sd = new SelectionData(j , i-1, p);
                                 selectionController.getSelectedBoardButtons().add(sd);
@@ -657,15 +698,16 @@ public class ScrabbleGame implements Serializable{//
                                 }
 
                                  */
+                                }
                             }
                         }
                     }
                 }
+                if (aiCantPlay) {
+                    skip();
+                }
+                selectionController.revertSelections();
             }
-            if (aiCantPlay) {
-                skip();
-            }
-            selectionController.revertSelections();
         }
         updateViews();
     }
@@ -999,5 +1041,5 @@ public class ScrabbleGame implements Serializable{//
         return possibleSolutions;
 
     }
-    
+
 }
