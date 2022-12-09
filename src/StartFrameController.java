@@ -38,7 +38,6 @@ public class StartFrameController implements ActionListener {
 
             JButton button = (JButton) o;
             if (button.getText() == START){
-                System.out.println("this ran --------------- yay");
 
                 if(startFrame.getButtonGroup().getSelection() != null){
 

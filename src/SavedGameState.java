@@ -24,7 +24,6 @@ public class SavedGameState implements Serializable {
                 scrabbleBoard.getBoard()[i][j] = game.getBoard().getPiece(i,j);
             }
         }
-        System.out.println("Bag SIZE: "+game.getBag().getBagPieces().size());
         for (int i = 0; i < game.getBag().getBagPieces().size(); i++) {
             bag.getBagPieces().add(game.getBag().getBagPieces().get(i));
         }

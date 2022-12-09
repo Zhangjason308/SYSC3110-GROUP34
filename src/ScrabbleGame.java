@@ -72,11 +72,9 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void changeTurn() {
-        System.out.println("Start of Change Turn -----------------------------------> TN: " + turnNumber + " ST.Size: " + storedTurns.size());
 
         if(turnNumber == storedTurns.size()){
             SavedGameState current = new SavedGameState(this);
-            //System.out.println(current.toString());
             storedTurns.add(turnNumber,current);
 
         }
@@ -84,7 +82,6 @@ public class ScrabbleGame implements Serializable{//
             storedTurns.set(turnNumber, new SavedGameState(this));
         }
         for (SavedGameState s: getStoredTurns()) {
-            System.out.println(s.toString());
         }
         if (turn == player1) {
             turn = player2;
@@ -92,11 +89,9 @@ public class ScrabbleGame implements Serializable{//
             turn = player1;
         }
         turnNumber++;
-        System.out.println("End of Change Turn -----------------------------------> TN: " + turnNumber + "ST.Size: " + storedTurns.size());
     }
 
     public void undo() {
-        System.out.println("Start of Undo ----------------------------------->  TN: " + turnNumber);
         if(turnNumber == 0){
             JOptionPane.showMessageDialog(null, "Nothing To Undo");
             return;
@@ -107,12 +102,8 @@ public class ScrabbleGame implements Serializable{//
         BoardPanel.resetDisabledButtons();
         reDisableButtons();
         updateViews();
-        System.out.println(storedTurns.get(turnNumber).toString());
-        System.out.println(storedTurns.get(turnNumber-1).toString());
-        System.out.println("End of Undo ----------------------------------->  TN: " + turnNumber);
     }
     public void redo() {
-        System.out.println("In Redo -----------------------------------> " + turnNumber + "ST.Size: " + storedTurns.size());
         if(turnNumber == storedTurns.size()){
             JOptionPane.showMessageDialog(null, "Nothing To Redo");
             return;
@@ -123,8 +114,6 @@ public class ScrabbleGame implements Serializable{//
         reDisableButtons();
         turnNumber++;
         updateViews();
-        System.out.println(this.getBoard().toString());
-        System.out.println("End of Redo ----------------------------------->  TN: " + turnNumber);
     }
 
     public Status getStatus() {
@@ -221,14 +210,12 @@ public class ScrabbleGame implements Serializable{//
     }
 
     public void skip() {
-        System.out.println("skip was pressed");
         selectionController.revertSelections();
         changeTurn();
         updateViews();
     }
 
     public void swap() {
-        System.out.println("swap was pressed");
         refillHand(getCurrentHand());
         selectionController.clearSelectionButtons();
         changeTurn();
@@ -262,7 +249,6 @@ public class ScrabbleGame implements Serializable{//
                         y--;
                         break;
                     }
-                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     y--;
                     tracker = getBoard().getPiece(x, y);
                 }// tracker has position of first letter in branch
@@ -273,7 +259,6 @@ public class ScrabbleGame implements Serializable{//
                     if (y == 14) {
                         break;
                     }
-                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = getBoard().getPiece(x, y);
                     if (tracker.getLetter() != ' ') {
                         word.append(tracker.getLetter());
@@ -298,7 +283,6 @@ public class ScrabbleGame implements Serializable{//
                         x--;
                         break;
                     }
-                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     x--;
                     tracker = getBoard().getPiece(x, y);
                 }// tracker has position of first letter in branch
@@ -309,7 +293,6 @@ public class ScrabbleGame implements Serializable{//
                     if (x == 14) {
                         break;
                     }
-                    //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                     tracker = getBoard().getPiece(x, y);
                     if (tracker.getLetter() != ' ') {
                         word.append(tracker.getLetter());
@@ -320,7 +303,6 @@ public class ScrabbleGame implements Serializable{//
             }
             //for every word in branchWords and word, check if they are all valid words in the dictionary, if Yes, then call calculateScore()
         }
-        int index = 0;
         ArrayList<String> toReturn = new ArrayList<>();
         for (String s : branchWords) {
             String str = s.trim();
@@ -328,14 +310,12 @@ public class ScrabbleGame implements Serializable{//
                 toReturn.add(str);
             }
         }
-        System.out.println("Branch words length: " + toReturn.size());
         return toReturn;
     }
 
     public String getWord(ArrayList<SelectionData> selectedBoardButtons) {
 
         if (selectedBoardButtons.isEmpty()) {
-            System.out.println("in getWord Function: selectedBoardButtons is empty");
             return "";
         }
 
@@ -350,7 +330,6 @@ public class ScrabbleGame implements Serializable{//
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][0][1][j]) {
                     selectionController.addToBlueButtons(selectedBoardButtons.get(i));
                     for (int z = 0; z < selectionController.getSpecialBlueButtons().size(); z++) {
-                        System.out.println("BLUE: " + selectionController.getSpecialBlueButtons().get(z).getPiece().getLetter());
                     }
                 }
             }
@@ -359,7 +338,6 @@ public class ScrabbleGame implements Serializable{//
                 if (selectedBoardButtons.get(i).getX() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][0][j] && selectedBoardButtons.get(i).getY() == BoardPanel.BOARD_TYPES[BoardPanel.getBoardNumber()][1][1][j]) {
                     selectionController.addToRedButtons(selectedBoardButtons.get(i));
                     for (int z = 0; z < selectionController.getSpecialRedButtons().size(); z++) {
-                        System.out.println("RED: " + selectionController.getSpecialRedButtons().get(z).getPiece().getLetter());
                     }
                 }
             }
@@ -379,12 +357,10 @@ public class ScrabbleGame implements Serializable{//
             }// tracker has position of first letter in branch
             x++;
             tracker = getBoard().getPiece(x, y);
-            System.out.println(tracker.getLetter());
 
             while (tracker.getLetter() != ' ') {
 
                 tracker = getBoard().getPiece(x, y);
-                System.out.println(word);
                 word.append(tracker.getLetter());
                 if (x == 14) {
                     break;
@@ -395,7 +371,6 @@ public class ScrabbleGame implements Serializable{//
         } else {
 
             while (tracker.getLetter() != ' ') {
-                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 if (y == 0) {
                     y--;
                     break;
@@ -408,7 +383,6 @@ public class ScrabbleGame implements Serializable{//
 
             while (tracker.getLetter() != ' ') {
 
-                //tracker = new SelectionData(x, y - 1, model.getBoard().getPiece(x, y - 1));
                 tracker = getBoard().getPiece(x, y);
                 word.append(tracker.getLetter());
                 if (y == 14) {
@@ -472,16 +446,9 @@ public class ScrabbleGame implements Serializable{//
     public int getPieceAround(int i, int j, int iNum, int jNum, Piece p) {
         SelectionData sd = new SelectionData(j + jNum, i+iNum, p);
         selectionController.getSelectedBoardButtons().add(sd);
-        //model.getPlayer2Hand().removePiece();
         scrabbleBoard.placePiece(sd);
-        System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-        System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
         if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-            System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
             player2Hand.getHandPieces().remove(p);
-            //model.changeTurn();
-            //model.updateViews();
-            //model.refillHand(model.getPlayer2Hand());
             refillHand(getCurrentHand());
             changeTurn();
             selectionController.clearSelectionButtons();
@@ -499,43 +466,31 @@ public class ScrabbleGame implements Serializable{//
 
         if(turn){ // player 1 turn
             if(playWordOnBoard(selectionController.getSelectedBoardButtons())){
-                System.out.println("Word Was Placed Successfully");
-
                 selectionController.clearSelectionButtons();
                 refillHand(getCurrentHand());
                 changeTurn();
             }
             else{
-                System.out.println("Word Was not Placed Successfully");
-
                 selectionController.revertSelections();
             }
         }
         else {
             if(player2Selected){
                 if(playWordOnBoard(selectionController.getSelectedBoardButtons())){
-                    System.out.println("Word Was Placed Successfully");
-
                     selectionController.clearSelectionButtons();
                     refillHand(getCurrentHand());
                     changeTurn();
                 }
                 else{
-                    System.out.println("Word Was not Placed Successfully");
-
                     selectionController.revertSelections();
                 }
             }else {
-
-                System.out.println("Player 2 turn");
                 boolean aiCantPlay = true;
                 istrueword:
                 for (int i = 0; i < Board.SIZE; i++) {
                     for (int j = 0; j < Board.SIZE; j++) {
                         if (scrabbleBoard.getPiece(j, i).getLetter() != ' ') {
                             selectionController.getSelectedBoardButtons().clear();
-                            System.out.println("Lucky Letter: " + scrabbleBoard.getPiece(j, i).getLetter() + scrabbleBoard.toString());
-                            //Piece p = player2Hand.getHandPieces().get(pieceIndex);
                             for (int k = 0; k < ScrabbleGame.HAND_SIZE; k++) {
                                 Piece p = player2Hand.getHandPieces().get(k);
                                 if (scrabbleBoard.getPiece(j - 1, i).getLetter() == ' ') {
@@ -598,12 +553,9 @@ public class ScrabbleGame implements Serializable{//
             if (selectionController.isXAligned() || selectionController.isYAligned()) { // all x or y indexes are same
                 String word = getWord(selectedBoardButtons); //gets the word (including the letters in potential spaces)
                 if(word.length() == 0){
-                    System.out.println("mainline word is 0");
                    return false;
                 }
                 ArrayList<String> branches = getBranchWords(selectedBoardButtons);
-                System.out.println(branches);
-                System.out.println(word);
                 int score = 0;
                     if (isValidWord(word)) {
                         score += calculateScore(word);
@@ -611,7 +563,6 @@ public class ScrabbleGame implements Serializable{//
                             if (isValidWord(s)) {
                                 score += calculateScore(s);
                             } else {
-                                System.out.println("Invalid word: " + s);
                                 selectionController.revertSelections();
                                 score = 0;
                                 updateViews();
@@ -619,12 +570,10 @@ public class ScrabbleGame implements Serializable{//
                             }
                         }
                     } else {
-                        System.out.println("Invalid word: " + word);
                         selectionController.revertSelections();
                         updateViews();
                     }
                 if (score == 0) {
-                    System.out.println("invalid word");
                     selectionController.revertSelections();
                     updateViews();
                 } else {
@@ -634,7 +583,6 @@ public class ScrabbleGame implements Serializable{//
                     return true;
                 }
             } else {
-                System.out.println("Invalid Placements");
                 selectionController.revertSelections();
                 updateViews();
                 return false;
@@ -753,24 +701,15 @@ public class ScrabbleGame implements Serializable{//
         if (selectionController.isXAligned() || selectionController.isYAligned()) {
             //int values[] = new int[selectionController.getSelectedBoardButtons().size()];
             for (SelectionData d : selectionController.getSelectedBoardButtons()){
-                System.out.println(d.getPiece().getLetter());
-
-
                 if(wordIsConnectedSubMethod(d, 1, 0) == 1){
                     return true;
                 }
-
-
-
                 if(wordIsConnectedSubMethod(d, -1, 0) == 1){
                     return true;
                 }
-
-
                 if(wordIsConnectedSubMethod(d, 0, 1) == 1){
                     return true;
                 }
-
                 if(wordIsConnectedSubMethod(d, 0, -1) == 1){
                     return true;
                 }
@@ -781,21 +720,7 @@ public class ScrabbleGame implements Serializable{//
         }
         return false;
     }
-    public ArrayList<ArrayList<Character>> getList () throws IOException {
 
-        String[] temp = getDictionary();
-
-
-        for (String s : temp) {
-            ArrayList<Character> tempChar = new ArrayList<Character>();
-            for (int i = 0; i < s.length(); i++) {
-                tempChar.add(s.charAt(i));
-            }
-            list.add(tempChar);
-        }
-
-        return list;
-    }
 
 
 }

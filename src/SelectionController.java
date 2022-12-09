@@ -125,8 +125,6 @@ public class SelectionController implements Serializable {
 
     public void selectHandButton(int handIndex, String buttonText){
 
-        System.out.println("button from hand, index: " + handIndex + " text: " + buttonText);
-
         if (buttonText.charAt(0) == ScrabbleGame.BLANK) {
             String newChar = JOptionPane.showInputDialog("Enter a single letter: ").trim().toLowerCase();
 
@@ -136,27 +134,19 @@ public class SelectionController implements Serializable {
             return;
         }
 
-        if (buttonText.equals(" ")) {
-            System.out.println("No piece there");
-        } else {
+        if (!buttonText.equals(" ")) {
             SelectionData data;
 
             data = new SelectionData(handIndex, handIndex, model.getCurrentHand().getHandPieces().get(handIndex));
             model.getCurrentHand().removePiece(handIndex);
 
-            System.out.println(handIndex);
-
             model.selectionController.addToHandButtons(data);
-
-            System.out.println(selectedHandButtons.get(0).getX() + " <- Hand Index");
         }
     }
 
     public void selectBoardButton(int x, int y, String buttonText){
         if (buttonText.equals(" ")) { // empty spot, check if and pieces are selected
-            if (selectedHandButtons.isEmpty()) {
-                System.out.println("nothing from hand is selected to be placed");
-            } else {
+            if (!selectedHandButtons.isEmpty()) {
                 SelectionData data = new SelectionData(x, y, selectedHandButtons.get(0).getPiece());
                 selectedBoardButtons.add(data);
                 model.getBoard().placePiece(data);
@@ -173,7 +163,6 @@ public class SelectionController implements Serializable {
             }
             selectedBoardButtons.remove(index);
         }
-        System.out.println("button from board (X: " + x + " Y: " + y);
     }
 
 }

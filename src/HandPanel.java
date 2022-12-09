@@ -25,7 +25,6 @@ public class HandPanel extends JPanel implements ScrabbleView{//
     @Override
     public void update(ScrabbleGame model) {
         Hand playerHand = model.getTurn() ? model.getPlayer1Hand(): model.getPlayer2Hand();
-        System.out.println(playerHand.toString());
 
         int missing = playerHand.sizeOfHand();
         if(missing == 0){
