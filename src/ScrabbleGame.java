@@ -216,10 +216,6 @@ public class ScrabbleGame implements Serializable{//
         }
     }
 
-    public void placePiece(SelectionData data) {
-        scrabbleBoard.placePiece(data);
-    }
-
     public Piece removeFromBoard(int x, int y) {
         return scrabbleBoard.removePiece(x, y);
     }
@@ -370,7 +366,6 @@ public class ScrabbleGame implements Serializable{//
 
         }
 
-        //Piece tracker = model.getBoard().getPiece(x,y);
         Piece tracker = selectedBoardButtons.get(0).getPiece();
         if (selectionController.isXAligned()) {
             while (tracker.getLetter() != ' ') {
@@ -551,31 +546,7 @@ public class ScrabbleGame implements Serializable{//
                                     else {
                                         continue;
                                     }
-                                /*
-                                SelectionData sd = new SelectionData(j - 1, i, p);
-                                selectionController.getSelectedBoardButtons().add(sd);
-                                //model.getPlayer2Hand().removePiece();
-                                scrabbleBoard.placePiece(sd);
-                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                    player2Hand.getHandPieces().remove(p);
-                                    //model.changeTurn();
-                                    //model.updateViews();
-                                    //model.refillHand(model.getPlayer2Hand());
-                                    refillHand(getCurrentHand());
-                                    changeTurn();
-                                    selectionController.clearSelectionButtons();
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                } else {
-                                    scrabbleBoard.removePiece(j - 1, i);
-                                    selectionController.getSelectedBoardButtons().clear();
-                                    continue;
-                                }
 
-                                 */
                                 }
 
 
@@ -587,31 +558,7 @@ public class ScrabbleGame implements Serializable{//
                                     else {
                                         continue;
                                     }
-                                /*
-                                SelectionData sd = new SelectionData(j + 1, i, p);
-                                selectionController.getSelectedBoardButtons().add(sd);
-                                //model.getPlayer2Hand().removePiece();
-                                scrabbleBoard.placePiece(sd);
-                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                    player2Hand.getHandPieces().remove(p);
-                                    //model.changeTurn();
-                                    //model.updateViews();
-                                    //model.refillHand(model.getPlayer2Hand());
-                                    refillHand(getCurrentHand());
-                                    changeTurn();
-                                    selectionController.clearSelectionButtons();
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                } else {
-                                    scrabbleBoard.removePiece(j +1, i);
-                                    selectionController.getSelectedBoardButtons().clear();
-                                    continue;
-                                }
 
-                                 */
                                 }
                                 else if (scrabbleBoard.getPiece(j  , i+1).getLetter() == ' ') {
                                     if(getPieceAround(i, j, 1, 0, p) == 0){
@@ -621,31 +568,7 @@ public class ScrabbleGame implements Serializable{//
                                     else {
                                         continue;
                                     }
-                                /*
-                                SelectionData sd = new SelectionData(j , i+1, p);
-                                selectionController.getSelectedBoardButtons().add(sd);
-                                //model.getPlayer2Hand().removePiece();
-                                scrabbleBoard.placePiece(sd);
-                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                    player2Hand.getHandPieces().remove(p);
-                                    //model.changeTurn();
-                                    //model.updateViews();
-                                    //model.refillHand(model.getPlayer2Hand());
-                                    refillHand(getCurrentHand());
-                                    changeTurn();
-                                    selectionController.clearSelectionButtons();
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                } else {
-                                    scrabbleBoard.removePiece(j , i+1);
-                                    selectionController.getSelectedBoardButtons().clear();
-                                    continue;
-                                }
 
-                                 */
                                 }
                                 else if (scrabbleBoard.getPiece(j , i-1).getLetter() == ' ') {
                                     if(getPieceAround(i, j, -1, 0, p) == 0){
@@ -655,31 +578,7 @@ public class ScrabbleGame implements Serializable{//
                                     else {
                                         continue;
                                     }
-                                /*
-                                SelectionData sd = new SelectionData(j , i-1, p);
-                                selectionController.getSelectedBoardButtons().add(sd);
-                                //model.getPlayer2Hand().removePiece();
-                                scrabbleBoard.placePiece(sd);
-                                System.out.println(selectionController.getSelectedBoardButtons().size() + "=====");
-                                System.out.println("selectedAIButton: " + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                if (playWordOnBoard(selectionController.getSelectedBoardButtons())) {
-                                    System.out.println("Player 2 successfully placed a letter :" + selectionController.getSelectedBoardButtons().get(0).getPiece().getLetter());
-                                    player2Hand.getHandPieces().remove(p);
-                                    //model.changeTurn();
-                                    //model.updateViews();
-                                    //model.refillHand(model.getPlayer2Hand());
-                                    refillHand(getCurrentHand());
-                                    changeTurn();
-                                    selectionController.clearSelectionButtons();
-                                    aiCantPlay = false;
-                                    break istrueword;
-                                } else {
-                                    scrabbleBoard.removePiece(j , i-1);
-                                    selectionController.getSelectedBoardButtons().clear();
-                                    continue;
-                                }
 
-                                 */
                                 }
                             }
                         }
@@ -848,111 +747,30 @@ public class ScrabbleGame implements Serializable{//
         if(turnNumber == 0){
             return true;
         }
-        /*
-        if (selectionController.getSelectedBoardButtons().size() == 1){
-            SelectionData onlyValue = selectionController.getSelectedBoardButtons().get(0);
-            if (scrabbleBoard.getPiece(onlyValue.getX()+1, onlyValue.getY()).getLetter() != ' '){
-                return true;
-            }
 
-            if (scrabbleBoard.getPiece(onlyValue.getX()-1, onlyValue.getY()).getLetter() != ' '){
-                return true;
-            }
-
-            if (scrabbleBoard.getPiece(onlyValue.getX(), onlyValue.getY()+1).getLetter() != ' '){
-                return true;
-            }
-
-
-            if (scrabbleBoard.getPiece(onlyValue.getX(), onlyValue.getY()-1).getLetter() != ' '){
-                return true;
-            }
-        }
-
-         */
 
 
         if (selectionController.isXAligned() || selectionController.isYAligned()) {
             //int values[] = new int[selectionController.getSelectedBoardButtons().size()];
             for (SelectionData d : selectionController.getSelectedBoardButtons()){
                 System.out.println(d.getPiece().getLetter());
-                /*
-                if (scrabbleBoard.getPiece(d.getX() + 1, d.getY()).getLetter() != ' ') {
-                    boolean selectionDataThing = false;
-                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
-                        if (d.getX() + 1 == a.getX() && d.getY() == a.getY()) {
-                            selectionDataThing = true;
-                            break;
-                        }
-                    }
-                    if (!selectionDataThing) {
-                        return true;
-                    }
 
-                }
-
-                 */
 
                 if(wordIsConnectedSubMethod(d, 1, 0) == 1){
                     return true;
                 }
 
-                /*
-                if (scrabbleBoard.getPiece(d.getX() - 1, d.getY()).getLetter() != ' ') {
-                    boolean selectionDataThing = false;
-                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
-                        if (d.getX() - 1 == a.getX() && d.getY() == a.getY()) {
-                            selectionDataThing = true;
-                            break;
-                        }
-                    }
-                    if (!selectionDataThing) {
-                        return true;
-                    }
 
-                }
-
-                 */
 
                 if(wordIsConnectedSubMethod(d, -1, 0) == 1){
                     return true;
                 }
 
-                /*
-                if (scrabbleBoard.getPiece(d.getX(), d.getY()+1).getLetter() != ' ') {
-                    boolean selectionDataThing = false;
-                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
-                        if (d.getX() == a.getX() && d.getY()+1 == a.getY()) {
-                            selectionDataThing = true;
-                            break;
-                        }
-                    }
-                    if (!selectionDataThing) {
-                        return true;
-                    }
 
-                }
-
-                 */
                 if(wordIsConnectedSubMethod(d, 0, 1) == 1){
                     return true;
                 }
-                /*
-                if (scrabbleBoard.getPiece(d.getX(), d.getY()-1).getLetter() != ' ') {
-                    boolean selectionDataThing = false;
-                    for (SelectionData a : selectionController.getSelectedBoardButtons()) {
-                        if (d.getX() == a.getX() && d.getY()-1 == a.getY()) {
-                            selectionDataThing = true;
-                            break;
-                        }
-                    }
-                    if (!selectionDataThing) {
-                        return true;
-                    }
 
-                }
-
-                 */
                 if(wordIsConnectedSubMethod(d, 0, -1) == 1){
                     return true;
                 }
@@ -978,50 +796,6 @@ public class ScrabbleGame implements Serializable{//
 
         return list;
     }
-    // }
-    public ArrayList<ArrayList<Character>> playAI (Hand hand){ //calebs implementation
 
-        ArrayList<ArrayList<Character>> possibleSolutions = new ArrayList<ArrayList<Character>>();
-        ArrayList<Character> handList = new ArrayList<Character>();
-
-        for (Piece piece : hand.getHandPieces()) {
-            System.out.println(piece.getLetter());
-            handList.add(piece.getLetter());
-
-        }
-
-        try {
-            for (ArrayList<Character> dict : getList()) {
-                ArrayList<Character> tempDictList = new ArrayList<Character>(dict);
-                ArrayList<Character> tempHandList = new ArrayList<Character>(handList);
-
-
-                for (Character letter : dict) {
-                    if (tempHandList.contains(letter)) {
-                        tempHandList.remove(tempHandList.indexOf(letter));
-                        tempDictList.remove(tempDictList.indexOf(letter));
-                    }
-                }
-                //for(Character temp : tempDictList){
-                // System.out.println(temp);
-                // }
-                if (tempDictList.size() == 1) {
-                    System.out.println("Dict word:");
-                    ArrayList<Character> tempChar = new ArrayList<Character>();
-                    for (Character letter : dict) {
-                        tempChar.add(letter);
-                    }
-                    possibleSolutions.add(tempChar);
-                }
-
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        return possibleSolutions;
-
-    }
 
 }

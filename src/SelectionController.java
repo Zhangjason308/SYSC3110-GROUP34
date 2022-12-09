@@ -18,9 +18,6 @@ public class SelectionController implements Serializable {
         return selectedBoardButtons;
     }
 
-    public ArrayList<SelectionData> getSelectedHandButtons() {
-        return selectedHandButtons;
-    }
 
     private ArrayList<SelectionData> specialRedButtons;
     private ArrayList<SelectionData> selectedBoardButtons;
@@ -40,9 +37,6 @@ public class SelectionController implements Serializable {
     public void addToHandButtons(SelectionData sd){
         selectedHandButtons.add(sd);
     }
-    public void addToBoardButtons(SelectionData sd){
-        selectedBoardButtons.add(sd);
-    }
     public void addToRedButtons(SelectionData sd){
         specialRedButtons.add(sd);
     }
@@ -50,9 +44,6 @@ public class SelectionController implements Serializable {
         specialBlueButtons.add(sd);
     }
 
-    public void clearSelectionArray(ArrayList<SelectionData> toClear){
-        toClear.clear();
-    }
 
     public void clearSpecialButtons(){
         specialRedButtons.clear();

@@ -22,12 +22,6 @@ public class SelectionData implements Serializable {
         return p;
     }
 
-    public int getCoord(Boolean align){
-        if(align){
-            return x;
-        }
-        return y;
-    }
 
     public int getY(){
         return y;

@@ -49,8 +49,6 @@ public class StartFrame extends JFrame {
         JLabel picLabel1 = new JLabel(new ImageIcon(boardImage1));
         JLabel picLabel2 = new JLabel(new ImageIcon(boardImage2));
         JLabel picLabel3 = new JLabel(new ImageIcon(boardImage3));
-        //picLabel1.setSize(400,400);
-        //picLabel2.setSize(400,400);
         boardPanel.add(boardSetting, BorderLayout.CENTER);
         boardGroup.add(board1);
         boardGroup.add(board2);
@@ -63,7 +61,6 @@ public class StartFrame extends JFrame {
         boardSetting.add(picLabel1);
         boardSetting.add(picLabel2);
         boardSetting.add(picLabel3);
-        //ScrabbleFrame scrabbleFrame = new ScrabbleFrame();
         this.setLayout(new BorderLayout(20,120));
         player2.setText("Player 2");
         player2.setActionCommand(StartFrameController.PLAYER2);
