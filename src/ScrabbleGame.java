@@ -81,7 +81,11 @@ public class ScrabbleGame implements Serializable{//
         else{
             storedTurns.set(turnNumber, new SavedGameState(this));
         }
-        for (SavedGameState s: getStoredTurns()) {
+        if(status != Status.UNDECIDED){
+            endConditionIsMet();
+            JOptionPane.showMessageDialog(null, calculateWinner() + " wins");
+            player1Hand.pieces.clear();
+            player2Hand.pieces.clear();
         }
         if (turn == player1) {
             turn = player2;
