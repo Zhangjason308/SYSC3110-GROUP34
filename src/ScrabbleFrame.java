@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ScrabbleFrame extends JFrame {
-    int selectedButton;
-    boolean player2Selected;
     public ScrabbleFrame(int selectedButton, boolean player2Selected ) {
         super("Scrabble");
         ScrabbleGame model = new ScrabbleGame(selectedButton, player2Selected);

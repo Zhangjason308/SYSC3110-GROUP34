@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class StartFrameController implements ActionListener {
 
@@ -25,7 +24,6 @@ public class StartFrameController implements ActionListener {
     public StartFrameController(StartFrame startFrame) {
         selectedButton = 0;
         player2Selected = false;
-        // frame = new ScrabbleFrame(selectedButton,player2Selected);
         this.startFrame = startFrame;
     }
 
