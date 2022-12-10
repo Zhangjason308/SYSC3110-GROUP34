@@ -55,6 +55,8 @@ public class ScrabbleGame implements Serializable{//
 
         this.selectedBoard = selectedBoard;
         this.player2Selected = player2Selected;
+
+        storedTurns.add(new SavedGameState(this));
     }
 
     public void addScrabbleView(ScrabbleView v) {
@@ -73,13 +75,13 @@ public class ScrabbleGame implements Serializable{//
 
     public void changeTurn() {
 
-        if(turnNumber == storedTurns.size()){
+        if(turnNumber == storedTurns.size()-1){
             SavedGameState current = new SavedGameState(this);
-            storedTurns.add(turnNumber,current);
+            storedTurns.add(current);
 
         }
         else{
-            storedTurns.set(turnNumber, new SavedGameState(this));
+            storedTurns.set(turnNumber + 1, new SavedGameState(this));
         }
         if(status != Status.UNDECIDED){
             endConditionIsMet();
@@ -100,23 +102,23 @@ public class ScrabbleGame implements Serializable{//
             JOptionPane.showMessageDialog(null, "Nothing To Undo");
             return;
         }
-        turnNumber = turnNumber-1;
-        this.setGameContents(storedTurns.get(turnNumber-1));
+        turnNumber--;
+        this.setGameContents(storedTurns.get(turnNumber));
 
         BoardPanel.resetDisabledButtons();
         reDisableButtons();
         updateViews();
     }
     public void redo() {
-        if(turnNumber == storedTurns.size()){
+        if(turnNumber == storedTurns.size()-1){
             JOptionPane.showMessageDialog(null, "Nothing To Redo");
             return;
         }
 
+        turnNumber++;
         this.setGameContents(storedTurns.get(turnNumber));
         BoardPanel.resetDisabledButtons();
         reDisableButtons();
-        turnNumber++;
         updateViews();
     }
 

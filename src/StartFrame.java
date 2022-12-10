@@ -14,10 +14,10 @@ public class StartFrame extends JFrame {
 
     private JPanel boardPanel = new JPanel(new BorderLayout(100,0));
     private JRadioButton player2 = new JRadioButton();
-    private JRadioButton ai = new JRadioButton();
+    private JRadioButton ai = new JRadioButton("", true);
 
     private JPanel boardOption = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 10));
-    private JRadioButton board1 = new JRadioButton();
+    private JRadioButton board1 = new JRadioButton("", true);
     private JRadioButton board2 = new JRadioButton();
     private JRadioButton board3 = new JRadioButton();
     private JButton starts = new JButton("START");
