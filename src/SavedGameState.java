@@ -21,13 +21,14 @@ public class SavedGameState implements Serializable {
         }
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                scrabbleBoard.getBoard()[i][j] = game.getBoard().getPiece(i,j);
+                scrabbleBoard.getBoard()[i][j] = new Piece(game.getBoard().getPiece(i,j).getLetter());
             }
         }
         for (int i = 0; i < game.getBag().getBagPieces().size(); i++) {
-            bag.getBagPieces().add(game.getBag().getBagPieces().get(i));
+            bag.getBagPieces().add(new Piece(game.getBag().getBagPieces().get(i).getLetter()));
         }
-        turn =game.getTurn();
+
+        turn = game.getTurn();
         selectionController = game.getSelectionController();
     }
 
