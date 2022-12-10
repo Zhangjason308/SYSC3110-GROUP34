@@ -703,7 +703,6 @@ public class ScrabbleGame implements Serializable{//
 
 
         if (selectionController.isXAligned() || selectionController.isYAligned()) {
-            //int values[] = new int[selectionController.getSelectedBoardButtons().size()];
             for (SelectionData d : selectionController.getSelectedBoardButtons()){
                 if(wordIsConnectedSubMethod(d, 1, 0) == 1){
                     return true;

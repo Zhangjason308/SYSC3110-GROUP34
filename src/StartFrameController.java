@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartFrameController implements ActionListener {
-
     public static String BOARD1 = "Board1";
     public static String BOARD2 = "Board2";
     public static String BOARD3 = "Board3";
@@ -15,8 +14,6 @@ public class StartFrameController implements ActionListener {
     public static String PLAYER2 = "Player2";
     public static String AI = "AI";
     public static String START = "START";
-//    ScrabbleFrame frame;
-
     StartFrame startFrame;
     int selectedButton;
     boolean player2Selected;
@@ -26,8 +23,6 @@ public class StartFrameController implements ActionListener {
         player2Selected = false;
         this.startFrame = startFrame;
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();

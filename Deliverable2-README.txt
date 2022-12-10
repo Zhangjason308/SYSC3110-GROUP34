@@ -1,7 +1,7 @@
 README for Scrabble Project including: version 4.0 12/9/2022
 
-Deliverable 4: For this deliverable, we added tiles multipliers that multiply the score of the player that has a word passing through one of the multipliers, and an AI was added, which the user will be
- playing against.
+Deliverable 4: For this deliverable, we added save,load,undo,redo commands, and the player can pick a board (board1,board2,board3) then the player can pick to play with
+the AI or player2 which the user will be playing against.
 
 Description:
 ------------
@@ -116,6 +116,7 @@ Jalal Mourad
 	- Dictionary.txt
 
 Caleb Lui-Yee
+    -
 	- UML
 	- Piece.java
 	- ScrabbleGame.java
@@ -137,6 +138,7 @@ Jason Zhang
 	- Readme
 
 Triton Crowley
+    - SavedGameState.java
 	- ScrabbleGame.java
 	- ScrabbleController.java
 	- Bag.java
@@ -177,10 +179,10 @@ How to use:
 			and only the selected pieces from the Hand will be swapped.
 -------------------------------------------------------------------------------------------------------------------------
 
-5. AI's turn or Player2's turn
+5. AI's turn or Player2's turn.
 6. If a word is placed on a multiplier, the player's score will me multiplied depending on the color of the multiplier it is placed on, red color
 tiles are x3 multipliers, and blue color tiles are x2 multipliers.
 7. Blank pieces are represented by "!" .
-8. Player Can Undo or Redo his tile
-9. Player can save his game, then load it when he enters again
-10. Repeat until Game Bag is empty, or no possible words can be made
+8. Player Can Undo or Redo his tile.
+9. Player can save his game, then load it when he enters again.
+10. Repeat until Game Bag is empty, or no possible words can be made.
