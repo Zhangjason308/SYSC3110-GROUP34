@@ -5,35 +5,26 @@ import java.util.ArrayList;
 public class SelectionController implements Serializable {
     ScrabbleGame model;
     private ArrayList<SelectionData> specialBlueButtons;
-
     public ArrayList<SelectionData> getSpecialBlueButtons() {
         return specialBlueButtons;
     }
-
     public ArrayList<SelectionData> getSpecialRedButtons() {
         return specialRedButtons;
     }
-
     public ArrayList<SelectionData> getSelectedBoardButtons() {
         return selectedBoardButtons;
     }
-
-
     private ArrayList<SelectionData> specialRedButtons;
     private ArrayList<SelectionData> selectedBoardButtons;
     private ArrayList<SelectionData> selectedHandButtons;
-
-
     public SelectionController(ScrabbleGame model){
         this.model = model;
 
         specialBlueButtons = new ArrayList<>();
         specialRedButtons = new ArrayList<>();
-
         selectedBoardButtons = new ArrayList<>();
         selectedHandButtons = new ArrayList<>();
     }
-
     public void addToHandButtons(SelectionData sd){
         selectedHandButtons.add(sd);
     }
@@ -43,8 +34,6 @@ public class SelectionController implements Serializable {
     public void addToBlueButtons(SelectionData sd){
         specialBlueButtons.add(sd);
     }
-
-
     public void clearSpecialButtons(){
         specialRedButtons.clear();
         specialBlueButtons.clear();
@@ -70,7 +59,6 @@ public class SelectionController implements Serializable {
     }
 
     public boolean[] lettersAreInLine() {
-
         boolean xAligned = true;
         boolean yAligned = true;
 

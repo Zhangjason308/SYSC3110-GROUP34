@@ -9,22 +9,17 @@ public class StartFrame extends JFrame {
 
     private JPanel playerSetting = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 20));
     private JPanel start = new JPanel(new BorderLayout(150,50));
-
     private JPanel boardSetting = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
-
     private JPanel boardPanel = new JPanel(new BorderLayout(100,0));
     private JRadioButton player2 = new JRadioButton();
     private JRadioButton ai = new JRadioButton();
-
     private JPanel boardOption = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 10));
     private JRadioButton board1 = new JRadioButton();
     private JRadioButton board2 = new JRadioButton();
     private JRadioButton board3 = new JRadioButton();
     private JButton starts = new JButton("START");
-
     private ButtonGroup buttonGroup = new ButtonGroup();
     private ButtonGroup boardGroup = new ButtonGroup();
-
     final JTextField title = new JTextField("Welcome to Scrabble");
     final JTextField playerOptions = new JTextField("Player Settings");
     final JTextField boardSelection = new JTextField("Board Settings");
@@ -43,9 +38,7 @@ public class StartFrame extends JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
         StartFrameController startFrameController = new StartFrameController(this);
-        
         JLabel picLabel1 = new JLabel(new ImageIcon(boardImage1));
         JLabel picLabel2 = new JLabel(new ImageIcon(boardImage2));
         JLabel picLabel3 = new JLabel(new ImageIcon(boardImage3));
@@ -77,7 +70,6 @@ public class StartFrame extends JFrame {
         board1.setBounds(120, 80, 120, 10);
         board2.setBounds(120, 80, 120, 10);
         board3.setBounds(120, 80, 120, 10);
-
         buttonGroup.add(player2);
         buttonGroup.add(ai);
         playerSetting.add(playerOptions);
@@ -106,7 +98,6 @@ public class StartFrame extends JFrame {
         this.setVisible(true);
         this.setSize(1000,800);
     }
-
     public ButtonGroup getButtonGroup(){
         return buttonGroup;
     }
